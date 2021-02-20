@@ -1,0 +1,52 @@
+:host {
+  width: var(--screen-width);
+  height:  var(--screen-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 80px;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+
+}
+
+.dog {
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  display: block;
+
+}
+.screen-title {
+  font-size: 100px;
+  color: #dedede;
+}
+
+.starts-soon {
+  font-size: 50px;
+  color: #dedede;
+
+}
+
+.tags {
+  color: #dedede;
+  font-size: 40px;
+  width: 100%;
+  display: flex;
+
+
+  li, ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  ul {
+    margin: auto;
+    display: flex;
+  }
+  li {
+    margin-right: 20px;
+  }
+}

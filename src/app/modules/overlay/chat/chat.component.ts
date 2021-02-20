@@ -11,6 +11,8 @@ import {map} from "rxjs/operators";
 export class ChatComponent implements OnInit {
   timeout = 30000;
 
+
+
   constructor(readonly twitch: TwitchClient) {
 
 
