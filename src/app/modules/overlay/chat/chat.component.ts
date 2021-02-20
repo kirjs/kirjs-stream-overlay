@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TwitchClient} from "../../twitch";
+import {TwitchClient} from "../../../twitch";
 import {interval, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 

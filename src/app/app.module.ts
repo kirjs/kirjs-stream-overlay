@@ -3,9 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {ChatModule} from './modules/chat/chat.module';
-import {BarModule} from './modules/bar/bar.module';
+import {ChatModule} from './modules/overlay/chat/chat.module';
+import {BarModule} from './modules/overlay/bar/bar.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {OverlayModule} from "./modules/overlay/overlay.module";
+import {RouterModule} from "@angular/router";
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC_Zyq9Ve1SrbenuN0iDlDd4hQvTIlruP8',
@@ -29,7 +31,9 @@ const firebaseConfig = {
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     ChatModule,
+    OverlayModule,
     BarModule
   ],
   providers: [],

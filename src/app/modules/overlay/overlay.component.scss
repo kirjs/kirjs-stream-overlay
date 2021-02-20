@@ -1,0 +1,25 @@
+:host {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  display: block;
+
+}
+
+app-chat {
+  position: absolute;
+  top: 0;
+
+  right: 0;
+}
+
+app-bar {
+  position: absolute;
+  display: block;
+  height: 80px;
+  background: #333333;
+  opacity: 95%;
+  bottom: 0;
+  left: 0;
+  right: var(--sidebar-size);
+}
