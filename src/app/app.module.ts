@@ -8,6 +8,7 @@ import {BarModule} from './modules/overlay/bar/bar.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {OverlayModule} from "./modules/overlay/overlay.module";
 import {RouterModule} from "@angular/router";
+import {AdminModule} from "./modules/admin/admin.module";
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC_Zyq9Ve1SrbenuN0iDlDd4hQvTIlruP8',
@@ -32,6 +33,7 @@ const firebaseConfig = {
     BrowserModule,
     AppRoutingModule,
     RouterModule,
+    AdminModule,
     ChatModule,
     OverlayModule,
     BarModule
