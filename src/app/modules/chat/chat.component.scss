@@ -1,5 +1,5 @@
 ::ng-deep :root {
-  --size: 350px;
+  --sidebar-size: 350px;
 }
 
 
@@ -10,14 +10,15 @@
   box-sizing: border-box;
   height: 1080px;
   background: #333333 url("logo.png") no-repeat center;
-  width: var(--size);
+  width: var(--sidebar-size);
 
   opacity: 0.95;
 }
 
 .content-wrapper {
-  width: var(--size);
+  width: var(--sidebar-size);
   display: block;
+  box-sizing: border-box;
   padding: 20px;
 }
 
@@ -43,8 +44,8 @@ h2 {
 }
 
 .dog {
-  width: var(--size);
-  height: var(--size);
+  width: var(--sidebar-size);
+  height: var(--sidebar-size);
 
 
   background: url("./dog.png");
@@ -55,7 +56,7 @@ h2 {
   opacity: 0.98;
   color: #eee;
   background-color: #333;
-  width: var(--size);
+  width: var(--sidebar-size);
 }
 
 .message {

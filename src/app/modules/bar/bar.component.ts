@@ -27,7 +27,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 export class BarComponent  {
   readonly messages = [
     '🏴󠁧󠁢󠁥󠁮󠁧󠁿 🇷🇺 I stream in English, but I speak Russian! Feel free to ask questions in Russian',
-    '🔥 Tomorrow, working on VsCode extension with @obenjiro',
+    '🔥 Tomorrow, we might be working on a clubhouse web client',
     '❤️ Please follow me!'
   ];
 
