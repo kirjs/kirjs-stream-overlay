@@ -1,0 +1,6 @@
+<script src="bar.component.ts"></script>
+<div *ngFor="let message of messages; let i = index">
+  <div *ngIf="(selectedSlide$ | async) == i" class="message" @carouselAnimation>
+    {{message}}
+  </div>
+</div>

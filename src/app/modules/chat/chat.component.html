@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <div class="dog"></div>
+  <div class="content-wrapper">
+    <h2>What's going on?</h2>
+    <div class="message">
+      <p>Configuring screen overlay</p>
+      <ul>
+        <li>Style the sidebar</li>
+        <li>Generate "Stream starting soon screen"</li>
+        <li>Make "working on" screen configurable</li>
+        <li>Deploy to Firebase Hosting</li>
+      </ul>
+<!--      <p>Сегодня мы с @obenjiro пилим расширение для VSCode</p>-->
+<!--      <p>Добавляем авто-импорты модуля из шаблона</p>-->
+<!--      <b>Звук скоро появится!!</b>-->
+<!--      <div class="head"></div>-->
+<!--      <p>We're doing really weird Angular stuff, please don't try it at home.</p>-->
+<!--      <p>We're working on converting content for codelab.fun.</p>-->
+<!--      <p>Angular components to JSON format.</p>-->
+    </div>
+    <div *ngIf="twitch.chat$ | async as messages">
+      <ng-container *ngIf="messages.length > 0">
+        <h2>Chat</h2>
+        <div *ngFor="let message of messages" class="message">
+          <div *ngIf="message.command === 'JOIN'">
+            <b class="username">{{message.username}}</b> joined
+          </div>
+          <div *ngIf="message.command === 'PRIVMSG'">
+            <b class="username">{{message.username}}</b>:  {{message.message}}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
