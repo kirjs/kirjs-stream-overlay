@@ -9,6 +9,7 @@ export interface Stream {
   tags: string[];
   date: Timestamp;
   streamDate: string;
+  highlights: string;
 }
 
 export interface UIStream  extends Stream {

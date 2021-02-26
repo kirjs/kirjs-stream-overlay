@@ -35,6 +35,7 @@ export class WaitingService {
       streamDate: 'Сегодня',
       date: firebase.firestore.FieldValue.serverTimestamp() as any,
       description: 'TBD',
+      highlights: '',
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
     });

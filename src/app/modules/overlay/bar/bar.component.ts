@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {interval} from 'rxjs';
+import {Component} from '@angular/core';
+import {combineLatest, interval} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {animate, style, transition, trigger} from "@angular/animations";
+import {WaitingService} from "../../admin/waiting-screen-editor/waiting.service";
 
 @Component({
   selector: 'app-bar',
@@ -24,13 +25,27 @@ import {animate, style, transition, trigger} from "@angular/animations";
     ])
   ]
 })
-export class BarComponent  {
+export class BarComponent {
+  constructor(readonly waitingService: WaitingService) {
+  }
+
   readonly messages = [
     '🏴󠁧󠁢󠁥󠁮󠁧󠁿 🇷🇺 I stream in English, but I speak Russian! Feel free to ask questions in Russian',
-    'Follow us on Clubhouse: @thekiba, @kirjs',
   ];
 
-  readonly selectedSlide$ = interval(15000).pipe(
-    startWith(0),
-    map(i => i % this.messages.length));
+  readonly highlights$ = this.waitingService.latestStream$.pipe(map(
+    stream => stream.highlights.split('\n')
+  ));
+
+  private readonly interval$ = interval(15000).pipe(
+    startWith(0));
+
+  readonly selectedSlide$ = combineLatest(
+    [this.interval$, this.highlights$])
+    .pipe(map(([index, messages]) => {
+      return index % messages.length;
+    }));
+
+
+
 }

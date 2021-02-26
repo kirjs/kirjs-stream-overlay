@@ -31,6 +31,14 @@
       </textarea>
     </label>
   </div>
+  <div class="field">
+    <label>
+      <span class="label">Highlights</span>
+      <textarea type="color" [ngModel]="stream.highlights" (ngModelChange)="updateByPropName(stream, 'highlights', $event)">
+
+      </textarea>
+    </label>
+  </div>
 
   <div>
     <app-waiting-screen></app-waiting-screen>
