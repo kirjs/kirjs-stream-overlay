@@ -29,10 +29,6 @@ export class BarComponent {
   constructor(readonly waitingService: WaitingService) {
   }
 
-  readonly messages = [
-    '🏴󠁧󠁢󠁥󠁮󠁧󠁿 🇷🇺 I stream in English, but I speak Russian! Feel free to ask questions in Russian',
-  ];
-
   readonly highlights$ = this.waitingService.latestStream$.pipe(map(
     stream => stream.highlights.split('\n')
   ));

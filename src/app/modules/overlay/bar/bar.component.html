@@ -2,6 +2,6 @@
 
 <div *ngFor="let message of (highlights$ | async); let i = index">
   <div *ngIf="(selectedSlide$ | async) == i" class="message" @carouselAnimation>
-    {{message}}
+    <div [innerHTML]="message"></div>
   </div>
 </div>
