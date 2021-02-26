@@ -1,0 +1,51 @@
+.wrapper {
+  width: var(--screen-width);
+  height:  var(--screen-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 60px;
+  box-sizing: border-box;
+  color: white;
+  font-size: 60px;
+}
+
+h1 {
+  color: white;
+  font-size: 80px;
+  margin-top: 0;
+  margin-bottom: 80px;
+}
+
+.links {
+  font-size: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.body {
+  height: 100% ;
+  margin-top: 40px;
+  display: flex;
+  .images {
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      margin-bottom: 40px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 20px;
+    }
+  }
+  .description {
+    margin-left: 80px;
+  }
+}
+
+::ng-deep {
+  ul {
+    margin-left: 80px;
+  }
+}

@@ -1,6 +1,4 @@
-::ng-deep :root {
-  --sidebar-size: 350px;
-}
+
 
 
 :host {
@@ -47,7 +45,7 @@ h2 {
   width: var(--sidebar-size);
   height: var(--sidebar-size);
 
-  background: url("dog.png");
+  //background: url("dog.png");
   background-size: cover;
 }
 
@@ -61,11 +59,4 @@ h2 {
 .message {
   font-size: 22px;
   margin-bottom: 8px;
-}
-
-.head {
-  background: url("./5Head-Emote.png.png");
-  width: 200px;
-  height: 200px;
-  background-size: cover;
 }

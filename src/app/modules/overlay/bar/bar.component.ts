@@ -27,8 +27,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 export class BarComponent  {
   readonly messages = [
     '🏴󠁧󠁢󠁥󠁮󠁧󠁿 🇷🇺 I stream in English, but I speak Russian! Feel free to ask questions in Russian',
-    '🔥 Tomorrow, we might be working on a clubhouse web client',
-    '❤️ Please follow me!'
+    'Follow us on Clubhouse: @thekiba, @kirjs',
   ];
 
   readonly selectedSlide$ = interval(15000).pipe(

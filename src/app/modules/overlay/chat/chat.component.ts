@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TwitchClient} from "../../../twitch";
 import {interval, Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {WaitingService} from "../../admin/waiting-screen-editor/waiting.service";
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +14,9 @@ export class ChatComponent implements OnInit {
 
 
 
-  constructor(readonly twitch: TwitchClient) {
+  constructor(
+    readonly waitingService: WaitingService,
+    readonly twitch: TwitchClient) {
 
 
   }

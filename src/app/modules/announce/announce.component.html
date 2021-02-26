@@ -1,0 +1,23 @@
+<div class="wrapper" [style.background]="stream.color" *ngIf="waitingService.latestStream$ | async as stream">
+  <h1 class="screen-title">
+    Стрим: "{{stream.name}}"
+  </h1>
+
+  <div class="body">
+    <div class="images">
+<!--      <img src="/assets/kiba.jpg" class="dog">-->
+      <img src="/assets/kirjs.jpg" class="dog">
+
+    </div>
+    <div class="description" [innerHTML]="stream.description">
+
+    </div>
+  </div>
+
+
+  <div class="links">
+    <div class="twitch">twitch.tv/kirjs</div>
+    <div class="date">{{stream.streamDate}}</div>
+  </div>
+</div>
+

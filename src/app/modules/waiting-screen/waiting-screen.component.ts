@@ -1,25 +1,16 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-
-
-const colors = [
-  '#ba0000',
-  '#1e98ea',
-  '#1f7f43',
-];
-
-const color = colors[Math.floor(Math.random() * colors.length)];
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {WaitingService} from "../admin/waiting-screen-editor/waiting.service";
 
 
 @Component({
   selector: 'app-waiting-screen',
   templateUrl: './waiting-screen.component.html',
-  styleUrls: ['./waiting-screen.component.scss']
+  styleUrls: ['./waiting-screen.component.scss'],
 })
 export class WaitingScreenComponent implements OnInit {
-  @HostBinding('style.background-color')
-  readonly color = color;
-  size: any;
+  constructor(public readonly waitingService: WaitingService) {
 
+  }
 
   ngOnInit(): void {
   }

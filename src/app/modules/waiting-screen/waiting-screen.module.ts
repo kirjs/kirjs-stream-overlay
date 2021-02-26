@@ -5,9 +5,12 @@ import { WaitingScreenComponent } from './waiting-screen.component';
 
 
 @NgModule({
-  declarations: [WaitingScreenComponent],
-  imports: [
-    CommonModule
-  ]
+    declarations: [WaitingScreenComponent],
+    exports: [
+        WaitingScreenComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class WaitingScreenModule { }
