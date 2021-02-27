@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {combineLatest, interval} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {WaitingService} from "../../admin/waiting-screen-editor/waiting.service";
+import {StreamConfigService} from "../../admin/waiting-screen-editor/stream-config.service";
 
 @Component({
   selector: 'app-bar',
@@ -26,7 +26,7 @@ import {WaitingService} from "../../admin/waiting-screen-editor/waiting.service"
   ]
 })
 export class BarComponent {
-  constructor(readonly waitingService: WaitingService) {
+  constructor(readonly waitingService: StreamConfigService) {
   }
 
   readonly highlights$ = this.waitingService.latestStream$.pipe(map(

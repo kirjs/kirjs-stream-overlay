@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {OverlayModule} from './modules/overlay/overlay.module';
 import {RouterModule} from '@angular/router';
 import {AdminModule} from './modules/admin/admin.module';
-import {WaitingService} from './modules/admin/waiting-screen-editor/waiting.service';
+import {StreamConfigService} from './modules/admin/waiting-screen-editor/stream-config.service';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -37,7 +37,7 @@ const firebaseConfig = {
     OverlayModule,
     BarModule
   ],
-  providers: [WaitingService],
+  providers: [StreamConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

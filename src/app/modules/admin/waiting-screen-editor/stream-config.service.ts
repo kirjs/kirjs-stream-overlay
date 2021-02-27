@@ -12,7 +12,7 @@ const colors = [
 ];
 
 @Injectable({providedIn: 'root'})
-export class WaitingService {
+export class StreamConfigService {
 
   constructor(readonly firestore: AngularFirestore) {
   }

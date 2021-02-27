@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {WaitingService} from './waiting.service';
+import {StreamConfigService} from './stream-config.service';
 import {UIStream} from "./types";
 import {BehaviorSubject, combineLatest} from "rxjs";
 import {first, map, take} from "rxjs/operators";
@@ -12,7 +12,7 @@ import domtoimage from 'dom-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitingScreenEditorComponent {
-  constructor(readonly waitingService: WaitingService) {
+  constructor(readonly waitingService: StreamConfigService) {
   }
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(undefined);

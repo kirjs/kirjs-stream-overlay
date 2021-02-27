@@ -1,5 +1,5 @@
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
-import {WaitingService} from "../admin/waiting-screen-editor/waiting.service";
+import {StreamConfigService} from "../admin/waiting-screen-editor/stream-config.service";
 
 
 @Component({
@@ -8,7 +8,7 @@ import {WaitingService} from "../admin/waiting-screen-editor/waiting.service";
   styleUrls: ['./waiting-screen.component.scss'],
 })
 export class WaitingScreenComponent implements OnInit {
-  constructor(public readonly waitingService: WaitingService) {
+  constructor(public readonly waitingService: StreamConfigService) {
 
   }
 
