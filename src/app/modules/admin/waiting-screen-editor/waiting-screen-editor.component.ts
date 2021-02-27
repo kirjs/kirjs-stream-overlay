@@ -12,7 +12,7 @@ import domtoimage from 'dom-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitingScreenEditorComponent {
-  constructor(readonly waitingService: StreamConfigService) {}
+  constructor(readonly streamConfigService: StreamConfigService) {}
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
     undefined,
@@ -20,7 +20,7 @@ export class WaitingScreenEditorComponent {
 
   readonly selectedStreamKey$ = combineLatest([
     this.selectedStreamKey,
-    this.waitingService.allStreams$.pipe(first()),
+    this.streamConfigService.allStreams$.pipe(first()),
   ]).pipe(
     map(([selectedStreamKey, allStreams]) => {
       return selectedStreamKey || allStreams[0]?.key;
@@ -28,7 +28,7 @@ export class WaitingScreenEditorComponent {
   );
 
   readonly currentStream$ = combineLatest([
-    this.waitingService.allStreams$,
+    this.streamConfigService.allStreams$,
     this.selectedStreamKey$,
   ]).pipe(
     map(([allStreams, key]) => {
@@ -37,7 +37,7 @@ export class WaitingScreenEditorComponent {
   );
 
   addNewStream(): void {
-    this.waitingService.addNewStream();
+    this.streamConfigService.addNewStream();
   }
 
   trackByKey(i: number, object: UIStream): string {
@@ -45,15 +45,15 @@ export class WaitingScreenEditorComponent {
   }
 
   updateStreamName(stream: UIStream, name: string): void {
-    this.waitingService.updateStream({ ...stream, name });
+    this.streamConfigService.updateStream({ ...stream, name });
   }
 
   updateStreamColor(stream: UIStream, color: string): void {
-    this.waitingService.updateStream({ ...stream, color });
+    this.streamConfigService.updateStream({ ...stream, color });
   }
 
   updateByPropName(stream: UIStream, name: string, value: string): void {
-    this.waitingService.updateStream({ ...stream, [name]: value });
+    this.streamConfigService.updateStream({ ...stream, [name]: value });
   }
 
   updateStreamDate(stream: UIStream, streamDate: any): void {
@@ -61,17 +61,22 @@ export class WaitingScreenEditorComponent {
   }
 
   updateStreamDescription(stream: UIStream, description: any): void {
-    this.waitingService.updateStream({ ...stream, description });
+    this.streamConfigService.updateStream({ ...stream, description });
   }
 
-  async downloadImage(el: HTMLDivElement) {
+  async downloadImage(el: HTMLDivElement): Promise<void> {
     const image = await domtoimage.toPng(el);
     const link = document.createElement('a');
     link.download = 'my-image-name.jpeg';
     link.href = image;
     link.click();
-    console.log(domtoimage);
   }
 
-  deleteStream() {}
+  deleteStream(key: string) {
+    this.streamConfigService.deleteStream(key);
+  }
+
+  duplicateStream(stream: UIStream) {
+    this.streamConfigService.duplicateStream(stream);
+  }
 }

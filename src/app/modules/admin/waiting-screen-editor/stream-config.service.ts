@@ -41,4 +41,14 @@ export class StreamConfigService {
   updateStream(doc: UIStream): void {
     this.streams.doc(doc.key).set(doc);
   }
+
+  deleteStream(key: string) {
+    this.streams.doc(key).delete();
+  }
+
+  duplicateStream(stream: UIStream) {
+    this.streams.add({
+      ...stream,
+    } as any);
+  }
 }

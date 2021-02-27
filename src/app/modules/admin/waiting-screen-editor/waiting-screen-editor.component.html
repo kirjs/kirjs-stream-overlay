@@ -3,7 +3,7 @@
   <div class="streams">
     <ng-container
       *ngFor="
-        let stream of waitingService.allStreams$ | async;
+        let stream of streamConfigService.allStreams$ | async;
         trackBy: trackByKey
       "
     >
@@ -90,7 +90,8 @@
     <div style="margin-top: 20px">
       <app-announce [stream]="stream"></app-announce>
     </div>
-    <button (click)="deleteStream()">Delete stream</button>
+    <button (click)="deleteStream(stream.key)">Delete stream</button>
+    <button (click)="duplicateStream(stream)">Duplicate stream</button>
   </div>
 </div>
 <button (click)="addNewStream()">Add new stream</button>
