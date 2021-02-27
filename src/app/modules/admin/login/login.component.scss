@@ -1,11 +1,16 @@
 :host {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 8px 16px;
   box-shadow: #ddd 0 0 4px 1px;
   margin-bottom: 12px;
-
 }
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
 .logged-in {
   display: flex;
   align-items: center;

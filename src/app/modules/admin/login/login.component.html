@@ -1,6 +1,12 @@
-<div *ngIf="auth.user | async as user; else showLogin" class="logged-in">
-  <img [src]="user.photoURL">{{user.uid}}<button mat-button (click)="logout()">Logout</button>
+<header>
+  <h1>🐶 Den_dp</h1>
+</header>
+<div class="login">
+  <div *ngIf="auth.user | async as user; else showLogin" class="logged-in">
+    <img [src]="user.photoURL">{{user.uid}}
+    <button mat-button (click)="logout()">Logout</button>
+  </div>
+  <ng-template #showLogin>
+    <button (click)="login()">Login</button>
+  </ng-template>
 </div>
-<ng-template #showLogin>
-  <button (click)="login()">Login</button>
-</ng-template>
