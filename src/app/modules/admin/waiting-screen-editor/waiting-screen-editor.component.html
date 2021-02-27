@@ -13,7 +13,7 @@
     <div class="field">
       <label>
         <span class="label">Name</span>
-        <input type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
+        <input class="name-input" type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
       </label>
     </div>
     <div class="field">
@@ -58,6 +58,7 @@
     <div style="margin-top: 20px;">
       <app-announce [stream]="stream"></app-announce>
     </div>
+    <button (click)="deleteStream()">Delete stream</button>
   </div>
 </div>
 <button (click)="addNewStream()">Add new stream</button>

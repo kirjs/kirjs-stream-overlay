@@ -73,4 +73,9 @@ export class WaitingScreenEditorComponent {
     link.click();
     console.log(domtoimage);
   }
+
+  deleteStream() {
+
+
+  }
 }
