@@ -21,8 +21,18 @@
 
   <div *ngIf="currentStream$ | async as stream" class="stream-config">
     <div class="stream-controls">
-      <button (click)="deleteStream(stream.key)">Delete stream</button>
-      <button (click)="duplicateStream(stream)">Duplicate stream</button>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deleteStream(stream.key)">
+          Delete stream
+        </button>
+        <button mat-menu-item (click)="duplicateStream(stream)">
+          Duplicate stream
+        </button>
+      </mat-menu>
     </div>
     <div class="field">
       <label>
