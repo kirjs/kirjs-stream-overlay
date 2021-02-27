@@ -1,18 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {WaitingService} from "../admin/waiting-screen-editor/waiting.service";
+import {Component, Input} from '@angular/core';
+import {UIStream} from "../admin/waiting-screen-editor/types";
 
 @Component({
   selector: 'app-announce',
   templateUrl: './announce.component.html',
   styleUrls: ['./announce.component.scss']
 })
-export class AnnounceComponent implements OnInit {
+export class AnnounceComponent {
+  @Input() stream!: UIStream;
 
-  constructor(public readonly waitingService: WaitingService) {
+  constructor() {
 
-  }
-
-  ngOnInit(): void {
   }
 
 }

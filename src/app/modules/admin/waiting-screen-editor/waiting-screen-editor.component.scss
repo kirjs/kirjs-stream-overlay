@@ -1,3 +1,22 @@
+:host {
+  display: flex;
+}
+
+
+.streams {
+  padding: 16px;
+
+  .stream {
+    margin-bottom: 20px;
+
+    app-announce {
+      zoom: 0.1;
+
+      display: block;
+    }
+  }
+
+}
 
 app-waiting-screen {
   zoom: 0.2;

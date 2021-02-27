@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import firebase from 'firebase';
 import {Stream, UIStream} from './types';
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 const colors = [
@@ -10,7 +10,6 @@ const colors = [
   '#1e98ea',
   '#1f7f43',
 ];
-
 
 @Injectable({providedIn: 'root'})
 export class WaitingService {
@@ -20,6 +19,8 @@ export class WaitingService {
 
   private readonly streams =
     this.firestore.collection<Stream>('streams');
+
+  readonly allStreams$ = this.firestore.collection<UIStream>('streams').valueChanges({idField: 'key'});
 
   readonly latestStream$: Observable<UIStream> = this.firestore.collection<UIStream>('streams', ref =>
     ref.orderBy('date', 'desc')

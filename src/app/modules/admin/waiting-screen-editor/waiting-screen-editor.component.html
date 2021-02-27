@@ -1,8 +1,12 @@
-<div *ngIf="waitingService.latestStream$ | async as stream">
+<div class="streams">
+  <div class="stream" *ngFor="let stream of (waitingService.allStreams$ | async)">
+    <app-announce (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
+  </div>
+</div>
+<div *ngIf="currentStream$ | async as stream">
   <div class="field">
     <label>
       <span class="label">Name</span>
-
       <input type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
     </label>
   </div>
@@ -44,7 +48,7 @@
     <app-waiting-screen></app-waiting-screen>
   </div>
   <div style="margin-top: 20px;">
-    <app-announce></app-announce>
+    <app-announce [stream]="stream"></app-announce>
   </div>
   <button (click)="addNewStream()">Add new stream</button>
 </div>

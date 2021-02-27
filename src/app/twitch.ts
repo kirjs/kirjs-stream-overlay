@@ -2,39 +2,34 @@ import {Api, Chat} from 'twitch-js';
 import {Injectable} from '@angular/core';
 import {combineLatest, interval, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-
+import {ApiToken, clientId, token, userId, username} from './tokens';
 
 
 @Injectable({providedIn: 'root'})
 export class TwitchClient {
-  readonly username = 'kirjs';
+
   readonly timeout = 120000;
-  readonly token = 'xcdg6m9as2rk5v94b2mtl49adz4so1';
+  readonly token = token;
   readonly now$ = interval(1000).pipe(map(() => Date.now()));
 
   // TODO(kirjs): Get the latest follower.
   readonly api$ = new Observable<any[]>(subscriber => {
-    const token = this.token;
-    const username = this.username;
-
     async function start(): Promise<void> {
       const api = new Api({
-        token,
+        token: ApiToken,
+        clientId,
         log: {level: 'warn'}
       });
 
       const follows = await api.get(`users/follows`,
-        {search: {to_id: username}}
+        {search: {to_id: userId, limit: 3}}
       );
-
     }
 
     start();
-  });
+  }).subscribe();
 
   readonly messages$ = new Observable<any[]>(subscriber => {
-    const username = this.username;
-    const token = this.token;
     const timeout = this.timeout;
 
     async function start(): Promise<void> {
