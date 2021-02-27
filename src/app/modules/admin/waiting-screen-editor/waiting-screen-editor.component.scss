@@ -1,7 +1,10 @@
-:host {
+.wrapper {
   display: flex;
 }
 
+input[type=text] {
+  width: 100%;
+}
 
 .streams {
   padding: 16px;
@@ -11,11 +14,9 @@
 
     app-announce {
       zoom: 0.1;
-
       display: block;
     }
   }
-
 }
 
 app-waiting-screen {

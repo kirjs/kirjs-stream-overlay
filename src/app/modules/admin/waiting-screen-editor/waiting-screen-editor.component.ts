@@ -3,7 +3,7 @@ import {WaitingService} from './waiting.service';
 import {UIStream} from "./types";
 import {BehaviorSubject, combineLatest} from "rxjs";
 import {map} from "rxjs/operators";
-
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'app-waiting-screen-editor',
@@ -53,5 +53,15 @@ export class WaitingScreenEditorComponent {
 
   updateStreamDescription(stream: UIStream, description: any): void {
     this.waitingService.updateStream({...stream, description});
+  }
+
+  async downloadImage(el: HTMLDivElement) {
+
+    const image = await domtoimage.toPng(el);
+    const link = document.createElement('a');
+    link.download = 'my-image-name.jpeg';
+    link.href = image;
+    link.click();
+    console.log(domtoimage);
   }
 }

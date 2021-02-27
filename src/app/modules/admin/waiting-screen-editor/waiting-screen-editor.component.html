@@ -1,54 +1,59 @@
-<div class="streams">
-  <div class="stream" *ngFor="let stream of (waitingService.allStreams$ | async)">
-    <app-announce (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
+<app-login></app-login>
+<div class="wrapper">
+  <div class="streams">
+    <div class="stream" *ngFor="let stream of (waitingService.allStreams$ | async)">
+      <app-announce (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
+    </div>
   </div>
-</div>
-<div *ngIf="currentStream$ | async as stream">
-  <div class="field">
-    <label>
-      <span class="label">Name</span>
-      <input type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
-    </label>
-  </div>
-  <div class="field">
-    <label>
-      <span class="label">Color</span>
-      <input type="color" [ngModel]="stream.color" (ngModelChange)="updateByPropName(stream, 'color', $event)">
-    </label>
-  </div>
-  <div class="field">
-    <label>
-      <span class="label">Color</span>
-      <input type="color" [ngModel]="stream.fontColor" (ngModelChange)="updateByPropName(stream, 'fontColor', $event)">
-    </label>
-  </div>
-  <div class="field">
-    <label>
-      <span class="label">Date</span>
-      <input type="text" [ngModel]="stream.streamDate" (ngModelChange)="updateStreamDate(stream, $event)">
-    </label>
-  </div>
-  <div class="field">
-    <label>
-      <span class="label">Description</span>
-      <textarea type="color" [ngModel]="stream.description" (ngModelChange)="updateStreamDescription(stream, $event)">
+  <div *ngIf="currentStream$ | async as stream">
+    <div class="field">
+      <label>
+        <span class="label">Name</span>
+        <input type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Color</span>
+        <input type="color" [ngModel]="stream.color" (ngModelChange)="updateByPropName(stream, 'color', $event)">
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Color</span>
+        <input type="color" [ngModel]="stream.fontColor"
+               (ngModelChange)="updateByPropName(stream, 'fontColor', $event)">
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Date</span>
+        <input type="text" [ngModel]="stream.streamDate" (ngModelChange)="updateStreamDate(stream, $event)">
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Description</span>
+        <textarea type="color" [ngModel]="stream.description" (ngModelChange)="updateStreamDescription(stream, $event)">
       </textarea>
-    </label>
-  </div>
-  <div class="field">
-    <label>
-      <span class="label">Highlights</span>
-      <textarea type="color" [ngModel]="stream.highlights" (ngModelChange)="updateByPropName(stream, 'highlights', $event)">
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Highlights</span>
+        <textarea type="color" [ngModel]="stream.highlights"
+                  (ngModelChange)="updateByPropName(stream, 'highlights', $event)">
 
       </textarea>
-    </label>
-  </div>
+      </label>
+    </div>
 
-  <div>
-    <app-waiting-screen></app-waiting-screen>
+    <div>
+      <app-waiting-screen></app-waiting-screen>
+    </div>
+    <div style="margin-top: 20px;">
+      <app-announce [stream]="stream"></app-announce>
+    </div>
+    <button (click)="addNewStream()">Add new stream</button>
   </div>
-  <div style="margin-top: 20px;">
-    <app-announce [stream]="stream"></app-announce>
-  </div>
-  <button (click)="addNewStream()">Add new stream</button>
 </div>

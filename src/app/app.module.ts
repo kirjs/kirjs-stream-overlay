@@ -6,20 +6,18 @@ import { AppComponent } from './app.component';
 import {ChatModule} from './modules/overlay/chat/chat.module';
 import {BarModule} from './modules/overlay/bar/bar.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {OverlayModule} from "./modules/overlay/overlay.module";
-import {RouterModule} from "@angular/router";
-import {AdminModule} from "./modules/admin/admin.module";
-import {WaitingService} from "./modules/admin/waiting-screen-editor/waiting.service";
+import {OverlayModule} from './modules/overlay/overlay.module';
+import {RouterModule} from '@angular/router';
+import {AdminModule} from './modules/admin/admin.module';
+import {WaitingService} from './modules/admin/waiting-screen-editor/waiting.service';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyC_Zyq9Ve1SrbenuN0iDlDd4hQvTIlruP8',
-  authDomain: 'kirjs-c884f.firebaseapp.com',
-  databaseURL: 'https://kirjs-c884f.firebaseio.com',
-  projectId: 'kirjs-c884f',
-  storageBucket: 'kirjs-c884f.appspot.com',
-  messagingSenderId: '651206687896',
-  appId: '1:651206687896:web:3df45fa9e636bb5882a4ed',
-  measurementId: 'G-3B7YEC4QG7'
+  apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
+  authDomain: 'kirjs-stream-overlay.firebaseapp.com',
+  projectId: 'kirjs-stream-overlay',
+  storageBucket: 'kirjs-stream-overlay.appspot.com',
+  messagingSenderId: '703581438271',
+  appId: '1:703581438271:web:b0a3b0a4e621115453d38a'
 };
 
 @NgModule({
