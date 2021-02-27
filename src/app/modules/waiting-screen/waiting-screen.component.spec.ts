@@ -8,9 +8,8 @@ describe('WaitingScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WaitingScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [WaitingScreenComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

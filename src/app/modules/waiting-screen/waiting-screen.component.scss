@@ -1,6 +1,6 @@
 .wrapper {
   width: var(--screen-width);
-  height:  var(--screen-height);
+  height: var(--screen-height);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +14,6 @@
   height: 400px;
   margin: auto;
   display: block;
-
 }
 .screen-title {
   font-size: 100px;
@@ -22,7 +21,6 @@
 
 .starts-soon {
   font-size: 50px;
-
 }
 
 .tags {
@@ -30,8 +28,8 @@
   width: 100%;
   display: flex;
 
-
-  li, ul {
+  li,
+  ul {
     list-style: none;
     padding: 0;
     margin: 0;

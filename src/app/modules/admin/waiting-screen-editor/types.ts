@@ -12,6 +12,6 @@ export interface Stream {
   highlights: string;
 }
 
-export interface UIStream  extends Stream {
+export interface UIStream extends Stream {
   key: string;
 }

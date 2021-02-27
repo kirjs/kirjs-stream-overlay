@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase';
 import { Stream, UIStream } from './types';
-import { map, ofogogo } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Observable } from 'rxjs';
 

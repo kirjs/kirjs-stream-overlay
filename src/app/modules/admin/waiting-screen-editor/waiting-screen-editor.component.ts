@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {StreamConfigService} from './stream-config.service';
-import {UIStream} from "./types";
-import {BehaviorSubject, combineLatest} from "rxjs";
-import {first, map, take} from "rxjs/operators";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { StreamConfigService } from './stream-config.service';
+import { UIStream } from './types';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { first, map, take } from 'rxjs/operators';
 import domtoimage from 'dom-to-image';
 
 @Component({
@@ -12,28 +12,29 @@ import domtoimage from 'dom-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitingScreenEditorComponent {
-  constructor(readonly waitingService: StreamConfigService) {
-  }
+  constructor(readonly waitingService: StreamConfigService) {}
 
-  readonly selectedStreamKey = new BehaviorSubject<string | undefined>(undefined);
+  readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
+    undefined,
+  );
 
-  readonly selectedStreamKey$ = combineLatest(
-    [
-      this.selectedStreamKey,
-      this.waitingService.allStreams$
-        .pipe(first())
-    ])
-    .pipe(map(([selectedStreamKey, allStreams]) => {
+  readonly selectedStreamKey$ = combineLatest([
+    this.selectedStreamKey,
+    this.waitingService.allStreams$.pipe(first()),
+  ]).pipe(
+    map(([selectedStreamKey, allStreams]) => {
       return selectedStreamKey || allStreams[0]?.key;
-    }));
+    }),
+  );
 
   readonly currentStream$ = combineLatest([
     this.waitingService.allStreams$,
-    this.selectedStreamKey$
-  ]).pipe(map(([allStreams, key]) => {
+    this.selectedStreamKey$,
+  ]).pipe(
+    map(([allStreams, key]) => {
       return allStreams.find(stream => stream.key === key);
-    }
-  ));
+    }),
+  );
 
   addNewStream(): void {
     this.waitingService.addNewStream();
@@ -44,28 +45,26 @@ export class WaitingScreenEditorComponent {
   }
 
   updateStreamName(stream: UIStream, name: string): void {
-    this.waitingService.updateStream({...stream, name});
+    this.waitingService.updateStream({ ...stream, name });
   }
 
   updateStreamColor(stream: UIStream, color: string): void {
-    this.waitingService.updateStream({...stream, color});
+    this.waitingService.updateStream({ ...stream, color });
   }
 
   updateByPropName(stream: UIStream, name: string, value: string): void {
-    this.waitingService.updateStream({...stream, [name]: value});
+    this.waitingService.updateStream({ ...stream, [name]: value });
   }
 
   updateStreamDate(stream: UIStream, streamDate: any): void {
     this.updateByPropName(stream, 'streamDate', streamDate);
-
   }
 
   updateStreamDescription(stream: UIStream, description: any): void {
-    this.waitingService.updateStream({...stream, description});
+    this.waitingService.updateStream({ ...stream, description });
   }
 
   async downloadImage(el: HTMLDivElement) {
-
     const image = await domtoimage.toPng(el);
     const link = document.createElement('a');
     link.download = 'my-image-name.jpeg';
@@ -74,8 +73,5 @@ export class WaitingScreenEditorComponent {
     console.log(domtoimage);
   }
 
-  deleteStream() {
-
-
-  }
+  deleteStream() {}
 }

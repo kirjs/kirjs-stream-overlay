@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {combineLatest, interval} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {animate, style, transition, trigger} from "@angular/animations";
-import {StreamConfigService} from "../../admin/waiting-screen-editor/stream-config.service";
+import { Component } from '@angular/core';
+import { combineLatest, interval } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { StreamConfigService } from '../../admin/waiting-screen-editor/stream-config.service';
 
 @Component({
   selector: 'app-bar',
@@ -11,37 +11,37 @@ import {StreamConfigService} from "../../admin/waiting-screen-editor/stream-conf
   animations: [
     trigger('carouselAnimation', [
       transition('void => *', [
-        style({top: 100}),
-        animate('200ms', style({top: 0}))
+        style({ top: 100 }),
+        animate('200ms', style({ top: 0 })),
       ]),
       transition('* => void', [
-        style({opacity: 0.8}),
-        animate('300ms', style({
-          top: -100,
-          opacity: 0,
-        })),
-
-      ])
-    ])
-  ]
+        style({ opacity: 0.8 }),
+        animate(
+          '300ms',
+          style({
+            top: -100,
+            opacity: 0,
+          }),
+        ),
+      ]),
+    ]),
+  ],
 })
 export class BarComponent {
-  constructor(readonly waitingService: StreamConfigService) {
-  }
+  constructor(readonly waitingService: StreamConfigService) {}
 
-  readonly highlights$ = this.waitingService.latestStream$.pipe(map(
-    stream => stream.highlights.split('\n')
-  ));
+  readonly highlights$ = this.waitingService.latestStream$.pipe(
+    map(stream => stream.highlights.split('\n')),
+  );
 
-  private readonly interval$ = interval(15000).pipe(
-    startWith(0));
+  private readonly interval$ = interval(15000).pipe(startWith(0));
 
-  readonly selectedSlide$ = combineLatest(
-    [this.interval$, this.highlights$])
-    .pipe(map(([index, messages]) => {
+  readonly selectedSlide$ = combineLatest([
+    this.interval$,
+    this.highlights$,
+  ]).pipe(
+    map(([index, messages]) => {
       return index % messages.length;
-    }));
-
-
-
+    }),
+  );
 }

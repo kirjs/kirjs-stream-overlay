@@ -1,10 +1,20 @@
 <app-login></app-login>
 <div class="wrapper">
   <div class="streams">
-    <ng-container *ngFor="let stream of (waitingService.allStreams$ | async); trackBy: trackByKey">
-      <div [class.selected]="(selectedStreamKey$ | async) === stream.key"  class="stream">
+    <ng-container
+      *ngFor="
+        let stream of waitingService.allStreams$ | async;
+        trackBy: trackByKey
+      "
+    >
+      <div
+        [class.selected]="(selectedStreamKey$ | async) === stream.key"
+        class="stream"
+      >
         <app-announce
-          (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
+          (click)="selectedStreamKey.next(stream.key)"
+          [stream]="stream"
+        ></app-announce>
       </div>
     </ng-container>
   </div>
@@ -13,49 +23,71 @@
     <div class="field">
       <label>
         <span class="label">Name</span>
-        <input class="name-input" type="text" [ngModel]="stream.name" (ngModelChange)="updateStreamName(stream, $event)">
+        <input
+          class="name-input"
+          type="text"
+          [ngModel]="stream.name"
+          (ngModelChange)="updateStreamName(stream, $event)"
+        />
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Color</span>
-        <input type="color" [ngModel]="stream.color" (ngModelChange)="updateByPropName(stream, 'color', $event)">
+        <input
+          type="color"
+          [ngModel]="stream.color"
+          (ngModelChange)="updateByPropName(stream, 'color', $event)"
+        />
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Color</span>
-        <input type="color" [ngModel]="stream.fontColor"
-               (ngModelChange)="updateByPropName(stream, 'fontColor', $event)">
+        <input
+          type="color"
+          [ngModel]="stream.fontColor"
+          (ngModelChange)="updateByPropName(stream, 'fontColor', $event)"
+        />
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Date</span>
-        <input type="text" [ngModel]="stream.streamDate" (ngModelChange)="updateStreamDate(stream, $event)">
+        <input
+          type="text"
+          [ngModel]="stream.streamDate"
+          (ngModelChange)="updateStreamDate(stream, $event)"
+        />
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Description</span>
-        <textarea type="color" [ngModel]="stream.description" (ngModelChange)="updateStreamDescription(stream, $event)">
-      </textarea>
+        <textarea
+          type="color"
+          [ngModel]="stream.description"
+          (ngModelChange)="updateStreamDescription(stream, $event)"
+        >
+        </textarea>
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Highlights</span>
-        <textarea type="color" [ngModel]="stream.highlights"
-                  (ngModelChange)="updateByPropName(stream, 'highlights', $event)">
-
-      </textarea>
+        <textarea
+          type="color"
+          [ngModel]="stream.highlights"
+          (ngModelChange)="updateByPropName(stream, 'highlights', $event)"
+        >
+        </textarea>
       </label>
     </div>
 
     <div>
       <app-waiting-screen></app-waiting-screen>
     </div>
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 20px">
       <app-announce [stream]="stream"></app-announce>
     </div>
     <button (click)="deleteStream()">Delete stream</button>

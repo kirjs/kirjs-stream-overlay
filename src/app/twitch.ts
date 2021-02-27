@@ -1,13 +1,11 @@
-import {Api, Chat} from 'twitch-js';
-import {Injectable} from '@angular/core';
-import {combineLatest, interval, Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {ApiToken, clientId, token, userId, username} from './tokens';
+import { Api, Chat } from 'twitch-js';
+import { Injectable } from '@angular/core';
+import { combineLatest, interval, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiToken, clientId, token, userId, username } from './tokens';
 
-
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class TwitchClient {
-
   readonly timeout = 120000;
   readonly token = token;
   readonly now$ = interval(1000).pipe(map(() => Date.now()));
@@ -18,12 +16,12 @@ export class TwitchClient {
       const api = new Api({
         token: ApiToken,
         clientId,
-        log: {level: 'warn'}
+        log: { level: 'warn' },
       });
 
-      const follows = await api.get(`users/follows`,
-        {search: {to_id: userId, limit: 3}}
-      );
+      const follows = await api.get(`users/follows`, {
+        search: { to_id: userId, limit: 3 },
+      });
     }
 
     start();
@@ -36,7 +34,7 @@ export class TwitchClient {
       const chat = new Chat({
         username,
         token,
-        log: {level: 'warn'}
+        log: { level: 'warn' },
       });
 
       let messages: any[] = [];
@@ -51,7 +49,6 @@ export class TwitchClient {
         }
       });
 
-
       await chat.connect();
       await chat.join('kirjs');
     }
@@ -59,10 +56,9 @@ export class TwitchClient {
     start();
   });
 
-  readonly chat$ = combineLatest([this.messages$, this.now$]).pipe(map(([messages, now]) => {
-    return messages.filter(m => now - m.timestamp < this.timeout);
-  }));
-
+  readonly chat$ = combineLatest([this.messages$, this.now$]).pipe(
+    map(([messages, now]) => {
+      return messages.filter(m => now - m.timestamp < this.timeout);
+    }),
+  );
 }
-
-

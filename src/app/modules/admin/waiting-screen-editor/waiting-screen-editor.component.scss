@@ -6,7 +6,7 @@
   font-size: 20px;
 }
 
-input[type=text] {
+input[type='text'] {
   width: 100%;
 }
 
@@ -16,7 +16,6 @@ input[type=text] {
   .stream {
     margin-bottom: 20px;
     opacity: 0.8;
-
 
     &.selected {
       opacity: 1;
@@ -55,5 +54,3 @@ textarea {
   width: 400px;
   height: 120px;
 }
-
-
