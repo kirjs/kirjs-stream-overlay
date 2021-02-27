@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  box-shadow: #ddd 0 0 4px 1px;
+  margin-bottom: 12px;
+
+}
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
