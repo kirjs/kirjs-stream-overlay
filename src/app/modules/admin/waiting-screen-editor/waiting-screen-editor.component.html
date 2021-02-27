@@ -19,7 +19,11 @@
     </ng-container>
   </div>
 
-  <div *ngIf="currentStream$ | async as stream">
+  <div *ngIf="currentStream$ | async as stream" class="stream-config">
+    <div class="stream-controls">
+      <button (click)="deleteStream(stream.key)">Delete stream</button>
+      <button (click)="duplicateStream(stream)">Duplicate stream</button>
+    </div>
     <div class="field">
       <label>
         <span class="label">Name</span>
@@ -83,6 +87,17 @@
         </textarea>
       </label>
     </div>
+    <div class="field">
+      <label>
+        <span class="label">Promo text</span>
+        <textarea
+          type="color"
+          [ngModel]="stream.promoText"
+          (ngModelChange)="updateByPropName(stream, 'promoText', $event)"
+        >
+        </textarea>
+      </label>
+    </div>
 
     <div>
       <app-waiting-screen></app-waiting-screen>
@@ -90,8 +105,6 @@
     <div style="margin-top: 20px">
       <app-announce [stream]="stream"></app-announce>
     </div>
-    <button (click)="deleteStream(stream.key)">Delete stream</button>
-    <button (click)="duplicateStream(stream)">Duplicate stream</button>
   </div>
 </div>
 <button (click)="addNewStream()">Add new stream</button>

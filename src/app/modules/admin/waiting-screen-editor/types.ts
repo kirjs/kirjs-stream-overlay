@@ -10,6 +10,7 @@ export interface Stream {
   date: Timestamp;
   streamDate: string;
   highlights: string;
+  promoText: string;
 }
 
 export interface UIStream extends Stream {

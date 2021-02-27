@@ -31,10 +31,11 @@ export class StreamConfigService {
       tags: [],
       streamDate: 'Сегодня',
       date: firebase.firestore.FieldValue.serverTimestamp() as any,
-      description: 'TBD',
+      description: '',
       highlights: '',
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
+      promoText: '',
     });
   }
 
