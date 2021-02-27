@@ -1,10 +1,14 @@
 <app-login></app-login>
 <div class="wrapper">
   <div class="streams">
-    <div class="stream" *ngFor="let stream of (waitingService.allStreams$ | async)">
-      <app-announce (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
-    </div>
+    <ng-container *ngFor="let stream of (waitingService.allStreams$ | async); trackBy: trackByKey">
+      <div [class.selected]="(selectedStreamKey$ | async) === stream.key"  class="stream">
+        <app-announce
+          (click)="selectedStreamKey.next(stream.key)" [stream]="stream"></app-announce>
+      </div>
+    </ng-container>
   </div>
+
   <div *ngIf="currentStream$ | async as stream">
     <div class="field">
       <label>

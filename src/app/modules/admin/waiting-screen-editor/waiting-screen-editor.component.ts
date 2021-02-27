@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {WaitingService} from './waiting.service';
 import {UIStream} from "./types";
 import {BehaviorSubject, combineLatest} from "rxjs";
-import {map} from "rxjs/operators";
+import {first, map, take} from "rxjs/operators";
 import domtoimage from 'dom-to-image';
 
 @Component({
@@ -17,11 +17,21 @@ export class WaitingScreenEditorComponent {
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(undefined);
 
+  readonly selectedStreamKey$ = combineLatest(
+    [
+      this.selectedStreamKey,
+      this.waitingService.allStreams$
+        .pipe(first())
+    ])
+    .pipe(map(([selectedStreamKey, allStreams]) => {
+      return selectedStreamKey || allStreams[0]?.key;
+    }));
+
   readonly currentStream$ = combineLatest([
     this.waitingService.allStreams$,
-    this.selectedStreamKey
+    this.selectedStreamKey$
   ]).pipe(map(([allStreams, key]) => {
-      return allStreams.find(stream => stream.key === key) || allStreams[0];
+      return allStreams.find(stream => stream.key === key);
     }
   ));
 
@@ -32,7 +42,6 @@ export class WaitingScreenEditorComponent {
   trackByKey(i: number, object: UIStream): string {
     return object.key;
   }
-
 
   updateStreamName(stream: UIStream, name: string): void {
     this.waitingService.updateStream({...stream, name});
