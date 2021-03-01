@@ -4,16 +4,11 @@
   [style.color]="stream.fontColor"
   *ngIf="waitingService.latestStream$ | async as stream"
 >
-  <div class="screen-title">
-    {{ stream.name }}
-  </div>
-  <div class="secondary-title">
-    {{ stream.secondaryTitle }}
-  </div>
+  <div class="screen-title">The end</div>
 
   <img src="/assets/dog.png" class="dog" />
 
   <div class="starts-soon">
-    <div class="starts-soon">Starting soon...</div>
+    <div class="starts-soon">Thanks everybody! See you next time!</div>
   </div>
 </div>

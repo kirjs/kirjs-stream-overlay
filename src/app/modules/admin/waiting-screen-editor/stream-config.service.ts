@@ -36,6 +36,7 @@ export class StreamConfigService {
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
       promoText: '',
+      secondaryTitle: '#Angular',
     });
   }
 

@@ -10,6 +10,7 @@ import { OverlayModule } from './modules/overlay/overlay.module';
 import { RouterModule } from '@angular/router';
 import { AdminModule } from './modules/admin/admin.module';
 import { StreamConfigService } from './modules/admin/waiting-screen-editor/stream-config.service';
+import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -31,6 +32,7 @@ const firebaseConfig = {
     AdminModule,
     ChatModule,
     OverlayModule,
+    StreamCompleteModule,
     BarModule,
   ],
   providers: [StreamConfigService],

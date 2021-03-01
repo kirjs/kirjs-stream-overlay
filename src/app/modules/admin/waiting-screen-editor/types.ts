@@ -11,6 +11,7 @@ export interface Stream {
   streamDate: string;
   highlights: string;
   promoText: string;
+  secondaryTitle: string;
 }
 
 export interface UIStream extends Stream {
