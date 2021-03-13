@@ -7,6 +7,7 @@ import { LoginModule } from '../login/login.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [WaitingScreenEditorComponent],
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    FormsModule,
   ],
 })
 export class WaitingScreenEditorModule {}
