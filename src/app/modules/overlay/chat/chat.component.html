@@ -34,7 +34,7 @@
             <b class="username">{{ message.username }}</b> joined
           </div>
           <div *ngIf="message.command === 'PRIVMSG'">
-            <b class="username">{{ message.username }}</b
+            <b class="username" [style.color]="message.tags.color">{{ message.tags.displayName }}</b
             >: {{ message.message }}
           </div>
         </div>
