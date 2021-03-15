@@ -9,6 +9,7 @@ import { StreamCompleteComponent } from './modules/stream-complete/stream-comple
 
 const routes: Routes = [
   { path: 'overlay', component: OverlayComponent },
+  { path: '', redirectTo: '/admin', pathMatch: 'full' },
   { path: 'waiting', component: WaitingScreenComponent },
   { path: 'complete', component: StreamCompleteComponent },
   { path: 'admin', component: WaitingScreenEditorComponent },

@@ -1,0 +1,60 @@
+<script>
+  /**
+   *
+   * @param {number[][]} recs
+   * @returns {number}
+   */
+  function area([x0, y0, x1, y1]) {
+    return Math.abs((x1 - x0) * (y1 - y0));
+  }
+
+  function isIntersecting([x0, y0, x1, y1], [a0, b0, a1, b1]) {
+    return !(a1 <= x0 || a0 >= x1 || b0 >= y1 || b1 <= y0);
+  }
+
+  function diffRect(a, b) {
+    const [x0, y0, x1, y1] = a;
+    const [a0, b0, a1, b1] = b;
+
+    const xs = [...new Set([x0, x1, a0, a1])].sort();
+    const ys = [...new Set([y0, y1, b0, b1])].sort();
+    const result = [];
+
+    for (let x = 0; x < xs.length - 1; x++) {
+      for (let y = 0; y < ys.length - 1; y++) {
+        const rect = [xs[x], ys[y], xs[x + 1], ys[y + 1]];
+        if (isIntersecting(rect, b) && !isIntersecting(rect, a)) {
+          result.push(rect);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  function addRect(rects, rect) {
+    for (const r of rects) {
+      if (isIntersecting(r, rect)) {
+        const diffedRects = diffRect(r, rect);
+        for (const r2 of diffedRects) {
+          addRect(rects, r2);
+        }
+        return rects;
+      }
+    }
+
+    rects.push(rect);
+
+    return rects;
+  }
+
+  function calculate(recs) {
+    console.time('a');
+    const sum = [];
+    recs.forEach(r => addRect(sum, r));
+    const result = sum.map(area).reduce((a, b) => a + b, 0);
+
+    console.timeEnd('a');
+    return result;
+  }
+</script>
