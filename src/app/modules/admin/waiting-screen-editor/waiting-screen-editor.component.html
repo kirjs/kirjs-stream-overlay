@@ -11,6 +11,7 @@
         [class.selected]="(selectedStreamKey$ | async) === stream.key"
         class="stream"
       >
+        <div *ngIf="stream.isCurrent" class="live-small">LIVE</div>
         <app-announce
           (click)="selectedStreamKey.next(stream.key)"
           [stream]="stream"
@@ -21,6 +22,8 @@
 
   <div *ngIf="currentStream$ | async as stream" class="stream-config">
     <div class="stream-controls">
+      <button mat-button (click)="startStream(stream)">Start stream</button>
+
       <button mat-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -34,6 +37,8 @@
         </button>
       </mat-menu>
     </div>
+
+    <div *ngIf="stream.isCurrent" class="live">LIVE</div>
     <div class="field">
       <label>
         <span class="label">Name</span>
@@ -121,7 +126,7 @@
     </div>
 
     <div>
-      <app-waiting-screen></app-waiting-screen>
+      <app-waiting-screen [stream]="stream"></app-waiting-screen>
     </div>
     <div style="margin-top: 20px">
       <app-announce [stream]="stream"></app-announce>

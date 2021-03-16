@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { combineLatest, interval } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { StreamConfigService } from '../../admin/waiting-screen-editor/stream-config.service';
 
@@ -30,8 +30,11 @@ import { StreamConfigService } from '../../admin/waiting-screen-editor/stream-co
 export class BarComponent {
   constructor(readonly waitingService: StreamConfigService) {}
 
-  readonly highlights$ = this.waitingService.latestStream$.pipe(
-    map(stream => stream.highlights.split('\n')),
+  readonly highlights$ = this.waitingService.currentStream$.pipe(
+    filter(stream => !!stream),
+    map(stream => {
+      return stream?.highlights.split('\n') ?? [];
+    }),
   );
 
   private readonly interval$ = interval(15000).pipe(startWith(0));

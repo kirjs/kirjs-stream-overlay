@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StreamConfigService } from './stream-config.service';
 import { UIStream } from './types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { first, map, take } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import domtoimage from 'dom-to-image';
 
 @Component({
@@ -72,11 +72,15 @@ export class WaitingScreenEditorComponent {
     link.click();
   }
 
-  deleteStream(key: string) {
+  deleteStream(key: string): void {
     this.streamConfigService.deleteStream(key);
   }
 
-  duplicateStream(stream: UIStream) {
+  duplicateStream(stream: UIStream): void {
     this.streamConfigService.duplicateStream(stream);
+  }
+
+  startStream(stream: UIStream): void {
+    this.streamConfigService.selectStream(stream.key);
   }
 }

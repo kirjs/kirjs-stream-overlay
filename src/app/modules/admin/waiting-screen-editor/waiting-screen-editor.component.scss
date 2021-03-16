@@ -61,5 +61,17 @@ textarea {
 
 .stream-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+.live {
+  background: #0d920d;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.live-small {
+  background: #0d920d;
+  color: white;
+  padding: 4px 8px;
 }

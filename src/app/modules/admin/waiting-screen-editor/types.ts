@@ -1,6 +1,10 @@
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
 
+export interface StreamConfig {
+  streamId?: string;
+}
+
 export interface Stream {
   name: string;
   description: string;
@@ -16,4 +20,5 @@ export interface Stream {
 
 export interface UIStream extends Stream {
   key: string;
+  isCurrent: boolean;
 }

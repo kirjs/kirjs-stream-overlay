@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { AdminModule } from './modules/admin/admin.module';
 import { StreamConfigService } from './modules/admin/waiting-screen-editor/stream-config.service';
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -25,6 +26,7 @@ const firebaseConfig = {
   declarations: [AppComponent],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,

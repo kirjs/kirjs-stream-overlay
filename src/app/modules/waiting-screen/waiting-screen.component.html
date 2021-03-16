@@ -2,7 +2,7 @@
   class="wrapper"
   [style.background]="stream.color"
   [style.color]="stream.fontColor"
-  *ngIf="waitingService.latestStream$ | async as stream"
+  *ngIf="stream"
 >
   <div class="screen-title">
     {{ stream.name }}
@@ -11,7 +11,7 @@
     {{ stream.secondaryTitle }}
   </div>
 
-  <img src="/assets/dog.png" class="dog" />
+  <img src="/assets/dog.png" class="dog" alt="It's a dog" />
 
   <div class="starts-soon">
     <div class="starts-soon">Starting soon...</div>

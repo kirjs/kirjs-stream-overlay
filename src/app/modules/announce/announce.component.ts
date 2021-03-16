@@ -8,6 +8,4 @@ import { UIStream } from '../admin/waiting-screen-editor/types';
 })
 export class AnnounceComponent {
   @Input() stream!: UIStream;
-
-  constructor() {}
 }

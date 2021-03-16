@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase';
-import { Stream, UIStream } from './types';
-import { map } from 'rxjs/operators';
+import { Stream, StreamConfig, UIStream } from './types';
 
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
@@ -12,18 +12,27 @@ const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 export class StreamConfigService {
   constructor(readonly firestore: AngularFirestore) {}
 
+  private readonly streamConfig = this.firestore
+    .collection('config')
+    .doc<StreamConfig>('stream');
+
   private readonly streams = this.firestore.collection<Stream>('streams');
 
-  readonly allStreams$ = this.firestore
-    .collection<UIStream>('streams')
-    .valueChanges({ idField: 'key' });
+  readonly allStreams$: Observable<UIStream[]> = combineLatest([
+    this.streams.valueChanges({ idField: 'key' }),
+    this.streamConfig.valueChanges(),
+  ]).pipe(
+    map(([streams, streamConfig]) => {
+      return streams.map(stream => ({
+        ...stream,
+        isCurrent: streamConfig?.streamId === stream.key,
+      }));
+    }),
+  );
 
-  readonly latestStream$: Observable<UIStream> = this.firestore
-    .collection<UIStream>('streams', ref =>
-      ref.orderBy('date', 'desc').limit(1),
-    )
-    .valueChanges({ idField: 'key' })
-    .pipe(map(a => a[0] || []));
+  readonly currentStream$ = this.allStreams$.pipe(
+    map(streams => streams.find(stream => stream.isCurrent)),
+  );
 
   addNewStream(): void {
     this.streams.add({
@@ -44,13 +53,17 @@ export class StreamConfigService {
     this.streams.doc(doc.key).set(doc);
   }
 
-  deleteStream(key: string) {
+  deleteStream(key: string): void {
     this.streams.doc(key).delete();
   }
 
-  duplicateStream(stream: UIStream) {
+  duplicateStream(stream: UIStream): void {
     this.streams.add({
       ...stream,
     } as any);
+  }
+
+  selectStream(streamId: string): void {
+    this.streamConfig.set({ streamId });
   }
 }
