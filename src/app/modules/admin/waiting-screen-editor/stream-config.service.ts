@@ -5,12 +5,16 @@ import { Stream, StreamConfig, UIStream } from './types';
 
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TwitchClient } from '../../../twitch';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
 @Injectable({ providedIn: 'root' })
 export class StreamConfigService {
-  constructor(readonly firestore: AngularFirestore) {}
+  constructor(
+    readonly firestore: AngularFirestore,
+    readonly twitchClient: TwitchClient,
+  ) {}
 
   private readonly streamConfig = this.firestore
     .collection('config')
@@ -42,6 +46,7 @@ export class StreamConfigService {
       date: firebase.firestore.FieldValue.serverTimestamp() as any,
       description: '',
       highlights: '',
+      language: 'en',
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
       promoText: '',
@@ -63,7 +68,8 @@ export class StreamConfigService {
     } as any);
   }
 
-  selectStream(streamId: string): void {
-    this.streamConfig.set({ streamId });
+  selectStream(stream: UIStream): void {
+    this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en');
+    this.streamConfig.set({ streamId: stream.key });
   }
 }

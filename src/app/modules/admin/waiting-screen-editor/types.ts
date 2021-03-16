@@ -9,6 +9,7 @@ export interface Stream {
   name: string;
   description: string;
   color: string;
+  language: 'en' | 'ru';
   fontColor: string;
   tags: string[];
   date: Timestamp;

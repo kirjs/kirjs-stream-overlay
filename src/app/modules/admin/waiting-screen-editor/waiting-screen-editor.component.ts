@@ -81,6 +81,6 @@ export class WaitingScreenEditorComponent {
   }
 
   startStream(stream: UIStream): void {
-    this.streamConfigService.selectStream(stream.key);
+    this.streamConfigService.selectStream(stream);
   }
 }

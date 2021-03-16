@@ -41,13 +41,25 @@
     <div *ngIf="stream.isCurrent" class="live">LIVE</div>
     <div class="field">
       <label>
-        <span class="label">Name</span>
+        <span class="label">Title</span>
         <input
           class="name-input"
           type="text"
           [ngModel]="stream.name"
           (ngModelChange)="updateStreamName(stream, $event)"
         />
+      </label>
+    </div>
+    <div class="field">
+      <label>
+        <span class="label">Language</span>
+        <select
+          [ngModel]="stream.language"
+          (ngModelChange)="updateByPropName(stream, 'language', $event)"
+        >
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
       </label>
     </div>
     <div class="field">
@@ -62,7 +74,7 @@
     </div>
     <div class="field">
       <label>
-        <span class="label">Color</span>
+        <span class="label">Font color</span>
         <input
           type="color"
           [ngModel]="stream.fontColor"

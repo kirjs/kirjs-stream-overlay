@@ -12,6 +12,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { StreamConfigService } from './modules/admin/waiting-screen-editor/stream-config.service';
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -29,6 +30,7 @@ const firebaseConfig = {
     AngularFireStorageModule,
     BrowserAnimationsModule,
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     RouterModule,
     AdminModule,
