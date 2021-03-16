@@ -3,7 +3,7 @@ import { StreamConfigService } from '../admin/waiting-screen-editor/stream-confi
 
 @Component({
   template:
-    '<app-waiting-screen [stream]="waitingService.currentStream$ | async"></app-waiting-screen>',
+    '<app-waiting-screen *ngIf="waitingService.currentStream$ | async as stream" [stream]="stream"></app-waiting-screen>',
   styleUrls: ['./waiting-screen.component.scss'],
 })
 export class WaitingScreenWrapperComponent {
