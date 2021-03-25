@@ -41,7 +41,7 @@ h1 {
       height: 220px;
       border-radius: 50%;
       margin-bottom: 40px;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px 20px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px 20px;
     }
   }
   .description {
@@ -49,7 +49,7 @@ h1 {
   }
 }
 
-::ng-deep {
+:host ::ng-deep {
   ul {
     margin-left: 80px;
   }

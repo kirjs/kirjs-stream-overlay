@@ -8,10 +8,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { WysiwygEditorModule } from './wysiwyg-editor/wysiwyg-editor.module';
 
 @NgModule({
   declarations: [WaitingScreenEditorComponent],
   imports: [
+    WysiwygEditorModule,
     CommonModule,
     WaitingScreenModule,
     AnnounceModule,

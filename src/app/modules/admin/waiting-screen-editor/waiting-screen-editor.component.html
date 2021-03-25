@@ -106,34 +106,28 @@
     <div class="field">
       <label>
         <span class="label">Description</span>
-        <textarea
-          type="color"
-          [ngModel]="stream.description"
-          (ngModelChange)="updateStreamDescription(stream, $event)"
-        >
-        </textarea>
+        <app-wysiwyg-editor
+          [html]="stream.description"
+          (changeHtml)="updateByPropName(stream, 'description', $event)"
+        ></app-wysiwyg-editor>
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Highlights</span>
-        <textarea
-          type="color"
-          [ngModel]="stream.highlights"
-          (ngModelChange)="updateByPropName(stream, 'highlights', $event)"
-        >
-        </textarea>
+        <app-wysiwyg-editor
+          [html]="stream.highlights"
+          (changeHtml)="updateByPropName(stream, 'highlights', $event)"
+        ></app-wysiwyg-editor>
       </label>
     </div>
     <div class="field">
       <label>
         <span class="label">Promo text</span>
-        <textarea
-          type="color"
-          [ngModel]="stream.promoText"
-          (ngModelChange)="updateByPropName(stream, 'promoText', $event)"
-        >
-        </textarea>
+        <app-wysiwyg-editor
+          [html]="stream.promoText"
+          (changeHtml)="updateByPropName(stream, 'promoText', $event)"
+        ></app-wysiwyg-editor>
       </label>
     </div>
 

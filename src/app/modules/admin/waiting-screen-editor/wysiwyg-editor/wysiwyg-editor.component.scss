@@ -1,0 +1,9 @@
+@import url('https://cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css');
+@import url('https://cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/themes/default.css');
+
+:host {
+  border: 1px var(--border-color) solid;
+  padding: var(--input-padding);
+  width: 100%;
+  min-height: 4em;
+}
