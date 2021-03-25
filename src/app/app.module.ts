@@ -13,6 +13,7 @@ import { StreamConfigService } from './modules/admin/waiting-screen-editor/strea
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { ApiKeysModule } from './modules/admin/api-keys/api-keys.module';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -38,6 +39,7 @@ const firebaseConfig = {
     OverlayModule,
     StreamCompleteModule,
     BarModule,
+    ApiKeysModule,
   ],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],

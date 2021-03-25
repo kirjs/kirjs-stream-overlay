@@ -1,0 +1,22 @@
+<div *ngFor="let token of tokens$ | async" class="token">
+  <label>
+    <span class="label">{{ token.name }}: </span>
+    <input
+      #val
+      type="text"
+      [ngModel]="token.value"
+      (ngModelChange)="updateToken(token, val.value)"
+    />
+  </label>
+
+  <button mat-icon-button (click)="deleteToken(token)">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+
+<div class="new-token">
+  <label>
+    <input type="text" #newTokenName />
+    <button (click)="createToken(newTokenName.value)">create token</button>
+  </label>
+</div>

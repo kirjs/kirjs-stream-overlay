@@ -5,6 +5,7 @@ import { WaitingScreenEditorComponent } from './modules/admin/waiting-screen-edi
 import { AnnounceComponent } from './modules/announce/announce.component';
 import { StreamCompleteComponent } from './modules/stream-complete/stream-complete.component';
 import { WaitingScreenWrapperComponent } from './modules/waiting-screen/waiting-screen-wrapper.component';
+import { TokensComponent } from './modules/admin/api-keys/tokens.component';
 
 const routes: Routes = [
   { path: 'overlay', component: OverlayComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'waiting', component: WaitingScreenWrapperComponent },
   { path: 'complete', component: StreamCompleteComponent },
   { path: 'admin', component: WaitingScreenEditorComponent },
+  { path: 'admin/keys', component: TokensComponent },
   { path: 'announce', component: AnnounceComponent },
 ];
 
