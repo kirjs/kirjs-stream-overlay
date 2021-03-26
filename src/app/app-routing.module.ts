@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'waiting', component: WaitingScreenWrapperComponent },
   { path: 'complete', component: StreamCompleteComponent },
   { path: 'admin', component: WaitingScreenEditorComponent },
-  { path: 'admin/keys', component: TokensComponent },
+  { path: 'admin/tokens', component: TokensComponent },
   { path: 'announce', component: AnnounceComponent },
 ];
 

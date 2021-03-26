@@ -3,7 +3,7 @@
     <span class="label">{{ token.name }}: </span>
     <input
       #val
-      type="text"
+      type="password"
       [ngModel]="token.value"
       (ngModelChange)="updateToken(token, val.value)"
     />
