@@ -5,6 +5,8 @@ import { TokensComponent } from './api-keys/tokens.component';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
 
 @NgModule({
   declarations: [TokensComponent],
@@ -12,8 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
     WaitingScreenEditorModule,
     CommonModule,
     FormsModule,
+    AdminWrapperModule,
     MatIconModule,
     MatButtonModule,
+    AdminRoutingModule,
   ],
 })
 export class AdminModule {}
