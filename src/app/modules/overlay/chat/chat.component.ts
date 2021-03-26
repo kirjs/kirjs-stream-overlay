@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TwitchClient } from '../../../twitch';
+import { TwitchClient } from '../../admin/services/twitch';
 import { StreamConfigService } from '../../admin/waiting-screen-editor/stream-config.service';
 
 @Component({

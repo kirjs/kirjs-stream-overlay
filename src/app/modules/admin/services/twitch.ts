@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 import { userId, username } from './tokens';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { TokensService } from './modules/admin/api-keys/tokens.service';
+import { TokensService } from '../api-keys/tokens.service';
 
 @Injectable({ providedIn: 'root' })
 export class TwitchClient {

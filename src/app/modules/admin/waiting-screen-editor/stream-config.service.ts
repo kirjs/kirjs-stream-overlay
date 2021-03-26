@@ -5,16 +5,20 @@ import { Stream, StreamConfig, UIStream } from './types';
 
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TwitchClient } from '../../../twitch';
+import { TwitchClient } from '../services/twitch';
+import { YoutubeService } from '../services/youtube.service';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
 @Injectable({ providedIn: 'root' })
 export class StreamConfigService {
   constructor(
-    readonly firestore: AngularFirestore,
-    readonly twitchClient: TwitchClient,
-  ) {}
+    private readonly firestore: AngularFirestore,
+    private readonly twitchClient: TwitchClient,
+    private readonly youtubeService: YoutubeService,
+  ) {
+    youtubeService.getLiveStreams();
+  }
 
   private readonly streamConfig = this.firestore
     .collection('config')

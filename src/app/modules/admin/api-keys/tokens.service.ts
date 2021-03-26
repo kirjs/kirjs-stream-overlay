@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, take, takeUntil, tap } from 'rxjs/operators';
+import { map, shareReplay, take, takeUntil, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 export interface Token {
@@ -56,6 +56,8 @@ export class TokensService {
           throw new Error(`token ${name} is missing`);
         }
       }),
+      take(1),
+      shareReplay(1),
     );
   }
 }
