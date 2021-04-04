@@ -24,7 +24,9 @@ export class StreamConfigService {
     .collection('config')
     .doc<StreamConfig>('stream');
 
-  private readonly streams = this.firestore.collection<Stream>('streams');
+  private readonly streams = this.firestore.collection<Stream>('streams', ref =>
+    ref.orderBy('lastModified', 'desc'),
+  );
 
   readonly allStreams$: Observable<UIStream[]> = combineLatest([
     this.streams.valueChanges({ idField: 'key' }),
@@ -55,11 +57,15 @@ export class StreamConfigService {
       fontColor: '#dddddd',
       promoText: '',
       secondaryTitle: '#Angular',
+      lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
   }
 
   updateStream(doc: UIStream): void {
-    this.streams.doc(doc.key).set(doc);
+    this.streams.doc(doc.key).set({
+      ...doc,
+      lastModified: firebase.firestore.FieldValue.serverTimestamp(),
+    });
   }
 
   deleteStream(key: string): void {
@@ -69,11 +75,21 @@ export class StreamConfigService {
   duplicateStream(stream: UIStream): void {
     this.streams.add({
       ...stream,
+      lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     } as any);
   }
 
   selectStream(stream: UIStream): void {
     this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en');
     this.streamConfig.set({ streamId: stream.key });
+    this.updateStream(stream);
+  }
+
+  nextEpisode(stream: UIStream): void {
+    const name = stream.name.replace(/#(\d+)/, (match, n) => {
+      return '#' + (Number(n) + 1).toString();
+    });
+
+    this.duplicateStream({ ...stream, name });
   }
 }

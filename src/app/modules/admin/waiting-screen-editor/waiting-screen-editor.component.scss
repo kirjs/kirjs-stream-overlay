@@ -73,6 +73,10 @@ textarea {
 .stream-controls {
   display: flex;
   justify-content: space-between;
+
+  .stream-buttons {
+    display: flex;
+  }
 }
 
 .live {

@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
+import FieldValue = firebase.firestore.FieldValue;
 
 export interface StreamConfig {
   streamId?: string;
@@ -17,6 +18,7 @@ export interface Stream {
   highlights: string;
   promoText: string;
   secondaryTitle: string;
+  lastModified: FieldValue;
 }
 
 export interface UIStream extends Stream {

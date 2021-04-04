@@ -52,8 +52,14 @@ export class WaitingScreenEditorComponent {
     this.streamConfigService.updateStream({ ...stream, color });
   }
 
-  updateByPropName(stream: UIStream, name: string, value: string): void {
-    this.streamConfigService.updateStream({ ...stream, [name]: value });
+  updateByPropName(
+    stream: UIStream,
+    name: keyof UIStream,
+    value: string,
+  ): void {
+    if (stream[name] !== value) {
+      this.streamConfigService.updateStream({ ...stream, [name]: value });
+    }
   }
 
   updateStreamDate(stream: UIStream, streamDate: any): void {
@@ -78,6 +84,9 @@ export class WaitingScreenEditorComponent {
 
   duplicateStream(stream: UIStream): void {
     this.streamConfigService.duplicateStream(stream);
+  }
+  nextEpisode(stream: UIStream): void {
+    this.streamConfigService.nextEpisode(stream);
   }
 
   startStream(stream: UIStream): void {
