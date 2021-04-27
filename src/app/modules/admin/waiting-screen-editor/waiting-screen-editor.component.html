@@ -1,10 +1,7 @@
 <div class="wrapper">
   <div class="streams">
     <ng-container
-      *ngFor="
-        let stream of streamConfigService.allStreams$ | async;
-        trackBy: trackByKey
-      "
+      *ngFor="let stream of streamConfigService.allStreams$ | async; trackBy: trackByKey"
     >
       <div
         [class.selected]="(selectedStreamKey$ | async) === stream.key"

@@ -14,6 +14,7 @@ import { StreamCompleteModule } from './modules/stream-complete/stream-complete.
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiKeysModule } from './modules/admin/api-keys/api-keys.module';
+import {HomeModule} from "./modules/home/home.module";
 
 const firebaseConfig = {
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
@@ -40,6 +41,7 @@ const firebaseConfig = {
     StreamCompleteModule,
     BarModule,
     ApiKeysModule,
+    HomeModule,
   ],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],

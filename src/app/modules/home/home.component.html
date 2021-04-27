@@ -1,0 +1,21 @@
+<h1>kirjs</h1>
+
+<div class="intro">
+  Привет, я стримлю в  <a href="http://twitch.tv/kirjs">twitch</a>, и пишу в <a href="https://t.me/kirjs_ru">telegram</a>
+</div>
+
+<h2>Список стримов</h2>
+<div class="posts">
+  <article class="row"
+       *ngFor="let stream of streamConfigService.allStreams$ | async; trackBy: trackByKey"
+  >
+    <div  class="stream">
+      <h3>
+        <span>{{stream.name}}</span>
+        <span>{{stream.streamDate}}</span>
+      </h3>
+
+      <div [innerHTML]="stream.description"></div>
+    </div>
+  </article>
+</div>
