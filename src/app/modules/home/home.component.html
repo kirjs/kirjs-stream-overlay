@@ -4,10 +4,18 @@
   Привет, я стримлю в  <a href="http://twitch.tv/kirjs">twitch</a>, и пишу в <a href="https://t.me/kirjs_ru">telegram</a>
 </div>
 
-<h2>Список стримов</h2>
+<ng-container *ngIf="(streamConfigService.futureStreams$ | async)?.length">
+  <h2>Следующий стрим</h2>
+  <article class="row"
+           *ngFor="let stream of streamConfigService.futureStreams$ | async; trackBy: trackByKey"
+  >
+    <app-announce class="flexible" [stream]="stream"></app-announce>
+  </article>
+</ng-container>
+<h2 class="old-streams">Прошлые стримы</h2>
 <div class="posts">
   <article class="row"
-       *ngFor="let stream of streamConfigService.allStreams$ | async; trackBy: trackByKey"
+       *ngFor="let stream of streamConfigService.pastStreams$ | async; trackBy: trackByKey"
   >
     <div  class="stream">
       <h3>

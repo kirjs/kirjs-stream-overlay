@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {Injectable, Input} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
 import firebase from 'firebase';
-import { Stream, StreamConfig, UIStream } from './types';
+import {Stream, StreamConfig, UIStream} from './types';
 
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { TwitchClient } from '../services/twitch';
-import { YoutubeService } from '../services/youtube.service';
+import {combineLatest, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TwitchClient} from '../services/twitch';
+import {YoutubeService} from '../services/youtube.service';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
-@Injectable({ providedIn: 'root' })
+const isInThePast = (dateTime: string) => Number(new Date(dateTime)) - Date.now() > 0;
+
+@Injectable({providedIn: 'root'})
 export class StreamConfigService {
   constructor(
     private readonly firestore: AngularFirestore,
@@ -29,7 +31,7 @@ export class StreamConfigService {
   );
 
   readonly allStreams$: Observable<UIStream[]> = combineLatest([
-    this.streams.valueChanges({ idField: 'key' }),
+    this.streams.valueChanges({idField: 'key'}),
     this.streamConfig.valueChanges(),
   ]).pipe(
     map(([streams, streamConfig]) => {
@@ -39,6 +41,18 @@ export class StreamConfigService {
       }));
     }),
   );
+
+  readonly pastStreams$ = this.allStreams$.pipe(map(streams => {
+    return streams.filter(stream => {
+      return !isInThePast(stream.realDateTime);
+    });
+  }));
+ readonly futureStreams$ = this.allStreams$.pipe(map(streams => {
+    return streams.filter(stream => {
+      return isInThePast(stream.realDateTime);
+    });
+  }));
+
 
   readonly currentStream$ = this.allStreams$.pipe(
     map(streams => streams.find(stream => stream.isCurrent)),
@@ -53,6 +67,7 @@ export class StreamConfigService {
       description: '',
       highlights: '',
       language: 'en',
+      realDateTime: new Date().toISOString().slice(0, 16),
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
       promoText: '',
@@ -81,7 +96,7 @@ export class StreamConfigService {
 
   selectStream(stream: UIStream): void {
     this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en');
-    this.streamConfig.set({ streamId: stream.key });
+    this.streamConfig.set({streamId: stream.key});
     this.updateStream(stream);
   }
 
@@ -90,6 +105,6 @@ export class StreamConfigService {
       return '#' + (Number(n) + 1).toString();
     });
 
-    this.duplicateStream({ ...stream, name });
+    this.duplicateStream({...stream, name});
   }
 }

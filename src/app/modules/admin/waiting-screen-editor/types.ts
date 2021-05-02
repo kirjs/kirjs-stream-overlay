@@ -18,6 +18,7 @@ export interface Stream {
   highlights: string;
   promoText: string;
   secondaryTitle: string;
+  realDateTime: string;
   lastModified: FieldValue;
 }
 

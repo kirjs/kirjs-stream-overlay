@@ -1,3 +1,45 @@
+:host {
+  --font-size: 16px;
+  --font-line-height: calc(var(--font-size) + 4px);
+  --header-size: 20px;
+  --header-line-height: calc(var(--header-size) + 4px);
+}
+
+:host.flexible {
+  display: block;
+
+  .wrapper {
+    width: 100%;
+    height: auto;
+    font-size: var(--font-size);
+    line-height: var(--font-line-height);
+    padding: 16px;
+  }
+
+  h1, .links {
+    font-size: var(--header-size);
+    line-height: var(--header-line-height);
+    margin: 0;
+  }
+
+  .body {
+    height: 100%;
+    margin-top: 40px;
+    display: flex;
+
+    .images {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+
+}
+
 .wrapper {
   width: var(--screen-width);
   height: var(--screen-height);
@@ -32,6 +74,7 @@ h1 {
   height: 100%;
   margin-top: 40px;
   display: flex;
+
   .images {
     display: flex;
     flex-direction: column;
@@ -44,6 +87,7 @@ h1 {
       box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px 20px;
     }
   }
+
   .description {
     margin-left: 80px;
   }

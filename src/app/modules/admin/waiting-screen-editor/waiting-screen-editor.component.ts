@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StreamConfigService } from './stream-config.service';
-import { UIStream } from './types';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {StreamConfigService} from './stream-config.service';
+import {UIStream} from './types';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {first, map} from 'rxjs/operators';
 import domtoimage from 'dom-to-image';
 
 @Component({
@@ -12,7 +12,8 @@ import domtoimage from 'dom-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitingScreenEditorComponent {
-  constructor(readonly streamConfigService: StreamConfigService) {}
+  constructor(readonly streamConfigService: StreamConfigService) {
+  }
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
     undefined,
@@ -45,11 +46,11 @@ export class WaitingScreenEditorComponent {
   }
 
   updateStreamName(stream: UIStream, name: string): void {
-    this.streamConfigService.updateStream({ ...stream, name });
+    this.streamConfigService.updateStream({...stream, name});
   }
 
   updateStreamColor(stream: UIStream, color: string): void {
-    this.streamConfigService.updateStream({ ...stream, color });
+    this.streamConfigService.updateStream({...stream, color});
   }
 
   updateByPropName(
@@ -58,7 +59,7 @@ export class WaitingScreenEditorComponent {
     value: string,
   ): void {
     if (stream[name] !== value) {
-      this.streamConfigService.updateStream({ ...stream, [name]: value });
+      this.streamConfigService.updateStream({...stream, [name]: value});
     }
   }
 
@@ -66,8 +67,9 @@ export class WaitingScreenEditorComponent {
     this.updateByPropName(stream, 'streamDate', streamDate);
   }
 
+
   updateStreamDescription(stream: UIStream, description: any): void {
-    this.streamConfigService.updateStream({ ...stream, description });
+    this.streamConfigService.updateStream({...stream, description});
   }
 
   async downloadImage(el: HTMLDivElement): Promise<void> {
@@ -85,6 +87,7 @@ export class WaitingScreenEditorComponent {
   duplicateStream(stream: UIStream): void {
     this.streamConfigService.duplicateStream(stream);
   }
+
   nextEpisode(stream: UIStream): void {
     this.streamConfigService.nextEpisode(stream);
   }

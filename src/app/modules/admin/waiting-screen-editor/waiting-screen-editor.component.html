@@ -90,6 +90,15 @@
           (ngModelChange)="updateStreamDate(stream, $event)"
         />
       </label>
+    </div> <div class="field">
+      <label>
+        <span class="label">Real date</span>
+        <input
+          type="datetime-local"
+          [ngModel]="stream.realDateTime"
+          (ngModelChange)="updateByPropName(stream, 'realDateTime', $event)"
+        />
+      </label>
     </div>
     <div class="field">
       <label>

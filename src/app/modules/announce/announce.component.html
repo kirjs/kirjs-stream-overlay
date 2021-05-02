@@ -1,5 +1,6 @@
 <div class="wrapper" *ngIf="stream" [style.background]="stream.color">
-  <h1 class="screen-title">Стрим: "{{ stream.name }}"</h1>
+  <h1 class="screen-title">
+    {{stream.language === 'ru'? 'Стрим' : 'Stream'}}: "{{ stream.name }}"</h1>
 
   <div class="body">
     <div class="images">
@@ -11,6 +12,6 @@
 
   <div class="links">
     <div class="twitch">twitch.tv/kirjs</div>
-    <div class="date">{{ stream.streamDate }}</div>
+    <div class="date">{{ stream.realDateTime | date:'d MMMM H:mm ':undefined:stream.language }}</div>
   </div>
 </div>
