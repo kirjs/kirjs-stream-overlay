@@ -1,10 +1,10 @@
-import {Injectable, Input} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import firebase from 'firebase';
 import {Stream, StreamConfig, UIStream} from './types';
 
 import {combineLatest, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, mapTo} from 'rxjs/operators';
 import {TwitchClient} from '../services/twitch';
 import {YoutubeService} from '../services/youtube.service';
 
@@ -19,7 +19,6 @@ export class StreamConfigService {
     private readonly twitchClient: TwitchClient,
     private readonly youtubeService: YoutubeService,
   ) {
-    youtubeService.getLiveStreams();
   }
 
   private readonly streamConfig = this.firestore
@@ -47,7 +46,7 @@ export class StreamConfigService {
       return !isInThePast(stream.realDateTime);
     });
   }));
- readonly futureStreams$ = this.allStreams$.pipe(map(streams => {
+  readonly futureStreams$ = this.allStreams$.pipe(map(streams => {
     return streams.filter(stream => {
       return isInThePast(stream.realDateTime);
     });
@@ -76,8 +75,8 @@ export class StreamConfigService {
     });
   }
 
-  updateStream(doc: UIStream): void {
-    this.streams.doc(doc.key).set({
+  updateStream(doc: UIStream): Promise<void> {
+    return this.streams.doc(doc.key).set({
       ...doc,
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -94,10 +93,13 @@ export class StreamConfigService {
     } as any);
   }
 
-  selectStream(stream: UIStream): void {
-    this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en');
-    this.streamConfig.set({streamId: stream.key});
-    this.updateStream(stream);
+  selectStream(stream: UIStream): Observable<void> {
+    return combineLatest([
+      this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en'),
+      this.youtubeService.updateLiveStream(stream.name),
+      this.streamConfig.set({streamId: stream.key}),
+      this.updateStream(stream),
+    ]).pipe(mapTo(undefined));
   }
 
   nextEpisode(stream: UIStream): void {

@@ -17,7 +17,7 @@ export class WaitingScreenEditorComponent {
   constructor(
     readonly streamConfigService: StreamConfigService,
     private readonly telegramService: TelegramService,
-    private readonly  snackBar: MatSnackBar,) {
+    private readonly  snackBar: MatSnackBar) {
   }
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
@@ -94,7 +94,11 @@ export class WaitingScreenEditorComponent {
   }
 
   startStream(stream: UIStream): void {
-    this.streamConfigService.selectStream(stream);
+    this.streamConfigService.selectStream(stream).subscribe(() => {
+      this.snackBar.open('Stream started successfully', 'ok', {duration: 500});
+    }, (e) => {
+      this.snackBar.open(e.error.description, 'ok');
+    });
   }
 
   async postToTelegram(announce: Element, stream: UIStream): Promise<void> {

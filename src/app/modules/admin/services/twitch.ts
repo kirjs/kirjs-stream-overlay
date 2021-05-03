@@ -1,7 +1,7 @@
 import { Chat } from 'twitch-js';
 import { Injectable } from '@angular/core';
 import { combineLatest, interval, Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import {map, switchMap, take} from 'rxjs/operators';
 import { userId, username } from './tokens';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -62,10 +62,10 @@ export class TwitchClient {
     }),
   );
 
-  async updateStreamInfo(title: string, language = 'en'): Promise<void> {
-    this.twitchTokens$
+  updateStreamInfo(title: string, language = 'en'): Observable<void> {
+    return this.twitchTokens$
       .pipe(
-        map(async ({ twitchClientId, twitchApiToken }) => {
+        switchMap(async ({ twitchClientId, twitchApiToken }) => {
           const params = new HttpParams().set(
             'broadcaster_id',
             userId.toString(),
@@ -87,8 +87,6 @@ export class TwitchClient {
             })
             .toPromise();
         }),
-        take(1),
-      )
-      .subscribe();
+      );
   }
 }

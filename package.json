@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
+    "@types/gapi": "0.0.39",
     "dom-to-image": "^2.6.0",
     "firebase": "^8.2.7",
     "gapi": "0.0.3",
