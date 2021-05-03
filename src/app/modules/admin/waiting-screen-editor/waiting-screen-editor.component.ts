@@ -4,6 +4,8 @@ import {UIStream} from './types';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {first, map} from 'rxjs/operators';
 import domtoimage from 'dom-to-image';
+import {TelegramService} from "../services/telegram.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-waiting-screen-editor',
@@ -12,7 +14,10 @@ import domtoimage from 'dom-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaitingScreenEditorComponent {
-  constructor(readonly streamConfigService: StreamConfigService) {
+  constructor(
+    readonly streamConfigService: StreamConfigService,
+    private readonly telegramService: TelegramService,
+    private readonly  snackBar: MatSnackBar,) {
   }
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
@@ -72,12 +77,8 @@ export class WaitingScreenEditorComponent {
     this.streamConfigService.updateStream({...stream, description});
   }
 
-  async downloadImage(el: HTMLDivElement): Promise<void> {
-    const image = await domtoimage.toPng(el);
-    const link = document.createElement('a');
-    link.download = 'my-image-name.jpeg';
-    link.href = image;
-    link.click();
+  generateImage(el: Element): Promise<Blob> {
+    return domtoimage.toBlob(el);
   }
 
   deleteStream(key: string): void {
@@ -94,5 +95,15 @@ export class WaitingScreenEditorComponent {
 
   startStream(stream: UIStream): void {
     this.streamConfigService.selectStream(stream);
+  }
+
+  async postToTelegram(announce: Element): Promise<void> {
+    const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
+    const image = await this.generateImage(wrapper);
+    this.telegramService.postImage(image).subscribe((result) => {
+      this.snackBar.open('posted successfully', 'ok');
+    }, () => {
+      this.snackBar.open('error', 'ok');
+    });
   }
 }

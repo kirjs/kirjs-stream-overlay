@@ -21,6 +21,7 @@
       <div class="stream-buttons">
         <button mat-button (click)="startStream(stream)">Start stream</button>
         <button mat-button (click)="nextEpisode(stream)">Next episode</button>
+        <button mat-button (click)="postToTelegram(announce)">Post to telegram</button>
       </div>
 
       <button mat-button [matMenuTriggerFor]="menu">
@@ -142,7 +143,7 @@
     <div>
       <app-waiting-screen [stream]="stream"></app-waiting-screen>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px" #announce>
       <app-announce [stream]="stream"></app-announce>
     </div>
   </div>
