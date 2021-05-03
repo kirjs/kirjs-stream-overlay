@@ -4,6 +4,12 @@ import {HttpClient} from '@angular/common/http';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
+function stripP(content: string): string {
+  return content.replace(/<p[^>]*>/g, '')
+    .replace(/<\/p>/g, '\r\n\r\n')
+    .replace(/<br\s?\/?>/g, '\r\n')
+    .replace(/&nbsp;/g, ' ');
+}
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +21,16 @@ export class TelegramService {
   ) {
   }
 
-  postImage(file: Blob): Observable<any> {
+  postImage(file: Blob, caption: string): Observable<any> {
     return this.tokenService.getToken('telegramToken').pipe(switchMap((token) => {
       const chatId = '-1001164093572';
       const url = `https://api.telegram.org/bot${token}/sendPhoto`;
 
       const data = new FormData();
       data.append('chat_id', chatId);
-      data.append('caption', 'LOL');
+      data.append('caption', stripP(caption));
       data.append('photo', file, 'lol.png');
-      data.append('text', file, 'lol text');
+      data.append('parse_mode', 'HTML');
 
       return this.http.post(url, data);
     }));

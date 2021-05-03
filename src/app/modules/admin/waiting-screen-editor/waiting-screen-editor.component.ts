@@ -4,8 +4,8 @@ import {UIStream} from './types';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {first, map} from 'rxjs/operators';
 import domtoimage from 'dom-to-image';
-import {TelegramService} from "../services/telegram.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {TelegramService} from '../services/telegram.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-waiting-screen-editor',
@@ -97,13 +97,14 @@ export class WaitingScreenEditorComponent {
     this.streamConfigService.selectStream(stream);
   }
 
-  async postToTelegram(announce: Element): Promise<void> {
+  async postToTelegram(announce: Element, stream: UIStream): Promise<void> {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
-    this.telegramService.postImage(image).subscribe((result) => {
-      this.snackBar.open('posted successfully', 'ok');
-    }, () => {
-      this.snackBar.open('error', 'ok');
+
+    this.telegramService.postImage(image, stream.promoText).subscribe(() => {
+      this.snackBar.open('posted successfully', 'ok', {duration: 500});
+    }, (e) => {
+      this.snackBar.open(e.error.description, 'ok');
     });
   }
 }
