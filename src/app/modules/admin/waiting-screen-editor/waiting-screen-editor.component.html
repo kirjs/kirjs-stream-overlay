@@ -21,7 +21,7 @@
       <div class="stream-buttons">
         <button mat-button (click)="startStream(stream)">Start stream</button>
         <button mat-button (click)="nextEpisode(stream)">Next episode</button>
-        <button mat-button (click)="postToTelegram(announce)">Post to telegram</button>
+        <button mat-button class="telegram" (click)="postToTelegram(announce)"><img src="assets/telegram.svg"> Post to telegram </button>
       </div>
 
       <button mat-button [matMenuTriggerFor]="menu">
@@ -91,7 +91,8 @@
           (ngModelChange)="updateStreamDate(stream, $event)"
         />
       </label>
-    </div> <div class="field">
+    </div>
+    <div class="field">
       <label>
         <span class="label">Real date</span>
         <input

@@ -73,6 +73,7 @@ textarea {
 .stream-controls {
   display: flex;
   justify-content: space-between;
+  margin: 8px 0;
 
   .stream-buttons {
     display: flex;
@@ -93,4 +94,15 @@ textarea {
 
 app-announce {
   display: block;
+}
+
+.telegram {
+  background: #0088cc;
+  color: white;
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
 }
