@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {TokensService} from '../api-keys/tokens.service';
-import {HttpClient} from '@angular/common/http';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {stripHtml} from "../utils";
 
 // First step: obtain the video's 'categoryId'
 
@@ -48,7 +48,7 @@ export class YoutubeService {
 
   }
 
-  updateLiveStream(title: string): Observable<void> {
+  updateLiveStream(title: string, description: string): Observable<void> {
     return this.api$.pipe(switchMap(async ({youtube}) => {
       const broadcasts = await youtube.liveBroadcasts.list({mine: true});
 
@@ -60,7 +60,7 @@ export class YoutubeService {
         snippet: {
           ...activeBroadcast.snippet,
           title,
-          description: 'Пока не знаю как обновлять дескрипшн :(',
+          description: stripHtml(description),
         },
       });
     }));

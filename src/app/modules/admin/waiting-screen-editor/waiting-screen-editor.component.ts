@@ -68,11 +68,6 @@ export class WaitingScreenEditorComponent {
     }
   }
 
-  updateStreamDate(stream: UIStream, streamDate: any): void {
-    this.updateByPropName(stream, 'streamDate', streamDate);
-  }
-
-
   updateStreamDescription(stream: UIStream, description: any): void {
     this.streamConfigService.updateStream({...stream, description});
   }

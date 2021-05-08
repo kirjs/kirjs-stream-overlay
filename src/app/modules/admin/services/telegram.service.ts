@@ -3,13 +3,7 @@ import {TokensService} from '../api-keys/tokens.service';
 import {HttpClient} from '@angular/common/http';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-
-function stripP(content: string): string {
-  return content.replace(/<p[^>]*>/g, '')
-    .replace(/<\/p>/g, '\r\n\r\n')
-    .replace(/<br\s?\/?>/g, '\r\n')
-    .replace(/&nbsp;/g, ' ');
-}
+import {normalizeSpaces} from "../utils";
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +22,7 @@ export class TelegramService {
 
       const data = new FormData();
       data.append('chat_id', chatId);
-      data.append('caption', stripP(caption));
+      data.append('caption', normalizeSpaces(caption));
       data.append('photo', file, 'lol.png');
       data.append('parse_mode', 'HTML');
 

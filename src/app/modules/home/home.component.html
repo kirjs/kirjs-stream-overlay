@@ -20,7 +20,7 @@
     <div  class="stream">
       <h3>
         <span>{{stream.name}}</span>
-        <span>{{stream.streamDate}}</span>
+        <span>{{stream.realDateTime | date}}</span>
       </h3>
 
       <div [innerHTML]="stream.description"></div>

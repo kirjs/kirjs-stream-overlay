@@ -61,7 +61,6 @@ export class StreamConfigService {
     this.streams.add({
       name: 'latest',
       tags: [],
-      streamDate: 'Сегодня',
       date: firebase.firestore.FieldValue.serverTimestamp() as any,
       description: '',
       highlights: '',
@@ -96,7 +95,7 @@ export class StreamConfigService {
   selectStream(stream: UIStream): Observable<void> {
     return combineLatest([
       this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en'),
-      this.youtubeService.updateLiveStream(stream.name),
+      this.youtubeService.updateLiveStream(stream.name, stream.description),
       this.streamConfig.set({streamId: stream.key}),
       this.updateStream(stream),
     ]).pipe(mapTo(undefined));

@@ -14,7 +14,6 @@ export interface Stream {
   fontColor: string;
   tags: string[];
   date: Timestamp;
-  streamDate: string;
   highlights: string;
   promoText: string;
   secondaryTitle: string;
