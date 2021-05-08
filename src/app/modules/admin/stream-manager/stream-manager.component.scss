@@ -20,25 +20,6 @@ input[type='text'] {
   width: 100%;
 }
 
-.streams {
-  padding: 16px;
-
-  .stream {
-    margin-bottom: 20px;
-    opacity: 0.8;
-
-    &.selected {
-      opacity: 1;
-      outline: 4px #444 solid;
-    }
-
-    app-announce {
-      zoom: 0.1;
-      display: block;
-    }
-  }
-}
-
 app-waiting-screen {
   zoom: 0.2;
 }
@@ -85,11 +66,6 @@ textarea {
   color: white;
   padding: 20px;
   text-align: center;
-}
-.live-small {
-  background: #0d920d;
-  color: white;
-  padding: 4px 8px;
 }
 
 app-announce {

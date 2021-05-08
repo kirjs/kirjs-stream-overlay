@@ -10,10 +10,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
 import {WysiwygEditorModule} from './wysiwyg-editor/wysiwyg-editor.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { StreamListComponent } from './stream-list/stream-list.component';
 
 
 @NgModule({
-  declarations: [StreamManagerComponent],
+  declarations: [StreamManagerComponent, StreamListComponent],
   imports: [
     WysiwygEditorModule,
     CommonModule,

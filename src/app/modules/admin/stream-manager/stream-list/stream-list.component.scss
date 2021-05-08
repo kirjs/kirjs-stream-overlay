@@ -1,0 +1,26 @@
+
+.streams {
+  padding: 16px;
+
+  .stream {
+    cursor: pointer;
+    margin-bottom: 20px;
+    opacity: 0.8;
+
+    &.selected {
+      opacity: 1;
+      outline: 4px #444 solid;
+    }
+
+    app-announce {
+      zoom: 0.1;
+      display: block;
+    }
+  }
+}
+
+.live-small {
+  background: #0d920d;
+  color: white;
+  padding: 4px 8px;
+}

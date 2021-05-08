@@ -1,20 +1,9 @@
 <div class="wrapper">
-  <div class="streams">
-    <ng-container
-      *ngFor="let stream of streamConfigService.allStreams$ | async; trackBy: trackByKey"
-    >
-      <div
-        [class.selected]="(selectedStreamKey$ | async) === stream.key"
-        class="stream"
-      >
-        <div *ngIf="stream.isCurrent" class="live-small">LIVE</div>
-        <app-announce
-          (click)="selectedStreamKey.next(stream.key)"
-          [stream]="stream"
-        ></app-announce>
-      </div>
-    </ng-container>
-  </div>
+  <app-stream-list
+    [streams]="(streamConfigService.allStreams$ | async)!"
+                   [selectedStreamKey]="selectedStreamKey$ | async"
+                   (selectStream)="selectedStreamKey.next($event)"
+  ></app-stream-list>
 
   <div *ngIf="currentStream$ | async as stream" class="stream-config">
     <div class="stream-controls">
