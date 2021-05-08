@@ -48,13 +48,13 @@ export class YoutubeService {
 
   }
 
-  updateLiveStream(title: string, description: string): Observable<void> {
+  updateLiveStream(title: string, description: string): Observable<{ result: {id: string} }> {
     return this.api$.pipe(switchMap(async ({youtube}) => {
       const broadcasts = await youtube.liveBroadcasts.list({mine: true});
 
       const activeBroadcast = broadcasts.result.items.find((s: any) => s.status.recordingStatus === 'recording');
 
-      await youtube.liveBroadcasts.update({
+      return await youtube.liveBroadcasts.update({
         part: 'snippet',
         id: activeBroadcast.id,
         snippet: {

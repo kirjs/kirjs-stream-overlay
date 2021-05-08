@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import {Stream, StreamConfig, UIStream} from './types';
 
 import {combineLatest, Observable} from 'rxjs';
-import {map, mapTo} from 'rxjs/operators';
+import {map, mapTo, switchMap} from 'rxjs/operators';
 import {TwitchClient} from '../services/twitch';
 import {YoutubeService} from '../services/youtube.service';
 
@@ -92,10 +92,18 @@ export class StreamConfigService {
     } as any);
   }
 
+
+  updateYoutubeStreamInfo(stream: UIStream) {
+    return this.youtubeService.updateLiveStream(stream.name, stream.description)
+      .pipe(switchMap(({result}) => {
+        return this.updateStream({...stream, youtubeId: result.id});
+      }));
+  }
+
   selectStream(stream: UIStream): Observable<void> {
     return combineLatest([
       this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en'),
-      this.youtubeService.updateLiveStream(stream.name, stream.description),
+      this.updateYoutubeStreamInfo(stream),
       this.streamConfig.set({streamId: stream.key}),
       this.updateStream(stream),
     ]).pipe(mapTo(undefined));

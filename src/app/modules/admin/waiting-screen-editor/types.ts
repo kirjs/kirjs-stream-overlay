@@ -16,6 +16,7 @@ export interface Stream {
   date: Timestamp;
   highlights: string;
   promoText: string;
+  youtubeId?: string;
   secondaryTitle: string;
   realDateTime: string;
   lastModified: FieldValue;
