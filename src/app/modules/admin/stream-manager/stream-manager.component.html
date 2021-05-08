@@ -1,9 +1,12 @@
 <div class="wrapper">
-  <app-stream-list
-    [streams]="(streamConfigService.allStreams$ | async)!"
-                   [selectedStreamKey]="selectedStreamKey$ | async"
-                   (selectStream)="selectedStreamKey.next($event)"
-  ></app-stream-list>
+  <div>
+    <button mat-button (click)="addNewStream()">Add new stream</button>
+    <app-stream-list
+      [streams]="(streamConfigService.allStreams$ | async)!"
+      [selectedStreamKey]="selectedStreamKey$ | async"
+      (selectStream)="selectedStreamKey.next($event)"
+    ></app-stream-list>
+  </div>
 
   <div *ngIf="currentStream$ | async as stream" class="stream-config">
     <div class="stream-controls">
@@ -131,5 +134,5 @@
     </div>
   </div>
 </div>
-<button (click)="addNewStream()">Add new stream</button>
+
 

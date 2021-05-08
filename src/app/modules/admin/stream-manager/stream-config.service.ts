@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import {Stream, StreamConfig, UIStream} from './types';
 
 import {combineLatest, Observable} from 'rxjs';
@@ -14,23 +15,15 @@ const isInThePast = (dateTime: string) => Number(new Date(dateTime)) - Date.now(
 
 @Injectable({providedIn: 'root'})
 export class StreamConfigService {
-  constructor(
-    private readonly firestore: AngularFirestore,
-    private readonly twitchClient: TwitchClient,
-    private readonly youtubeService: YoutubeService,
-  ) {
-  }
-
   private readonly streamConfig = this.firestore
     .collection('config')
     .doc<StreamConfig>('stream');
-
   private readonly streams = this.firestore.collection<Stream>('streams', ref =>
     ref.orderBy('lastModified', 'desc'),
   );
 
   readonly allStreams$: Observable<UIStream[]> = combineLatest([
-    this.streams.valueChanges({idField: 'key'}),
+    this.streams.valueChanges({idField:  'key'}),
     this.streamConfig.valueChanges(),
   ]).pipe(
     map(([streams, streamConfig]) => {
@@ -51,11 +44,18 @@ export class StreamConfigService {
       return isInThePast(stream.realDateTime);
     });
   }));
-
-
   readonly currentStream$ = this.allStreams$.pipe(
     map(streams => streams.find(stream => stream.isCurrent)),
   );
+
+
+
+  constructor(
+    private readonly firestore: AngularFirestore,
+    private readonly twitchClient: TwitchClient,
+    private readonly youtubeService: YoutubeService,
+  ) {
+  }
 
   addNewStream(): void {
     this.streams.add({
