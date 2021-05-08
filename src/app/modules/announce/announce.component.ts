@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UIStream } from '../admin/waiting-screen-editor/types';
+import { UIStream } from '../admin/stream-manager/types';
 
 @Component({
   selector: 'app-announce',

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {WaitingScreenEditorComponent} from './waiting-screen-editor.component';
+import {StreamManagerComponent} from './stream-manager.component';
 import {WaitingScreenModule} from '../../waiting-screen/waiting-screen.module';
 import {AnnounceModule} from '../../announce/announce.module';
 import {LoginModule} from '../login/login.module';
@@ -13,7 +13,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
-  declarations: [WaitingScreenEditorComponent],
+  declarations: [StreamManagerComponent],
   imports: [
     WysiwygEditorModule,
     CommonModule,
@@ -27,5 +27,5 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     FormsModule,
   ],
 })
-export class WaitingScreenEditorModule {
+export class StreamManagerModule {
 }

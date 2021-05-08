@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TwitchClient } from '../../admin/services/twitch';
-import { StreamConfigService } from '../../admin/waiting-screen-editor/stream-config.service';
+import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
 
 @Component({
   selector: 'app-chat',

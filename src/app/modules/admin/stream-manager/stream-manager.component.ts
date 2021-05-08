@@ -8,12 +8,12 @@ import {TelegramService} from '../services/telegram.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-waiting-screen-editor',
-  templateUrl: './waiting-screen-editor.component.html',
-  styleUrls: ['./waiting-screen-editor.component.scss'],
+  selector: 'app-stream-manager',
+  templateUrl: './stream-manager.component.html',
+  styleUrls: ['./stream-manager.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WaitingScreenEditorComponent {
+export class StreamManagerComponent {
   constructor(
     readonly streamConfigService: StreamConfigService,
     private readonly telegramService: TelegramService,

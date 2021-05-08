@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WaitingScreenEditorComponent } from './waiting-screen-editor/waiting-screen-editor.component';
+import { StreamManagerComponent } from './stream-manager/stream-manager.component';
 import { TokensComponent } from './api-keys/tokens.component';
 import { AdminWrapperComponent } from './admin-wrapper/admin-wrapper.component';
 
@@ -10,7 +10,7 @@ const routes: Routes = [
     component: AdminWrapperComponent,
     children: [
       { path: 'tokens', component: TokensComponent },
-      { path: '', component: WaitingScreenEditorComponent },
+      { path: '', component: StreamManagerComponent },
     ],
   },
 ];

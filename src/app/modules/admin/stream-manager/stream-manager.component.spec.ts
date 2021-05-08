@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WaitingScreenEditorComponent } from './waiting-screen-editor.component';
+import { StreamManagerComponent } from './stream-manager.component';
 
 describe('WaitingScreenEditorComponent', () => {
-  let component: WaitingScreenEditorComponent;
-  let fixture: ComponentFixture<WaitingScreenEditorComponent>;
+  let component: StreamManagerComponent;
+  let fixture: ComponentFixture<StreamManagerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WaitingScreenEditorComponent],
+      declarations: [StreamManagerComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WaitingScreenEditorComponent);
+    fixture = TestBed.createComponent(StreamManagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

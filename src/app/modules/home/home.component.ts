@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {StreamConfigService} from "../admin/waiting-screen-editor/stream-config.service";
-import {UIStream} from "../admin/waiting-screen-editor/types";
+import {StreamConfigService} from "../admin/stream-manager/stream-config.service";
+import {UIStream} from "../admin/stream-manager/types";
 
 @Component({
   selector: 'app-home',
