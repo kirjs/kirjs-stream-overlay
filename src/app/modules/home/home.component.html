@@ -27,7 +27,8 @@
     <div class="stream">
       <h3>
 
-        <a target="_blank" rel="noopener noreferrer" target="_blank"
+        <a target="_blank"
+           rel="noopener noreferrer"
            href="https://www.youtube.com/watch?v={{stream.youtubeId}}"
            *ngIf="stream.youtubeId">{{stream.name}}</a>
         <span *ngIf="!stream.youtubeId">{{stream.name}}</span>

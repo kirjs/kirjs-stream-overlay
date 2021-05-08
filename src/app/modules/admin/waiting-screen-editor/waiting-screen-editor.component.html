@@ -21,7 +21,10 @@
       <div class="stream-buttons">
         <button mat-button (click)="startStream(stream)">Start stream</button>
         <button mat-button (click)="nextEpisode(stream)">Next episode</button>
-        <button mat-button class="telegram" (click)="postToTelegram(announce, stream)"><img alt="logo " src="assets/telegram.svg"> Post to telegram </button>
+        <button mat-button class="telegram" (click)="postToTelegram(announce, stream)">
+          <img alt="logo" src="assets/telegram.svg">
+          Post to telegram
+        </button>
       </div>
 
       <button mat-button [matMenuTriggerFor]="menu">
@@ -140,3 +143,4 @@
   </div>
 </div>
 <button (click)="addNewStream()">Add new stream</button>
+

@@ -27,6 +27,11 @@
     margin-top: 40px;
     display: flex;
 
+    ::ng-deep p {
+      line-height: var(--font-line-height);
+
+    }
+
     .images {
       display: flex;
       flex-direction: column;
@@ -94,6 +99,9 @@ h1 {
 }
 
 :host ::ng-deep {
+  p {
+    line-height: 90px;
+  }
   ul {
     margin-left: 80px;
   }
