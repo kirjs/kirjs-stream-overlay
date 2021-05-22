@@ -1,0 +1,4 @@
+<div class="wrapper" *ngIf="stream" [style.background]="stream.color">
+    <div class="title">{{ stream.name }}</div>
+    <div class="date">{{ stream.realDateTime | date:'d MMMM H:mm ':undefined:stream.language }}</div>
+</div>

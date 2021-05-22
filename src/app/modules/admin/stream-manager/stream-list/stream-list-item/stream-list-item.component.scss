@@ -1,0 +1,31 @@
+:host {
+  --font-size: 16px;
+  --font-line-height: calc(var(--font-size) + 4px);
+  --header-size: 20px;
+  --header-line-height: calc(var(--header-size) + 4px);
+}
+
+:host.selected {
+  .title:before {
+    content: "⭐️"
+  }
+}
+
+:host {
+  display: block;
+  color: white;
+  cursor: pointer;
+
+  .wrapper {
+    width: 100%;
+    height: auto;
+    font-size: var(--font-size);
+    line-height: var(--font-line-height);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+

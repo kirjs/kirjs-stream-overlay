@@ -6,8 +6,8 @@ import {StreamCompleteComponent} from './modules/stream-complete/stream-complete
 import {WaitingScreenWrapperComponent} from './modules/waiting-screen/waiting-screen-wrapper.component';
 import {HomeComponent} from './modules/home/home.component';
 import {StreamConfigService} from './modules/admin/stream-manager/stream-config.service';
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 
 // Using this one weird trick to redirect to an external URL.

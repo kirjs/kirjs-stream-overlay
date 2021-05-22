@@ -1,16 +1,11 @@
 <div class="streams">
-    <ng-container
-            *ngFor="let stream of streams; trackBy: trackByKey"
-    >
-        <div
-                [class.selected]="selectedStreamKey === stream.key"
-                class="stream"
-        >
-            <div *ngIf="stream.isCurrent" class="live-small">LIVE</div>
-            <app-announce
-                    (click)="selectStream.next(stream.key)"
-                    [stream]="stream"
-            ></app-announce>
-        </div>
-    </ng-container>
+  <ng-container
+    *ngFor="let stream of (streamConfigService.allStreams$ | async); trackBy: trackByKey"
+  >
+    <app-stream-list-item
+      [routerLink]="['/','admin', 'streams', stream.key]"
+      [class.selected] ="(selectedStreamKey$ | async) === stream.key"
+      [stream]="stream"
+    ></app-stream-list-item>
+  </ng-container>
 </div>

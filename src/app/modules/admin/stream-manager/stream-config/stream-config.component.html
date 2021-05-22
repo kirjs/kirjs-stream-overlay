@@ -1,0 +1,136 @@
+<div *ngIf="currentStream$ | async as stream" class="stream-config">
+  <div class="stream-controls">
+    <div class="stream-buttons">
+      <button mat-button [routerLink]="'/admin/streams'">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button mat-button (click)="startStream(stream)">Start stream</button>
+      <button mat-button (click)="nextEpisode(stream)">Next episode</button>
+      <button mat-button class="telegram" (click)="postToTelegram(announce, stream)">
+        <img alt="logo" src="assets/telegram.svg">
+      </button>
+    </div>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="deleteStream(stream.key)">
+        Delete stream
+      </button>
+      <button mat-menu-item (click)="duplicateStream(stream)">
+        Duplicate stream
+      </button>
+    </mat-menu>
+  </div>
+
+  <div *ngIf="stream.isCurrent" class="live">LIVE</div>
+  <div class="field">
+    <label>
+      <span class="label">Title</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.name"
+        (ngModelChange)="updateByPropName(stream, 'name', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Language</span>
+      <select
+        [ngModel]="stream.language"
+        (ngModelChange)="updateByPropName(stream, 'language', $event)"
+      >
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+      </select>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Color</span>
+      <input
+        type="color"
+        [ngModel]="stream.color"
+        (ngModelChange)="updateByPropName(stream, 'color', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Font color</span>
+      <input
+        type="color"
+        [ngModel]="stream.fontColor"
+        (ngModelChange)="updateByPropName(stream, 'fontColor', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Real date</span>
+      <input
+        type="datetime-local"
+        [ngModel]="stream.realDateTime"
+        (ngModelChange)="updateByPropName(stream, 'realDateTime', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Secondary title</span>
+      <input
+        type="text"
+        [ngModel]="stream.secondaryTitle"
+        (ngModelChange)="updateByPropName(stream, 'secondaryTitle', $event)"
+      />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Description</span>
+      <app-wysiwyg-editor
+        [html]="stream.description"
+        (changeHtml)="updateByPropName(stream, 'description', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Highlights</span>
+      <app-wysiwyg-editor
+        [html]="stream.highlights"
+        (changeHtml)="updateByPropName(stream, 'highlights', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Promo text (1024max)</span>
+      <app-wysiwyg-editor
+        [html]="stream.promoText"
+        (changeHtml)="updateByPropName(stream, 'promoText', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Talk Url</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.talkUrl"
+        (ngModelChange)="updateByPropName(stream, 'talkUrl', $event)"
+      />
+    </label>
+  </div>
+
+  <div style="margin-top: 20px" #announce>
+    <app-announce [stream]="stream"></app-announce>
+  </div>
+</div>
