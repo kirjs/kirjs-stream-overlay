@@ -1,6 +1,7 @@
 :host {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 8px 16px;
   box-shadow: #ddd 0 0 4px 1px;
   margin-bottom: 12px;
@@ -9,7 +10,10 @@
 h1 {
   margin: 0;
   padding: 0;
+  white-space: nowrap;
 }
+
+
 
 .logged-in {
   display: flex;
