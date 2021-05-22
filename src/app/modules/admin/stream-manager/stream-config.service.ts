@@ -65,6 +65,7 @@ export class StreamConfigService {
       description: '',
       highlights: '',
       language: 'en',
+      talkUrl: 'https://meet.google.com/bdk-davb-ibi',
       realDateTime: new Date().toISOString().slice(0, 16),
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',

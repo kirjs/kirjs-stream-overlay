@@ -20,6 +20,7 @@ export interface Stream {
   secondaryTitle: string;
   realDateTime: string;
   lastModified: FieldValue;
+  talkUrl: string;
 }
 
 export interface UIStream extends Stream {

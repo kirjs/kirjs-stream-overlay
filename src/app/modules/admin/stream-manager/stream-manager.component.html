@@ -126,9 +126,18 @@
       </label>
     </div>
 
-    <div>
-      <app-waiting-screen [stream]="stream"></app-waiting-screen>
+    <div class="field">
+      <label>
+        <span class="label">Talk Url</span>
+        <input
+          class="name-input"
+          type="text"
+          [ngModel]="stream.talkUrl"
+          (ngModelChange)="updateByPropName(stream, 'talkUrl', $event)"
+        />
+      </label>
     </div>
+
     <div style="margin-top: 20px" #announce>
       <app-announce [stream]="stream"></app-announce>
     </div>
