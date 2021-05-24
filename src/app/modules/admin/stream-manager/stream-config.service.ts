@@ -4,10 +4,11 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import {Stream, StreamConfig, UIStream} from './types';
 
-import {combineLatest, Observable} from 'rxjs';
-import {map, mapTo, switchMap} from 'rxjs/operators';
+import {combineLatest, Observable, of} from 'rxjs';
+import {map, mapTo, switchMap, tap} from 'rxjs/operators';
 import {TwitchClient} from '../services/twitch';
 import {YoutubeService} from '../services/youtube.service';
+import {Router} from '@angular/router';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
@@ -23,7 +24,7 @@ export class StreamConfigService {
   );
 
   readonly allStreams$: Observable<UIStream[]> = combineLatest([
-    this.streams.valueChanges({idField:  'key'}),
+    this.streams.valueChanges({idField: 'key'}),
     this.streamConfig.valueChanges(),
   ]).pipe(
     map(([streams, streamConfig]) => {
@@ -49,11 +50,11 @@ export class StreamConfigService {
   );
 
 
-
   constructor(
     private readonly firestore: AngularFirestore,
     private readonly twitchClient: TwitchClient,
     private readonly youtubeService: YoutubeService,
+    private readonly router: Router,
   ) {
   }
 
@@ -82,8 +83,14 @@ export class StreamConfigService {
     });
   }
 
-  deleteStream(key: string): void {
-    this.streams.doc(key).delete();
+  deleteStream(key: string, youtubeId?: string): Observable<any> {
+    return combineLatest([
+        this.streams.doc(key).delete(),
+        youtubeId ? this.youtubeService.deleteBroadcast(youtubeId) : of(undefined)
+      ]
+    ).pipe(tap(() => {
+      this.router.navigate(['/', 'admin', 'streams']);
+    }));
   }
 
   duplicateStream(stream: UIStream): void {
@@ -93,9 +100,20 @@ export class StreamConfigService {
     } as any);
   }
 
+  setYoutubeBroadcast(stream: UIStream): Observable<any> {
+    if (stream.youtubeId) {
+      return this.updateYoutubeBroadcast(stream.youtubeId, stream);
+    } else {
+      return this.createYoutubeBroadcast(stream);
+    }
+  }
 
-  updateYoutubeStreamInfo(stream: UIStream) {
-    return this.youtubeService.updateLiveStream(stream.name, stream.description)
+  updateYoutubeBroadcast(youtubeId: string, stream: UIStream): Observable<any> {
+    return this.youtubeService.updateLiveStreamById(youtubeId, stream);
+  }
+
+  createYoutubeBroadcast(stream: UIStream): Observable<any> {
+    return this.youtubeService.createBroadcast(stream)
       .pipe(switchMap(({result}) => {
         return this.updateStream({...stream, youtubeId: result.id});
       }));
@@ -104,7 +122,7 @@ export class StreamConfigService {
   selectStream(stream: UIStream): Observable<void> {
     return combineLatest([
       this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en'),
-      this.updateYoutubeStreamInfo(stream),
+      this.setYoutubeBroadcast(stream),
       this.streamConfig.set({streamId: stream.key}),
       this.updateStream(stream),
     ]).pipe(mapTo(undefined));

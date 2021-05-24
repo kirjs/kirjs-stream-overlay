@@ -3,8 +3,13 @@ import {TokensService} from '../api-keys/tokens.service';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {stripHtml} from "../utils";
+import {UIStream} from "../stream-manager/types";
 
 // First step: obtain the video's 'categoryId'
+
+function toYoutubeDate(date: string){
+  return date + ':00Z';
+}
 
 declare const gapi: any;
 
@@ -48,20 +53,44 @@ export class YoutubeService {
 
   }
 
-  updateLiveStream(title: string, description: string): Observable<{ result: {id: string} }> {
+  updateLiveStreamById(id: string, stream: UIStream): Observable<{ result: { id: string } }> {
     return this.api$.pipe(switchMap(async ({youtube}) => {
-      const broadcasts = await youtube.liveBroadcasts.list({mine: true});
-
-      const activeBroadcast = broadcasts.result.items.find((s: any) => s.status.recordingStatus === 'recording');
-
       return await youtube.liveBroadcasts.update({
         part: 'snippet',
-        id: activeBroadcast.id,
+        id,
         snippet: {
-          ...activeBroadcast.snippet,
-          title,
-          description: stripHtml(description),
+          title: stream.name,
+          description: stripHtml(stream.description),
+          scheduledStartTime: toYoutubeDate(stream.realDateTime)
         },
+      });
+    }));
+  }
+
+  deleteBroadcast(id: string): Observable<void>{
+    return this.api$.pipe(switchMap(async ({youtube}) => {
+      return await youtube.liveBroadcasts.delete({
+        id
+      });
+    }));
+  }
+
+  createBroadcast(stream: UIStream): Observable<{ result: { id: string } }> {
+    return this.api$.pipe(switchMap(async ({youtube}) => {
+      return await youtube.liveBroadcasts.insert({
+        part: 'status,snippet,contentDetails',
+        status: {
+          privacyStatus: 'unlisted'
+        },
+        snippet: {
+          title: stream.name,
+          description: stripHtml(stream.description),
+          scheduledStartTime: toYoutubeDate(stream.realDateTime)
+        },
+        contentDetails: {
+          recordFromStart: true,
+          useDvr: true
+        }
       });
     }));
   }

@@ -20,4 +20,8 @@ export class StreamListComponent {
   trackByKey(i: number, object: UIStream): string {
     return object.key;
   }
+
+  addNewStream() {
+    this.streamConfigService.addNewStream();
+  }
 }

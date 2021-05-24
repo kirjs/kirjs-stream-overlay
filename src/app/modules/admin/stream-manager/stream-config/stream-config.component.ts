@@ -35,8 +35,8 @@ export class StreamConfigComponent implements OnInit {
     }),
   );
 
-  deleteStream(key: string): void {
-    this.streamConfigService.deleteStream(key);
+  deleteStream(key: string, youtubeId?: string): void {
+    this.streamConfigService.deleteStream(key, youtubeId).subscribe();
   }
 
   duplicateStream(stream: UIStream): void {
@@ -86,4 +86,7 @@ export class StreamConfigComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createBroadcast(stream: UIStream) {
+    this.streamConfigService.createYoutubeBroadcast(stream).subscribe();
+  }
 }

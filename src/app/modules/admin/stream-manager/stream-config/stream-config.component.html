@@ -6,9 +6,21 @@
       </button>
       <button mat-button (click)="startStream(stream)">Start stream</button>
       <button mat-button (click)="nextEpisode(stream)">Next episode</button>
+      <button mat-button (click)="createBroadcast(stream)">Create broadcast</button>
       <button mat-button class="telegram" (click)="postToTelegram(announce, stream)">
         <img alt="logo" src="assets/telegram.svg">
       </button>
+
+      <button mat-icon-button class *ngIf="stream.youtubeId">
+        <!-- TODO(kirjs): Use youtube logo-->
+        <a target="_blank"
+           rel="noopener noreferrer"
+           href="https://www.youtube.com/watch?v={{stream.youtubeId}}"
+           *ngIf="stream.youtubeId">
+          <mat-icon>play_arrow</mat-icon>
+        </a>
+      </button>
+
     </div>
 
     <button mat-button [matMenuTriggerFor]="menu">
@@ -16,7 +28,7 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="deleteStream(stream.key)">
+      <button mat-menu-item (click)="deleteStream(stream.key, stream.youtubeId)">
         Delete stream
       </button>
       <button mat-menu-item (click)="duplicateStream(stream)">
