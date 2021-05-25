@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-overlay',

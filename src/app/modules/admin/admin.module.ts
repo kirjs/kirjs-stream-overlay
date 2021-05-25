@@ -7,17 +7,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({
   declarations: [TokensComponent],
-  imports: [
-    StreamManagerModule,
-    CommonModule,
-    FormsModule,
-    AdminWrapperModule,
-    MatIconModule,
-    MatButtonModule,
-    AdminRoutingModule,
-  ],
+    imports: [
+        StreamManagerModule,
+        CommonModule,
+        FormsModule,
+        AdminWrapperModule,
+        MatIconModule,
+        MatButtonModule,
+        AdminRoutingModule,
+        ClipboardModule,
+    ],
 })
 export class AdminModule {}

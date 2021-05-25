@@ -14,11 +14,13 @@ import {StreamListComponent} from './stream-list/stream-list.component';
 import {RouterModule} from '@angular/router';
 import {StreamConfigComponent} from './stream-config/stream-config.component';
 import {StreamListItemComponent} from './stream-list/stream-list-item/stream-list-item.component';
+import {AngularFireModule} from '@angular/fire';
 
 
 @NgModule({
   declarations: [StreamListItemComponent, StreamManagerComponent, StreamListComponent, StreamConfigComponent],
   imports: [
+    AngularFireModule,
     WysiwygEditorModule,
     CommonModule,
     WaitingScreenModule,

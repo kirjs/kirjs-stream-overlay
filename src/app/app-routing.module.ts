@@ -8,6 +8,7 @@ import {HomeComponent} from './modules/home/home.component';
 import {StreamConfigService} from './modules/admin/stream-manager/stream-config.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {AdminTokenAuthResolver} from "./modules/admin/services/admin-token-auth.resolver";
 
 
 // Using this one weird trick to redirect to an external URL.
@@ -36,7 +37,11 @@ class TalkRedirectGuard implements CanActivate, OnDestroy {
 }
 
 const routes: Routes = [
-  {path: 'overlay', component: OverlayComponent},
+  {
+    path: 'overlay',
+    component: OverlayComponent,
+    resolve: [AdminTokenAuthResolver]
+  },
   {path: '', component: HomeComponent},
   {path: 'waiting', component: WaitingScreenWrapperComponent},
   {path: 'complete', component: StreamCompleteComponent},

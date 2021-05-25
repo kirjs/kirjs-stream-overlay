@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ADMIN_ACCESS_TOKEN_PARAM_NAME } from '../constants';
 import { Token, TokensService } from './tokens.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { Token, TokensService } from './tokens.service';
 })
 export class TokensComponent implements OnInit, OnDestroy {
   private onDestroy = new Subject<void>();
+  readonly ADMIN_ACCESS_TOKEN_PARAM_NAME = ADMIN_ACCESS_TOKEN_PARAM_NAME;
+
   readonly tokens$ = this.tokensService.tokens$;
   readonly adminAccessTokens$ = this.tokensService.adminAccessTokens$;
 

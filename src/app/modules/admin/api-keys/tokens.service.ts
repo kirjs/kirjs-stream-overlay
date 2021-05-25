@@ -26,7 +26,8 @@ interface AdminAccessToken  extends  AdminAccessTokenPayload {
 })
 export class TokensService {
   private onDestroy = new Subject<void>();
-  private readonly adminAccessTokens = this.angularFire.collection('admin_access_tokens');
+  private readonly adminAccessTokens = this.angularFire.collection('adminAccessTokens');
+  private readonly uidsWithAccessToTokens = this.angularFire.collection('uidsWithAccessToTokens');
 
   readonly tokens = this.angularFire.collection('config').doc<Tokens>('tokens');
   readonly tokens$: Observable<Token[] | undefined> = this.tokens.valueChanges().pipe(map(t => t?.tokens));
@@ -40,10 +41,14 @@ export class TokensService {
       };
     })));
 
-  constructor(private readonly angularFire: AngularFirestore) {
+  constructor(private readonly angularFire: AngularFirestore) {}
 
-
+  elevateMeToAdminAndGrantMeTokens(uid: string, token: string){
+    debugger;
+    return this.uidsWithAccessToTokens.doc(uid).set({token});
   }
+
+
 
   updateValue(callback: (t: Token[]) => Token[]): void {
     this.tokens$
