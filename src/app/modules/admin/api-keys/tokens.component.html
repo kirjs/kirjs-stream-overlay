@@ -16,7 +16,25 @@
 
 <div class="new-token">
   <label>
-    <input type="text" #newTokenName />
+    <input type="text" #newTokenName/>
     <button (click)="createToken(newTokenName.value)">create token</button>
   </label>
+</div>
+
+<hr>
+<button mat-button (click)="createAdminAccessToken()">Create Admin Access Token</button>
+
+<div *ngFor="let token of adminAccessTokens$ | async" class="token">
+  <label>
+
+    <input
+      type="password"
+      disabled
+      [ngModel]="token.id"
+    />
+  </label>
+
+  <button mat-icon-button (click)="deleteAdminAccessTokens$(token.id)">
+    <mat-icon>cancel</mat-icon>
+  </button>
 </div>

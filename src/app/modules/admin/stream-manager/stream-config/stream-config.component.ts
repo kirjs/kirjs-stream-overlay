@@ -90,3 +90,4 @@ export class StreamConfigComponent implements OnInit {
     this.streamConfigService.createYoutubeBroadcast(stream).subscribe();
   }
 }
+

@@ -10,6 +10,7 @@ import { Token, TokensService } from './tokens.service';
 export class TokensComponent implements OnInit, OnDestroy {
   private onDestroy = new Subject<void>();
   readonly tokens$ = this.tokensService.tokens$;
+  readonly adminAccessTokens$ = this.tokensService.adminAccessTokens$;
 
   constructor(private readonly tokensService: TokensService) {}
 
@@ -34,5 +35,13 @@ export class TokensComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroy.next();
     this.onDestroy.complete();
+  }
+
+  createAdminAccessToken() {
+    this.tokensService.createAdminAccessToken();
+  }
+
+  deleteAdminAccessTokens$(id: string) {
+    this.tokensService.deleteAdminAccessToken(id);
   }
 }
