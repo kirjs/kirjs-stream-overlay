@@ -26,12 +26,15 @@
 
 <div *ngFor="let token of adminAccessTokens$ | async" class="token">
   <label>
-
     <input
       type="password"
       disabled
       [ngModel]="token.id"
     />
+    <button mat-icon-button [cdkCopyToClipboard]="'https://kirjs.com/overlay?' + ADMIN_ACCESS_TOKEN_PARAM_NAME + '=' + token.id">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+
   </label>
 
   <button mat-icon-button (click)="deleteAdminAccessTokens$(token.id)">

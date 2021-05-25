@@ -97,6 +97,7 @@ export class StreamConfigService {
     this.streams.add({
       ...stream,
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
+      youtubeId: undefined,
     } as any);
   }
 
