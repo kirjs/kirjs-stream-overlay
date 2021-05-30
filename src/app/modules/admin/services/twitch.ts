@@ -1,18 +1,20 @@
-import { Chat } from 'twitch-js';
-import { Injectable } from '@angular/core';
-import { combineLatest, interval, Observable } from 'rxjs';
-import {map, switchMap, take} from 'rxjs/operators';
-import { userId, username } from './tokens';
+import {Chat} from 'twitch-js';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {userId, username} from './tokens';
 
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { TokensService } from '../api-keys/tokens.service';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {TokensService} from '../api-keys/tokens.service';
+import {ChatMessage} from '../../overlay/chat/types';
 
-@Injectable({ providedIn: 'root' })
-export class TwitchClient {
+@Injectable({providedIn: 'root'})
+export class TwitchService {
   constructor(
     private readonly http: HttpClient,
     private readonly tokensService: TokensService,
-  ) {}
+  ) {
+  }
 
   readonly twitchTokens$ = this.tokensService.getTokens(
     'twitchClientId',
@@ -20,32 +22,25 @@ export class TwitchClient {
   );
 
   readonly timeout = 120000;
-  readonly now$ = interval(1000).pipe(map(() => Date.now()));
+
 
   readonly apiURL = 'https://api.twitch.tv/helix/';
 
-  readonly messages$ = this.tokensService.getTokens('chatToken').pipe(
-    map(({ chatToken }) => {
+  readonly messages$: Observable<ChatMessage[]> = this.tokensService.getTokens('chatToken').pipe(
+    map(({chatToken}) => {
       return new Chat({
         username,
         token: chatToken,
-        log: { level: 'warn' },
+        log: {level: 'warn'},
       });
     }),
     chat$ => {
       return new Observable<any[]>(subscriber => {
-        const timeout = this.timeout;
-
         chat$.subscribe(async chat => {
-          let messages: any[] = [];
-          subscriber.next(messages);
           const commands = ['PRIVMSG'];
           chat.on('*', (message: any) => {
             if (commands.includes(message.command)) {
-              messages.push(message);
-              const now = Date.now();
-              messages = messages.filter(m => now - m.timestamp < timeout);
-              subscriber.next(messages);
+              subscriber.next(message);
             }
           });
 
@@ -54,18 +49,20 @@ export class TwitchClient {
         });
       });
     },
-  );
-
-  readonly chat$ = combineLatest([this.messages$, this.now$]).pipe(
-    map(([messages, now]) => {
-      return messages.filter(m => now - m.timestamp < this.timeout);
-    }),
+    map((message: any) => {
+      return [{
+        text: message.message,
+        author: message.tags.displayName,
+        color: message.tags.color,
+        timestamp: message.timestamp,
+      }];
+    })
   );
 
   updateStreamInfo(title: string, language = 'en'): Observable<void> {
     return this.twitchTokens$
       .pipe(
-        switchMap(async ({ twitchClientId, twitchApiToken }) => {
+        switchMap(async ({twitchClientId, twitchApiToken}) => {
           const params = new HttpParams().set(
             'broadcaster_id',
             userId.toString(),

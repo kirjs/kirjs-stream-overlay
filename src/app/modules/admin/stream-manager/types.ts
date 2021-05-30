@@ -17,6 +17,7 @@ export interface Stream {
   highlights: string;
   promoText: string;
   youtubeId?: string;
+  lapteuhYoutubeLiveChatId?: string;
   secondaryTitle: string;
   realDateTime: string;
   lastModified: FieldValue;

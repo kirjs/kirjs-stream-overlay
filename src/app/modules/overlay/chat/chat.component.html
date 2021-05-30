@@ -9,19 +9,14 @@
         <div [innerHTML]="stream.description"></div>
       </ng-container>
     </div>
-    <div *ngIf="twitch.chat$ | async as messages">
+    <div *ngIf="chatService.chat$ | async as messages">
       <ng-container *ngIf="messages.length > 0">
         <h2>Chat</h2>
         <div *ngFor="let message of messages" class="message">
-          <div *ngIf="message.command === 'JOIN'">
-            <b class="username">{{ message.username }}</b> joined
-          </div>
-          <div *ngIf="message.command === 'PRIVMSG'">
-            <b class="username" [style.color]="message.tags.color">{{
-              message.tags.displayName
+            <b class="username" [style.color]="message.color">{{
+              message.author
             }}</b
-            >: {{ message.message }}
-          </div>
+            >: {{ message.text }}
         </div>
       </ng-container>
     </div>

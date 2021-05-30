@@ -44,7 +44,6 @@ export class TokensService {
   constructor(private readonly angularFire: AngularFirestore) {}
 
   elevateMeToAdminAndGrantMeTokens(uid: string, token: string){
-    debugger;
     return this.uidsWithAccessToTokens.doc(uid).set({token});
   }
 

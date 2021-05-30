@@ -6,7 +6,7 @@ import {Stream, StreamConfig, UIStream} from './types';
 
 import {combineLatest, Observable, of} from 'rxjs';
 import {map, mapTo, switchMap, tap} from 'rxjs/operators';
-import {TwitchClient} from '../services/twitch';
+import {TwitchService} from '../services/twitch';
 import {YoutubeService} from '../services/youtube.service';
 import {Router} from '@angular/router';
 
@@ -52,7 +52,7 @@ export class StreamConfigService {
 
   constructor(
     private readonly firestore: AngularFirestore,
-    private readonly twitchClient: TwitchClient,
+    private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
     private readonly router: Router,
   ) {
@@ -94,11 +94,13 @@ export class StreamConfigService {
   }
 
   duplicateStream(stream: UIStream): void {
-    this.streams.add({
+    const clonedStream = {
       ...stream,
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
-      youtubeId: undefined,
-    } as any);
+    };
+
+    delete clonedStream.youtubeId;
+    this.streams.add(clonedStream);
   }
 
   setYoutubeBroadcast(stream: UIStream): Observable<any> {
@@ -116,7 +118,10 @@ export class StreamConfigService {
   createYoutubeBroadcast(stream: UIStream): Observable<any> {
     return this.youtubeService.createBroadcast(stream)
       .pipe(switchMap(({result}) => {
-        return this.updateStream({...stream, youtubeId: result.id});
+        return this.updateStream({...stream,
+          youtubeId: result.id,
+          lapteuhYoutubeLiveChatId: result.snippet.liveChatId,
+        });
       }));
   }
 

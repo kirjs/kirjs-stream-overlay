@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TwitchClient } from '../../admin/services/twitch';
+import { TwitchService } from '../../admin/services/twitch';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
+import {ChatService} from "./chat.service";
 
 @Component({
   selector: 'app-chat',
@@ -8,11 +9,9 @@ import { StreamConfigService } from '../../admin/stream-manager/stream-config.se
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
-  timeout = 30000;
-
   constructor(
     readonly streamConfigService: StreamConfigService,
-    readonly twitch: TwitchClient,
+    readonly chatService: ChatService,
   ) {}
 
   ngOnInit(): void {}
