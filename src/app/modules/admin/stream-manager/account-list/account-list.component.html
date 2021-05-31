@@ -1,0 +1,8 @@
+<label> Account
+  <input [(ngModel)]="accountName">
+</label>
+<button (click)="addAccount()">Add account</button>
+
+<div *ngFor="let account of accountService.accounts$ | async">
+  <a [routerLink]="'./' + account.id">{{account.id}}</a>
+</div>

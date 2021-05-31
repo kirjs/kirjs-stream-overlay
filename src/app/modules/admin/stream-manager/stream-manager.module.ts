@@ -15,10 +15,11 @@ import {RouterModule} from '@angular/router';
 import {StreamConfigComponent} from './stream-config/stream-config.component';
 import {StreamListItemComponent} from './stream-list/stream-list-item/stream-list-item.component';
 import {AngularFireModule} from '@angular/fire';
+import { AccountListComponent } from './account-list/account-list.component';
 
 
 @NgModule({
-  declarations: [StreamListItemComponent, StreamManagerComponent, StreamListComponent, StreamConfigComponent],
+  declarations: [StreamListItemComponent, StreamManagerComponent, StreamListComponent, StreamConfigComponent, AccountListComponent],
   imports: [
     AngularFireModule,
     WysiwygEditorModule,

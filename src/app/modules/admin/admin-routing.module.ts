@@ -4,6 +4,7 @@ import {TokensComponent} from './api-keys/tokens.component';
 import {AdminWrapperComponent} from './admin-wrapper/admin-wrapper.component';
 import {StreamConfigComponent} from './stream-manager/stream-config/stream-config.component';
 import {StreamListComponent} from './stream-manager/stream-list/stream-list.component';
+import {AccountListComponent} from './stream-manager/account-list/account-list.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'streams',
         component: StreamListComponent,
+      },
+      {
+        path: 'accounts',
+        component: AccountListComponent,
       },
       {
         pathMatch: 'full',

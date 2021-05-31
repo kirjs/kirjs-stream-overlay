@@ -29,3 +29,7 @@ export interface UIStream extends Stream {
   key: string;
   isCurrent: boolean;
 }
+
+export interface UserAccount {
+  id: string;
+}

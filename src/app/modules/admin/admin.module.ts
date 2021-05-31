@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
-import {ClipboardModule} from "@angular/cdk/clipboard";
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {AccountListModule} from './stream-manager/account-list/account-list.module';
 
 @NgModule({
   declarations: [TokensComponent],
@@ -20,6 +21,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
         MatButtonModule,
         AdminRoutingModule,
         ClipboardModule,
+      AccountListModule,
     ],
 })
 export class AdminModule {}
