@@ -142,6 +142,17 @@
     </label>
   </div>
 
+  <div class="field">
+    <label>
+      <span class="label">Show chat</span>
+      <input
+        type="checkbox"
+        [ngModel]="stream.showChat"
+        (ngModelChange)="updateByPropName(stream, 'showChat', $event)"
+      />
+    </label>
+  </div>
+
   <div style="margin-top: 20px" #announce>
     <app-announce [stream]="stream"></app-announce>
   </div>

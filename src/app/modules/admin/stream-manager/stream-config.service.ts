@@ -71,6 +71,7 @@ export class StreamConfigService {
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
       promoText: '',
+      showChat: true,
       secondaryTitle: '#Angular',
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
