@@ -9,16 +9,18 @@
         <div [innerHTML]="stream.description"></div>
       </ng-container>
     </div>
-    <div *ngIf="chatService.chat$ | async as messages">
-      <ng-container *ngIf="messages.length > 0">
-        <h2>Chat</h2>
-        <div *ngFor="let message of messages" class="message">
+    <ng-container *ngIf="shouldShowChat$ | async">
+      <div *ngIf="chatService.chat$ | async as messages">
+        <ng-container *ngIf="messages.length > 0">
+          <h2>Chat</h2>
+          <div *ngFor="let message of messages" class="message">
             <b class="username" [style.color]="message.color">{{
               message.author
-            }}</b
+              }}</b
             >: {{ message.text }}
-        </div>
-      </ng-container>
-    </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </div>
