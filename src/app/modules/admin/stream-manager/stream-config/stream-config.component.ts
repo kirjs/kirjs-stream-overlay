@@ -13,7 +13,7 @@ import domtoimage from 'dom-to-image';
   templateUrl: './stream-config.component.html',
   styleUrls: ['./stream-config.component.scss']
 })
-export class StreamConfigComponent implements OnInit {
+export class StreamConfigComponent  {
   readonly selectedStreamKey$ = this.route.params.pipe(map(a => {
     return a.id;
   }));
@@ -48,7 +48,7 @@ export class StreamConfigComponent implements OnInit {
     this.streamConfigService.selectStream(stream).subscribe(() => {
       this.snackBar.open('Stream started successfully', 'ok', {duration: 500});
     }, (e) => {
-      this.snackBar.open(e.error.description, 'ok');
+      this.snackBar.open(e.result?.error?.message, 'ok');
     });
   }
 
@@ -83,11 +83,18 @@ export class StreamConfigComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+
+
+  createBroadcast(stream: UIStream): void {
+    this.streamConfigService.createYoutubeBroadcast(stream).subscribe();
   }
 
-  createBroadcast(stream: UIStream) {
-    this.streamConfigService.createYoutubeBroadcast(stream).subscribe();
+  linkToStream(stream: UIStream): void {
+    this.streamConfigService.linkToStream(stream).subscribe(() => {
+      this.snackBar.open('Stream linked successfully', 'ok', {duration: 500});
+    }, (e) => {
+      this.snackBar.open(e.result?.error?.message, 'ok');
+    });
   }
 }
 

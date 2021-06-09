@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
 import {TokensService} from '../api-keys/tokens.service';
-import {scan, switchMap} from 'rxjs/operators';
-import {interval, Observable} from 'rxjs';
-import {stripHtml} from "../utils";
+import {filter, last, map, mapTo, switchMap, takeWhile, tap} from 'rxjs/operators';
+import {from, interval, Observable, of, timer} from 'rxjs';
+import {stripHtml} from '../utils';
 import {UIStream} from '../stream-manager/types';
 import {ChatMessage} from '../../overlay/chat/types';
-import {maxChatTimeout} from '../../overlay/chat/common';
 
 // First step: obtain the video's 'categoryId'
 
 function toYoutubeDate(date: string): string {
   return date + ':00Z';
 }
+
+const CHAT_POLL_INTERVAL = 1000;
+const BROADCAST_STATUS_POLL_INTERVAL = 1000;
 
 declare const gapi: any;
 
@@ -21,6 +23,8 @@ interface YoutubeBroadcast {
     liveChatId: string;
   };
 }
+
+type BroadcastStatus = 'live' | 'testing' | 'complete';
 
 @Injectable({
   providedIn: 'root',
@@ -71,7 +75,7 @@ export class YoutubeService {
 
   }
 
-  updateLiveStreamById(id: string, stream: UIStream): Observable<{ result: YoutubeBroadcast }> {
+  updateLiveBroadcastById(id: string, stream: UIStream): Observable<{ result: YoutubeBroadcast }> {
     return this.api$.pipe(switchMap(async ({youtube}) => {
       return await youtube.liveBroadcasts.update({
         part: 'snippet',
@@ -118,7 +122,7 @@ export class YoutubeService {
       switchMap(({youtube}) => {
         let nextPageToken: string;
 
-        return interval(1000).pipe(switchMap(a => {
+        return interval(CHAT_POLL_INTERVAL).pipe(switchMap(() => {
           return youtube.liveChatMessages.list({
             part: 'snippet',
             liveChatId,
@@ -136,6 +140,109 @@ export class YoutubeService {
         }));
       }));
   }
+
+  bindBroadcastToStream(id: string, streamId: string): Observable<any> {
+    return this.api$.pipe(
+      switchMap(({youtube}) => {
+        return youtube.liveBroadcasts.bind({
+          part: 'snippet,status,contentDetails',
+          id,
+          streamId,
+        });
+      }));
+  }
+
+  getBroadcast(id: string): Observable<any> {
+    return this.api$.pipe(switchMap(async ({youtube}) => {
+      return await youtube.liveBroadcasts.list({
+        snippet: 'status,contentDetails',
+        id
+      }).then((response: any) => response.result.items[0]);
+    }));
+  }
+
+  getBroadcastStatus(id: string) {
+    return this.getBroadcast(id).pipe(map(broadcast => {
+      return broadcast.status.lifeCycleStatus;
+    }));
+  }
+
+  waitForBroadcastStatus(id: string, status: BroadcastStatus) {
+    return timer(0, BROADCAST_STATUS_POLL_INTERVAL).pipe(
+      switchMap(() => {
+        return this.getBroadcastStatus(id);
+      }),
+      takeWhile(broadcastStatus => {
+        console.log(broadcastStatus);
+        return broadcastStatus !== status;
+      }),
+      last(),
+      tap(st => console.log({st}))
+    );
+  }
+
+  linkToStream(stream: UIStream): Observable<any> {
+
+    return this.getActiveLivestream()
+      .pipe(
+        switchMap((livesStream) => this.bindBroadcastToStream(stream.youtubeId!, livesStream.id)
+        ),
+        switchMap((broadcast: any) => {
+            const status = broadcast.result.status.lifeCycleStatus;
+            if (status === 'testing' || status === 'live') {
+              return of(broadcast);
+            }
+
+            if (status === 'ready') {
+              // TODO(kirjs): Find a better alternative
+              broadcast.result.status.lifeCycleStatus = 'testing';
+              return this.transitionBroadcast(broadcast.result.id, 'testing').pipe(
+                mapTo(broadcast),
+              );
+            }
+            throw new Error('Unexpected status');
+          }
+        ),
+        switchMap((broadcast: any) => {
+          if (broadcast.result.status.lifeCycleStatus === 'testing') {
+            return this.transitionBroadcast(broadcast.result.id, 'live');
+          }
+
+          return of(broadcast);
+        })
+      );
+  }
+
+  private transitionBroadcast(id: string, broadcastStatus: BroadcastStatus) {
+    return this.api$.pipe(
+      switchMap(({youtube}) => {
+          return youtube.liveBroadcasts.transition({
+            id,
+            broadcastStatus,
+            part: 'snippet'
+          });
+        }
+      ),
+      switchMap((broadcast: any) => {
+        return this.waitForBroadcastStatus(broadcast.result.id, broadcastStatus);
+      }),
+    );
+  }
+
+  private getActiveLivestream() {
+    return this.api$.pipe(
+      switchMap(({youtube}) => {
+          return from(youtube.liveStreams.list({
+            part: 'snippet,status',
+            mine: true,
+          })).pipe(map((response: any) => {
+              return response.result.items.find((i: any) => i.status.streamStatus === 'active');
+            }),
+            filter(a => !!a));
+        }
+      ));
+  }
 }
+
 
 

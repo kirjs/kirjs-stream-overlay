@@ -113,7 +113,7 @@ export class StreamConfigService {
   }
 
   updateYoutubeBroadcast(youtubeId: string, stream: UIStream): Observable<any> {
-    return this.youtubeService.updateLiveStreamById(youtubeId, stream);
+    return this.youtubeService.updateLiveBroadcastById(youtubeId, stream);
   }
 
   createYoutubeBroadcast(stream: UIStream): Observable<any> {
@@ -141,5 +141,9 @@ export class StreamConfigService {
     });
 
     this.duplicateStream({...stream, name});
+  }
+
+  linkToStream(stream: UIStream): Observable<any> {
+    return this.youtubeService.linkToStream(stream);
   }
 }

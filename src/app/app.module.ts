@@ -22,18 +22,18 @@ import ru from '@angular/common/locales/ru';
 registerLocaleData(ru, 'ru');
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyC1RAwdiF-nGT9XB196Gf6AQHe96svMMuM',
-  authDomain: 'test-overlay-project.firebaseapp.com',
-  projectId: 'test-overlay-project',
-  storageBucket: 'test-overlay-project.appspot.com',
-  messagingSenderId: '977379365119',
-  appId: '1:977379365119:web:8569503929ee6bdb4ffcca'
-  // apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
-  // authDomain: 'kirjs-stream-overlay.firebaseapp.com',
-  // projectId: 'kirjs-stream-overlay',
-  // storageBucket: 'kirjs-stream-overlay.appspot.com',
-  // messagingSenderId: '703581438271',
-  // appId: '1:703581438271:web:b0a3b0a4e621115453d38a',
+  // apiKey: 'AIzaSyC1RAwdiF-nGT9XB196Gf6AQHe96svMMuM',
+  // authDomain: 'test-overlay-project.firebaseapp.com',
+  // projectId: 'test-overlay-project',
+  // storageBucket: 'test-overlay-project.appspot.com',
+  // messagingSenderId: '977379365119',
+  // appId: '1:977379365119:web:8569503929ee6bdb4ffcca'
+  apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
+  authDomain: 'kirjs-stream-overlay.firebaseapp.com',
+  projectId: 'kirjs-stream-overlay',
+  storageBucket: 'kirjs-stream-overlay.appspot.com',
+  messagingSenderId: '703581438271',
+  appId: '1:703581438271:web:b0a3b0a4e621115453d38a',
 };
 
 @NgModule({
