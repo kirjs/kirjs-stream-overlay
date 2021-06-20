@@ -1,9 +1,9 @@
 <div *ngIf="currentStream$ | async as stream" class="stream-config">
   <div class="stream-controls">
     <div class="stream-buttons">
-      <button mat-button [routerLink]="'/admin/streams'">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
+      <a tuiIconButton title="back" appearance="flat"  icon="tuiIconBackCircleLarge" [routerLink]="'/admin/streams'">
+      </a>
+
       <button mat-button (click)="startStream(stream)">Start stream</button>
       <button mat-button (click)="nextEpisode(stream)">Next episode</button>
 

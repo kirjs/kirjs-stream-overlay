@@ -18,6 +18,7 @@ import {HomeModule} from './modules/home/home.module';
 import {registerLocaleData} from '@angular/common';
 
 import ru from '@angular/common/locales/ru';
+import {TuiNotificationsModule, TuiRootModule} from '@taiga-ui/core';
 
 registerLocaleData(ru, 'ru');
 
@@ -38,22 +39,24 @@ const firebaseConfig = {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireStorageModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule,
-    AdminModule,
-    ChatModule,
-    OverlayModule,
-    StreamCompleteModule,
-    BarModule,
-    ApiKeysModule,
-    HomeModule,
-  ],
+    imports: [
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireStorageModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule,
+        AdminModule,
+        ChatModule,
+        OverlayModule,
+        StreamCompleteModule,
+        BarModule,
+        ApiKeysModule,
+        HomeModule,
+        TuiRootModule,
+        TuiNotificationsModule,
+    ],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],
 })
