@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TokensService} from '../api-keys/tokens.service';
-import {filter, last, map, mapTo, switchMap, takeWhile, tap} from 'rxjs/operators';
+import {filter, last, map, mapTo, switchMap, take, takeWhile, tap} from 'rxjs/operators';
 import {from, interval, Observable, of, timer} from 'rxjs';
 import {stripHtml} from '../utils';
 import {UIStream} from '../stream-manager/types';
@@ -31,6 +31,35 @@ type BroadcastStatus = 'live' | 'testing' | 'complete';
 })
 export class YoutubeService {
   clientId = '1091615339826-3rkfjkddctiimpna3evd5sjjvnuikh7c.apps.googleusercontent.com';
+  readonly api$: Observable<any> = this.tokenService.getToken('youtubeApiKey').pipe(
+    take(1),
+    switchMap((apiKey: string) => {
+      return new Promise((resolve) => {
+        gapi.load('client', async () => {
+          await gapi.client.init({
+            apiKey,
+            clientId: this.clientId,
+            discoveryDocs: [
+              'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
+            ],
+            scope:
+              'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly',
+          });
+
+          const auth = gapi.auth2.getAuthInstance();
+
+          if (!auth.isSignedIn.get()) {
+            await auth.signIn();
+          }
+
+          await new Promise(resolveYoutube => {
+            gapi.client.load('youtube', 'v3', resolveYoutube);
+          });
+
+          resolve({youtube: gapi.client.youtube});
+        });
+      });
+    }));
 
   readonly chat$ = new Observable<ChatMessage[]>(({next}) => {
     this.api$.pipe(switchMap(async ({youtube}) => {
@@ -41,38 +70,9 @@ export class YoutubeService {
     next([]);
   });
 
-  readonly api$: Observable<any> = this.tokenService.getToken('youtubeApiKey').pipe(switchMap((apiKey: string) => {
-    return new Promise((resolve) => {
-      gapi.load('client', async () => {
-        await gapi.client.init({
-          apiKey,
-          clientId: this.clientId,
-          discoveryDocs: [
-            'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
-          ],
-          scope:
-            'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly',
-        });
-
-        const auth = gapi.auth2.getAuthInstance();
-
-        if (!auth.isSignedIn.get()) {
-          await auth.signIn();
-        }
-
-        await new Promise(resolveYoutube => {
-          gapi.client.load('youtube', 'v3', resolveYoutube);
-        });
-
-        resolve({youtube: gapi.client.youtube});
-      });
-    });
-  }));
-
   constructor(
     private readonly tokenService: TokensService,
   ) {
-
   }
 
   updateLiveBroadcastById(id: string, stream: UIStream): Observable<{ result: YoutubeBroadcast }> {

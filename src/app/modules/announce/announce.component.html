@@ -1,6 +1,8 @@
-<div class="wrapper" *ngIf="stream" [style.background]="stream.color">
-  <h1 class="screen-title">
-    {{stream.language === 'ru'? 'Стрим' : 'Stream'}}: "{{ stream.name }}"</h1>
+<div class="wrapper"
+     *ngIf="stream"
+     [style.background]="stream.color"
+     [style.color]="stream.fontColor">
+  <h1 class="screen-title">{{ stream.name }}</h1>
 
   <div class="body">
     <div class="images">

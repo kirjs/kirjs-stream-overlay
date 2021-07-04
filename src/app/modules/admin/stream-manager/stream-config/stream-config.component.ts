@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {StreamConfigService} from '../stream-config.service';
@@ -13,19 +13,10 @@ import domtoimage from 'dom-to-image';
   templateUrl: './stream-config.component.html',
   styleUrls: ['./stream-config.component.scss']
 })
-export class StreamConfigComponent  {
+export class StreamConfigComponent {
   readonly selectedStreamKey$ = this.route.params.pipe(map(a => {
     return a.id;
   }));
-
-  constructor(
-    readonly streamConfigService: StreamConfigService,
-    private readonly telegramService: TelegramService,
-    private readonly  snackBar: MatSnackBar,
-    private readonly route: ActivatedRoute) {
-  }
-
-
   readonly currentStream$ = combineLatest([
     this.streamConfigService.allStreams$,
     this.selectedStreamKey$,
@@ -34,6 +25,13 @@ export class StreamConfigComponent  {
       return allStreams.find(stream => stream.key === key);
     }),
   );
+
+  constructor(
+    readonly streamConfigService: StreamConfigService,
+    private readonly telegramService: TelegramService,
+    private readonly  snackBar: MatSnackBar,
+    private readonly route: ActivatedRoute) {
+  }
 
   deleteStream(key: string, youtubeId?: string): void {
     this.streamConfigService.deleteStream(key, youtubeId).subscribe();
@@ -44,11 +42,11 @@ export class StreamConfigComponent  {
   }
 
   startStream(stream: UIStream): void {
-
     this.streamConfigService.selectStream(stream).subscribe(() => {
       this.snackBar.open('Stream started successfully', 'ok', {duration: 500});
     }, (e) => {
-      this.snackBar.open(e.result?.error?.message, 'ok');
+      // TODO(kirjs): Standardize other errors.
+      this.snackBar.open(e.error || e.result?.error?.message, 'ok');
     });
   }
 
@@ -71,7 +69,6 @@ export class StreamConfigComponent  {
     return domtoimage.toBlob(el);
   }
 
-
   async postToTelegram(announce: Element, stream: UIStream): Promise<void> {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
@@ -82,8 +79,6 @@ export class StreamConfigComponent  {
       this.snackBar.open(e.error.description, 'ok');
     });
   }
-
-
 
   createBroadcast(stream: UIStream): void {
     this.streamConfigService.createYoutubeBroadcast(stream).subscribe();

@@ -5,6 +5,7 @@ import {AdminWrapperComponent} from './admin-wrapper/admin-wrapper.component';
 import {StreamConfigComponent} from './stream-manager/stream-config/stream-config.component';
 import {StreamListComponent} from './stream-manager/stream-list/stream-list.component';
 import {AccountListComponent} from './stream-manager/account-list/account-list.component';
+import {RestreamGuard} from '../integrations/restream/restream.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,17 @@ const routes: Routes = [
     children: [
       {path: 'tokens', component: TokensComponent},
       {path: 'streams/:id', component: StreamConfigComponent},
+      {
+        path: 'login',
+        children: [
+          {
+            // This is needed for restream API auth
+            path: 'restream',
+            canActivate: [RestreamGuard],
+            children: []
+          }
+        ]
+      },
       {
         path: 'streams',
         component: StreamListComponent,
