@@ -1,7 +1,8 @@
 <div *ngIf="currentStream$ | async as stream" class="stream-config">
   <div class="stream-controls">
     <div class="stream-buttons">
-      <a tuiIconButton title="back" appearance="flat"  icon="tuiIconBackCircleLarge" [routerLink]="'/admin/streams'">
+      <a tuiIconButton title="back" appearance="flat" icon="tuiIconBackCircleLarge"
+         [routerLink]="'/admin/streams'">
       </a>
 
       <button mat-button (click)="startStream(stream)">Start stream</button>
@@ -154,6 +155,12 @@
         [ngModel]="stream.youtubeId"
         (ngModelChange)="updateByPropName(stream, 'youtubeId', $event)"
       />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Youtube chat id</span>
+      {{stream.lapteuhYoutubeLiveChatId}}
     </label>
   </div>
 

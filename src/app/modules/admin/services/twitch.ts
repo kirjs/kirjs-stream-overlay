@@ -52,7 +52,7 @@ export class TwitchService {
     map((message: any) => {
       return [{
         text: message.message,
-        author: message.tags.displayName,
+        displayName: message.tags.displayName,
         color: message.tags.color,
         timestamp: message.timestamp,
       }];

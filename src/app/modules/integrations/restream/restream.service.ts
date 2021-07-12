@@ -43,8 +43,10 @@ export class RestreamService {
         }));
       }),
       catchError((error) => {
+        // TODO(kirjs): Figure out why error messages have different format.
+        const message = error.error.error ? error.error.error.message : error.message;
         return throwError({
-          error: 'Restream error: ' + error.error.error.message
+          error: 'Restream error: ' + message,
         });
       })
     );

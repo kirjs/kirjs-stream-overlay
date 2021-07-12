@@ -9,7 +9,6 @@ import {map, mapTo, switchMap, tap} from 'rxjs/operators';
 import {TwitchService} from '../services/twitch';
 import {YoutubeService} from '../services/youtube.service';
 import {Router} from '@angular/router';
-import {RestreamService} from '../../integrations/restream/restream.service';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
@@ -56,7 +55,7 @@ export class StreamConfigService {
     private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
     private readonly router: Router,
-    private readonly restreamService: RestreamService,
+    // private readonly restreamService: RestreamService,
   ) {
   }
 
@@ -115,13 +114,21 @@ export class StreamConfigService {
   }
 
   updateYoutubeBroadcast(youtubeId: string, stream: UIStream): Observable<any> {
-    return this.youtubeService.updateLiveBroadcastById(youtubeId, stream);
+    return this.youtubeService.updateLiveBroadcastById(youtubeId, stream)
+      .pipe(switchMap(({result}) => {
+        // TODO(kirjs): We prob won't need this once everything works properly
+        return this.updateStream({
+          ...stream,
+          lapteuhYoutubeLiveChatId: result.snippet.liveChatId,
+        });
+      }));
   }
 
   createYoutubeBroadcast(stream: UIStream): Observable<any> {
     return this.youtubeService.createBroadcast(stream)
       .pipe(switchMap(({result}) => {
-        return this.updateStream({...stream,
+        return this.updateStream({
+          ...stream,
           youtubeId: result.id,
           lapteuhYoutubeLiveChatId: result.snippet.liveChatId,
         });
@@ -135,7 +142,7 @@ export class StreamConfigService {
       this.setYoutubeBroadcast(stream),
       this.streamConfig.set({streamId: stream.key}),
       this.updateStream(stream),
-      this.restreamService.updateTitle(stream.name),
+      // this.restreamService.updateTitle(stream.name),
     ]).pipe(mapTo(undefined));
   }
 

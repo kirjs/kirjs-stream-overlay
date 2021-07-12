@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
-import {interval, merge, Observable} from 'rxjs';
+import {EMPTY, merge, Observable} from 'rxjs';
 import {TwitchService} from '../../admin/services/twitch';
-import {filter, map, scan, switchMap} from 'rxjs/operators';
+import {catchError, filter, map, scan, switchMap} from 'rxjs/operators';
 import {YoutubeService} from '../../admin/services/youtube.service';
 import {StreamConfigService} from '../../admin/stream-manager/stream-config.service';
 import {ChatMessage} from './types';
 import {maxChatTimeout} from './common';
-
-
-const now$ = interval(1000).pipe(map(() => Number(Date.now())));
 
 
 @Injectable({
@@ -25,7 +22,7 @@ export class ChatService {
 
   readonly latestMessages$: Observable<ChatMessage[]> = merge(
     this.twitch.messages$,
-    this.youtubeChat$
+    this.youtubeChat$.pipe(catchError(() => EMPTY))
   )
     .pipe(scan((messages: ChatMessage[], message) => {
       const now = +new Date();

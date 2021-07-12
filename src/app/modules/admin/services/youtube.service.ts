@@ -61,15 +61,6 @@ export class YoutubeService {
       });
     }));
 
-  readonly chat$ = new Observable<ChatMessage[]>(({next}) => {
-    this.api$.pipe(switchMap(async ({youtube}) => {
-      return await youtube.liveChatMessages.list({
-        part: 'snippet',
-      });
-    }));
-    next([]);
-  });
-
   constructor(
     private readonly tokenService: TokensService,
   ) {
@@ -124,7 +115,7 @@ export class YoutubeService {
 
         return interval(CHAT_POLL_INTERVAL).pipe(switchMap(() => {
           return youtube.liveChatMessages.list({
-            part: 'snippet',
+            part: 'snippet,authorDetails',
             liveChatId,
             pageToken: nextPageToken,
           }).then((response: any): ChatMessage[] => {
@@ -132,7 +123,8 @@ export class YoutubeService {
             return response.result.items.map((item: any): ChatMessage => {
               return ({
                 text: item.snippet.displayMessage,
-                author: item.snippet.authorChannelId,
+                displayName: item.authorDetails.displayName,
+                profileUrl: item.authorDetails.profileImageUrl,
                 timestamp: new Date(item.snippet.publishedAt),
               });
             });

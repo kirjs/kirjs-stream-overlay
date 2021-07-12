@@ -14,10 +14,17 @@
         <ng-container *ngIf="messages.length > 0">
           <h2>Chat</h2>
           <div *ngFor="let message of messages" class="message">
-            <b class="username" [style.color]="message.color">{{
-              message.author
-              }}</b
-            >: {{ message.text }}
+            <ng-container>
+              <img class="profile-picture" *ngIf="message.profileUrl"
+                   [src]="message.profileUrl" alt="profile picture">
+              <div class="profile-picture" [style.background-color]="message.color || '#f90'" *ngIf="!message.profileUrl"></div>
+            </ng-container>
+            <div>
+              <b class="username" [style.color]="message.color">{{
+                message.displayName
+                }}:</b
+              > {{ message.text }}
+            </div>
           </div>
         </ng-container>
       </div>
