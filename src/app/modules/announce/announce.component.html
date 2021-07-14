@@ -1,12 +1,14 @@
-<div class="wrapper"
-     *ngIf="stream"
-     [style.background]="stream.color"
-     [style.color]="stream.fontColor">
+<div
+  class="wrapper"
+  *ngIf="stream"
+  [style.background]="stream.color"
+  [style.color]="stream.fontColor"
+>
   <h1 class="screen-title">{{ stream.name }}</h1>
 
   <div class="body">
     <div class="images">
-<!--            <img src="/assets/kiba.jpg" class="dog">-->
+      <!--            <img src="/assets/kiba.jpg" class="dog">-->
       <img src="/assets/kirjs.jpg" class="dog" alt="it's a dog" />
     </div>
     <div class="description" [innerHTML]="stream.description"></div>
@@ -14,6 +16,8 @@
 
   <div class="links">
     <div class="twitch">twitch.tv/kirjs</div>
-    <div class="date">{{ stream.realDateTime | date:'d MMMM H:mm ':undefined:stream.language }}</div>
+    <div class="date">
+      {{ stream.realDateTime | date: 'd MMMM H:mm ':undefined:stream.language }}
+    </div>
   </div>
 </div>

@@ -16,7 +16,8 @@
     padding: 16px;
   }
 
-  h1, .links {
+  h1,
+  .links {
     font-size: var(--header-size);
     line-height: var(--header-line-height);
     margin: 0;
@@ -29,7 +30,6 @@
 
     ::ng-deep p {
       line-height: var(--font-line-height);
-
     }
 
     .images {
@@ -42,7 +42,6 @@
       }
     }
   }
-
 }
 
 .wrapper {

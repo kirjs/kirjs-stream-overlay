@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { RestreamAuthServiceService } from './restream-auth.service';
 
 describe('RestreamAuthServiceService', () => {
