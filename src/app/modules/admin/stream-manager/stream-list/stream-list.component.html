@@ -1,12 +1,14 @@
 <div class="streams">
-
   <button mat-button (click)="addNewStream()">Add new stream</button>
   <ng-container
-    *ngFor="let stream of (streamConfigService.allStreams$ | async); trackBy: trackByKey"
+    *ngFor="
+      let stream of streamConfigService.allStreams$ | async;
+      trackBy: trackByKey
+    "
   >
     <app-stream-list-item
-      [routerLink]="['/','admin', 'streams', stream.key]"
-      [class.selected] ="(selectedStreamKey$ | async) === stream.key"
+      [routerLink]="['/', 'admin', 'streams', stream.key]"
+      [class.selected]="(selectedStreamKey$ | async) === stream.key"
       [stream]="stream"
     ></app-stream-list-item>
   </ng-container>

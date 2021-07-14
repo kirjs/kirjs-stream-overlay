@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { WysiwygEditorComponent } from './wysiwyg-editor.component';
 
 describe('WysiwygEditorComponent', () => {
@@ -8,9 +7,8 @@ describe('WysiwygEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WysiwygEditorComponent ]
-    })
-    .compileComponents();
+      declarations: [WysiwygEditorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

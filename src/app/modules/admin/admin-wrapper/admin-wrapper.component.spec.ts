@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AdminWrapperComponent } from './admin-wrapper.component';
 
 describe('AdminWrapperComponent', () => {
@@ -8,9 +7,8 @@ describe('AdminWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminWrapperComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminWrapperComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StreamConfigService } from '../admin/stream-manager/stream-config.service';
 
 @Component({

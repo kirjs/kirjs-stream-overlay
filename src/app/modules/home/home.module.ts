@@ -1,15 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { AnnounceModule } from '../announce/announce.module';
 import { HomeComponent } from './home.component';
-import {AnnounceModule} from '../announce/announce.module';
-
-
 
 @NgModule({
   declarations: [HomeComponent],
-    imports: [
-        CommonModule,
-        AnnounceModule
-    ]
+  imports: [CommonModule, AnnounceModule],
 })
-export class HomeModule { }
+export class HomeModule {}

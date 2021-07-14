@@ -9,21 +9,33 @@
         <div [innerHTML]="stream.description"></div>
       </ng-container>
     </div>
-    <div *ngIf="twitch.chat$ | async as messages">
-      <ng-container *ngIf="messages.length > 0">
-        <h2>Chat</h2>
-        <div *ngFor="let message of messages" class="message">
-          <div *ngIf="message.command === 'JOIN'">
-            <b class="username">{{ message.username }}</b> joined
+    <ng-container *ngIf="shouldShowChat$ | async">
+      <div *ngIf="chatService.chat$ | async as messages">
+        <ng-container *ngIf="messages.length > 0">
+          <h2>Chat</h2>
+          <div *ngFor="let message of messages" class="message">
+            <ng-container>
+              <img
+                class="profile-picture"
+                *ngIf="message.profileUrl"
+                [src]="message.profileUrl"
+                alt="profile picture"
+              />
+              <div
+                class="profile-picture"
+                [style.background-color]="message.color || '#f90'"
+                *ngIf="!message.profileUrl"
+              ></div>
+            </ng-container>
+            <div>
+              <b class="username" [style.color]="message.color"
+                >{{ message.displayName }}:</b
+              >
+              {{ message.text }}
+            </div>
           </div>
-          <div *ngIf="message.command === 'PRIVMSG'">
-            <b class="username" [style.color]="message.tags.color">{{
-              message.tags.displayName
-            }}</b
-            >: {{ message.message }}
-          </div>
-        </div>
-      </ng-container>
-    </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </div>

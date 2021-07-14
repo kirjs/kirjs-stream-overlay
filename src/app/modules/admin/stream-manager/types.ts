@@ -17,6 +17,8 @@ export interface Stream {
   highlights: string;
   promoText: string;
   youtubeId?: string;
+  lapteuhYoutubeLiveChatId?: string;
+  showChat: boolean;
   secondaryTitle: string;
   realDateTime: string;
   lastModified: FieldValue;
@@ -26,4 +28,8 @@ export interface Stream {
 export interface UIStream extends Stream {
   key: string;
   isCurrent: boolean;
+}
+
+export interface UserAccount {
+  id: string;
 }

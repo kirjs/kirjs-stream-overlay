@@ -1,27 +1,33 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {AngularFireModule} from '@angular/fire';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {ChatModule} from './modules/overlay/chat/chat.module';
-import {BarModule} from './modules/overlay/bar/bar.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {OverlayModule} from './modules/overlay/overlay.module';
-import {RouterModule} from '@angular/router';
-import {AdminModule} from './modules/admin/admin.module';
-import {StreamConfigService} from './modules/admin/stream-manager/stream-config.service';
-import {StreamCompleteModule} from './modules/stream-complete/stream-complete.module';
-import {AngularFireStorageModule} from '@angular/fire/storage';
-import {HttpClientModule} from '@angular/common/http';
-import {ApiKeysModule} from './modules/admin/api-keys/api-keys.module';
-import {HomeModule} from './modules/home/home.module';
-import {registerLocaleData} from '@angular/common';
-
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import ru from '@angular/common/locales/ru';
+import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { TuiNotificationsModule, TuiRootModule } from '@taiga-ui/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AdminModule } from './modules/admin/admin.module';
+import { ApiKeysModule } from './modules/admin/api-keys/api-keys.module';
+import { StreamConfigService } from './modules/admin/stream-manager/stream-config.service';
+import { HomeModule } from './modules/home/home.module';
+import { BarModule } from './modules/overlay/bar/bar.module';
+import { ChatModule } from './modules/overlay/chat/chat.module';
+import { OverlayModule } from './modules/overlay/overlay.module';
+import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
 
 registerLocaleData(ru, 'ru');
 
 const firebaseConfig = {
+  // apiKey: 'AIzaSyC1RAwdiF-nGT9XB196Gf6AQHe96svMMuM',
+  // authDomain: 'test-overlay-project.firebaseapp.com',
+  // projectId: 'test-overlay-project',
+  // storageBucket: 'test-overlay-project.appspot.com',
+  // messagingSenderId: '977379365119',
+  // appId: '1:977379365119:web:8569503929ee6bdb4ffcca'
   apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
   authDomain: 'kirjs-stream-overlay.firebaseapp.com',
   projectId: 'kirjs-stream-overlay',
@@ -47,9 +53,10 @@ const firebaseConfig = {
     BarModule,
     ApiKeysModule,
     HomeModule,
+    TuiRootModule,
+    TuiNotificationsModule,
   ],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

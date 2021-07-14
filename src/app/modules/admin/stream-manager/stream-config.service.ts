@@ -1,20 +1,20 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import {Stream, StreamConfig, UIStream} from './types';
-
-import {combineLatest, Observable, of} from 'rxjs';
-import {map, mapTo, switchMap, tap} from 'rxjs/operators';
-import {TwitchClient} from '../services/twitch';
-import {YoutubeService} from '../services/youtube.service';
-import {Router} from '@angular/router';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, mapTo, switchMap, tap } from 'rxjs/operators';
+import { TwitchService } from '../services/twitch';
+import { YoutubeService } from '../services/youtube.service';
+import { Stream, StreamConfig, UIStream } from './types';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
-const isInThePast = (dateTime: string) => Number(new Date(dateTime)) - Date.now() > 0;
+const isInThePast = (dateTime: string) =>
+  Number(new Date(dateTime)) - Date.now() > 0;
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class StreamConfigService {
   private readonly streamConfig = this.firestore
     .collection('config')
@@ -24,7 +24,7 @@ export class StreamConfigService {
   );
 
   readonly allStreams$: Observable<UIStream[]> = combineLatest([
-    this.streams.valueChanges({idField: 'key'}),
+    this.streams.valueChanges({ idField: 'key' }),
     this.streamConfig.valueChanges(),
   ]).pipe(
     map(([streams, streamConfig]) => {
@@ -35,28 +35,31 @@ export class StreamConfigService {
     }),
   );
 
-  readonly pastStreams$ = this.allStreams$.pipe(map(streams => {
-    return streams.filter(stream => {
-      return !isInThePast(stream.realDateTime);
-    });
-  }));
-  readonly futureStreams$ = this.allStreams$.pipe(map(streams => {
-    return streams.filter(stream => {
-      return isInThePast(stream.realDateTime);
-    });
-  }));
+  readonly pastStreams$ = this.allStreams$.pipe(
+    map(streams => {
+      return streams.filter(stream => {
+        return !isInThePast(stream.realDateTime);
+      });
+    }),
+  );
+  readonly futureStreams$ = this.allStreams$.pipe(
+    map(streams => {
+      return streams.filter(stream => {
+        return isInThePast(stream.realDateTime);
+      });
+    }),
+  );
   readonly currentStream$ = this.allStreams$.pipe(
     map(streams => streams.find(stream => stream.isCurrent)),
   );
 
-
   constructor(
     private readonly firestore: AngularFirestore,
-    private readonly twitchClient: TwitchClient,
+    private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
     private readonly router: Router,
-  ) {
-  }
+  ) // private readonly restreamService: RestreamService,
+  {}
 
   addNewStream(): void {
     this.streams.add({
@@ -71,6 +74,7 @@ export class StreamConfigService {
       color: colors[Math.floor(Math.random() * colors.length)],
       fontColor: '#dddddd',
       promoText: '',
+      showChat: true,
       secondaryTitle: '#Angular',
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -85,20 +89,25 @@ export class StreamConfigService {
 
   deleteStream(key: string, youtubeId?: string): Observable<any> {
     return combineLatest([
-        this.streams.doc(key).delete(),
-        youtubeId ? this.youtubeService.deleteBroadcast(youtubeId) : of(undefined)
-      ]
-    ).pipe(tap(() => {
-      this.router.navigate(['/', 'admin', 'streams']);
-    }));
+      this.streams.doc(key).delete(),
+      youtubeId
+        ? this.youtubeService.deleteBroadcast(youtubeId)
+        : of(undefined),
+    ]).pipe(
+      tap(() => {
+        this.router.navigate(['/', 'admin', 'streams']);
+      }),
+    );
   }
 
   duplicateStream(stream: UIStream): void {
-    this.streams.add({
+    const clonedStream = {
       ...stream,
       lastModified: firebase.firestore.FieldValue.serverTimestamp(),
-      youtubeId: undefined,
-    } as any);
+    };
+
+    delete clonedStream.youtubeId;
+    this.streams.add(clonedStream);
   }
 
   setYoutubeBroadcast(stream: UIStream): Observable<any> {
@@ -110,22 +119,37 @@ export class StreamConfigService {
   }
 
   updateYoutubeBroadcast(youtubeId: string, stream: UIStream): Observable<any> {
-    return this.youtubeService.updateLiveStreamById(youtubeId, stream);
+    return this.youtubeService.updateLiveBroadcastById(youtubeId, stream).pipe(
+      switchMap(({ result }) => {
+        // TODO(kirjs): We prob won't need this once everything works properly
+        return this.updateStream({
+          ...stream,
+          lapteuhYoutubeLiveChatId: result.snippet.liveChatId,
+        });
+      }),
+    );
   }
 
   createYoutubeBroadcast(stream: UIStream): Observable<any> {
-    return this.youtubeService.createBroadcast(stream)
-      .pipe(switchMap(({result}) => {
-        return this.updateStream({...stream, youtubeId: result.id});
-      }));
+    return this.youtubeService.createBroadcast(stream).pipe(
+      switchMap(({ result }) => {
+        return this.updateStream({
+          ...stream,
+          youtubeId: result.id,
+          lapteuhYoutubeLiveChatId: result.snippet.liveChatId,
+        });
+      }),
+    );
   }
 
   selectStream(stream: UIStream): Observable<void> {
     return combineLatest([
+      // TODO(kirjs): clean up
       this.twitchClient.updateStreamInfo(stream.name, stream.language || 'en'),
       this.setYoutubeBroadcast(stream),
-      this.streamConfig.set({streamId: stream.key}),
+      this.streamConfig.set({ streamId: stream.key }),
       this.updateStream(stream),
+      // this.restreamService.updateTitle(stream.name),
     ]).pipe(mapTo(undefined));
   }
 
@@ -134,6 +158,10 @@ export class StreamConfigService {
       return '#' + (Number(n) + 1).toString();
     });
 
-    this.duplicateStream({...stream, name});
+    this.duplicateStream({ ...stream, name });
+  }
+
+  linkToStream(stream: UIStream): Observable<any> {
+    return this.youtubeService.linkToStream(stream);
   }
 }

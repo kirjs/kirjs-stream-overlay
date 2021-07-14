@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StreamListComponent } from './stream-list.component';
 
 describe('StreamListComponent', () => {
@@ -8,9 +7,8 @@ describe('StreamListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StreamListComponent ]
-    })
-    .compileComponents();
+      declarations: [StreamListComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

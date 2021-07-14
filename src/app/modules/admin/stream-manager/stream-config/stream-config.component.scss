@@ -27,11 +27,9 @@ input[type='color'] {
 select,
 input[type='text'],
 input[type='color'],
-input[type='datetime-local']
-{
+input[type='datetime-local'] {
   width: 100%;
 }
-
 
 app-waiting-screen {
   zoom: 0.2;
@@ -46,7 +44,6 @@ app-announce {
   width: 140px;
   flex-shrink: 0;
 }
-
 
 @media screen and (max-width: 640px) {
   label {

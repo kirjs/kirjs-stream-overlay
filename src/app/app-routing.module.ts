@@ -1,15 +1,21 @@
-import {Injectable, NgModule, OnDestroy} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterModule, RouterStateSnapshot, Routes, UrlTree} from '@angular/router';
-import {OverlayComponent} from './modules/overlay/overlay.component';
-import {AnnounceComponent} from './modules/announce/announce.component';
-import {StreamCompleteComponent} from './modules/stream-complete/stream-complete.component';
-import {WaitingScreenWrapperComponent} from './modules/waiting-screen/waiting-screen-wrapper.component';
-import {HomeComponent} from './modules/home/home.component';
-import {StreamConfigService} from './modules/admin/stream-manager/stream-config.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {AdminTokenAuthResolver} from "./modules/admin/services/admin-token-auth.resolver";
-
+import { Injectable, NgModule, OnDestroy } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  RouterModule,
+  RouterStateSnapshot,
+  Routes,
+  UrlTree,
+} from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AdminTokenAuthResolver } from './modules/admin/services/admin-token-auth.resolver';
+import { StreamConfigService } from './modules/admin/stream-manager/stream-config.service';
+import { AnnounceComponent } from './modules/announce/announce.component';
+import { HomeComponent } from './modules/home/home.component';
+import { OverlayComponent } from './modules/overlay/overlay.component';
+import { StreamCompleteComponent } from './modules/stream-complete/stream-complete.component';
+import { WaitingScreenWrapperComponent } from './modules/waiting-screen/waiting-screen-wrapper.component';
 
 // Using this one weird trick to redirect to an external URL.
 @Injectable()
@@ -23,8 +29,8 @@ class TalkRedirectGuard implements CanActivate, OnDestroy {
 
   constructor(contentService: StreamConfigService) {
     contentService.currentStream$
-      .pipe(takeUntil(this.destroy$)).subscribe(
-      (a) => {
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(a => {
         if (a && a.talkUrl) {
           window.location.href = a.talkUrl;
         }
@@ -40,18 +46,18 @@ const routes: Routes = [
   {
     path: 'overlay',
     component: OverlayComponent,
-    resolve: [AdminTokenAuthResolver]
+    resolve: [AdminTokenAuthResolver],
   },
-  {path: '', component: HomeComponent},
-  {path: 'waiting', component: WaitingScreenWrapperComponent},
-  {path: 'complete', component: StreamCompleteComponent},
-  {path: 'talk', canActivate: [TalkRedirectGuard], children: []},
+  { path: '', component: HomeComponent },
+  { path: 'waiting', component: WaitingScreenWrapperComponent },
+  { path: 'complete', component: StreamCompleteComponent },
+  { path: 'talk', canActivate: [TalkRedirectGuard], children: [] },
   {
     path: 'admin',
     loadChildren: () =>
       import('./modules/admin/admin.module').then(m => m.AdminModule),
   },
-  {path: 'announce', component: AnnounceComponent},
+  { path: 'announce', component: AnnounceComponent },
 ];
 
 @NgModule({
@@ -59,5 +65,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [TalkRedirectGuard],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

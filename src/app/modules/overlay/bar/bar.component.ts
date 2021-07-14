@@ -1,7 +1,7 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { combineLatest, interval } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
 
 @Component({

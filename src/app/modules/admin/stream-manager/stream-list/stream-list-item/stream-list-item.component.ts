@@ -1,6 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {UIStream} from '../../types';
-
+import { Component, Input } from '@angular/core';
+import { UIStream } from '../../types';
 
 @Component({
   selector: 'app-stream-list-item',
