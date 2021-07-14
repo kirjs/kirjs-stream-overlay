@@ -12,7 +12,7 @@ function toYoutubeDate(date: string): string {
   return date + ':00Z';
 }
 
-const CHAT_POLL_INTERVAL = 1000;
+const CHAT_POLL_INTERVAL = 5000;
 const BROADCAST_STATUS_POLL_INTERVAL = 1000;
 
 declare const gapi: any;
