@@ -1,21 +1,19 @@
-import {Component} from '@angular/core';
-import {UIStream} from '../types';
-import {StreamConfigService} from '../stream-config.service';
-import {map} from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { StreamConfigService } from '../stream-config.service';
+import { UIStream } from '../types';
 
 @Component({
   selector: 'app-stream-list',
   templateUrl: './stream-list.component.html',
-  styleUrls: ['./stream-list.component.scss']
+  styleUrls: ['./stream-list.component.scss'],
 })
 export class StreamListComponent {
-  readonly selectedStreamKey$ = this.streamConfigService.currentStream$
-    .pipe(map(p => p?.key));
+  readonly selectedStreamKey$ = this.streamConfigService.currentStream$.pipe(
+    map(p => p?.key),
+  );
 
-  constructor(
-    readonly streamConfigService: StreamConfigService,
-  ) {
-  }
+  constructor(readonly streamConfigService: StreamConfigService) {}
 
   trackByKey(i: number, object: UIStream): string {
     return object.key;

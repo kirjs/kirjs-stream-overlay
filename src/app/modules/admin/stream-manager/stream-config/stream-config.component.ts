@@ -1,22 +1,24 @@
-import {Component} from '@angular/core';
-import {combineLatest} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {StreamConfigService} from '../stream-config.service';
-import {TelegramService} from '../../services/telegram.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {ActivatedRoute} from '@angular/router';
-import {UIStream} from '../types';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import domtoimage from 'dom-to-image';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { TelegramService } from '../../services/telegram.service';
+import { StreamConfigService } from '../stream-config.service';
+import { UIStream } from '../types';
 
 @Component({
   selector: 'app-stream-config',
   templateUrl: './stream-config.component.html',
-  styleUrls: ['./stream-config.component.scss']
+  styleUrls: ['./stream-config.component.scss'],
 })
 export class StreamConfigComponent {
-  readonly selectedStreamKey$ = this.route.params.pipe(map(a => {
-    return a.id;
-  }));
+  readonly selectedStreamKey$ = this.route.params.pipe(
+    map(a => {
+      return a.id;
+    }),
+  );
   readonly currentStream$ = combineLatest([
     this.streamConfigService.allStreams$,
     this.selectedStreamKey$,
@@ -29,9 +31,9 @@ export class StreamConfigComponent {
   constructor(
     readonly streamConfigService: StreamConfigService,
     private readonly telegramService: TelegramService,
-    private readonly  snackBar: MatSnackBar,
-    private readonly route: ActivatedRoute) {
-  }
+    private readonly snackBar: MatSnackBar,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   deleteStream(key: string, youtubeId?: string): void {
     this.streamConfigService.deleteStream(key, youtubeId).subscribe();
@@ -42,12 +44,17 @@ export class StreamConfigComponent {
   }
 
   startStream(stream: UIStream): void {
-    this.streamConfigService.selectStream(stream).subscribe(() => {
-      this.snackBar.open('Stream started successfully', 'ok', {duration: 500});
-    }, (e) => {
-      // TODO(kirjs): Standardize other errors.
-      this.snackBar.open(e.error || e.result?.error?.message, 'ok');
-    });
+    this.streamConfigService.selectStream(stream).subscribe(
+      () => {
+        this.snackBar.open('Stream started successfully', 'ok', {
+          duration: 500,
+        });
+      },
+      e => {
+        // TODO(kirjs): Standardize other errors.
+        this.snackBar.open(e.error || e.result?.error?.message, 'ok');
+      },
+    );
   }
 
   updateByPropName(
@@ -56,14 +63,13 @@ export class StreamConfigComponent {
     value: string,
   ): void {
     if (stream[name] !== value) {
-      this.streamConfigService.updateStream({...stream, [name]: value});
+      this.streamConfigService.updateStream({ ...stream, [name]: value });
     }
   }
 
   nextEpisode(stream: UIStream): void {
     this.streamConfigService.nextEpisode(stream);
   }
-
 
   generateImage(el: Element): Promise<Blob> {
     return domtoimage.toBlob(el);
@@ -73,11 +79,14 @@ export class StreamConfigComponent {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
 
-    this.telegramService.postImage(image, stream.promoText).subscribe(() => {
-      this.snackBar.open('posted successfully', 'ok', {duration: 500});
-    }, (e) => {
-      this.snackBar.open(e.error.description, 'ok');
-    });
+    this.telegramService.postImage(image, stream.promoText).subscribe(
+      () => {
+        this.snackBar.open('posted successfully', 'ok', { duration: 500 });
+      },
+      e => {
+        this.snackBar.open(e.error.description, 'ok');
+      },
+    );
   }
 
   createBroadcast(stream: UIStream): void {
@@ -85,11 +94,15 @@ export class StreamConfigComponent {
   }
 
   linkToStream(stream: UIStream): void {
-    this.streamConfigService.linkToStream(stream).subscribe(() => {
-      this.snackBar.open('Stream linked successfully', 'ok', {duration: 500});
-    }, (e) => {
-      this.snackBar.open(e.result?.error?.message, 'ok');
-    });
+    this.streamConfigService.linkToStream(stream).subscribe(
+      () => {
+        this.snackBar.open('Stream linked successfully', 'ok', {
+          duration: 500,
+        });
+      },
+      e => {
+        this.snackBar.open(e.result?.error?.message, 'ok');
+      },
+    );
   }
 }
-

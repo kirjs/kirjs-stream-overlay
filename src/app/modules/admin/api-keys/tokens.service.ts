@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {combineLatest, Observable, Subject} from 'rxjs';
-import {map, take, takeUntil, tap} from 'rxjs/operators';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {nanoid} from 'nanoid';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { nanoid } from 'nanoid';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, take, takeUntil, tap } from 'rxjs/operators';
 
 export interface Token {
   name: string;
@@ -22,25 +22,32 @@ interface AdminAccessTokenPayload {
 })
 export class TokensService {
   readonly tokens = this.angularFire.collection('config').doc<Tokens>('tokens');
-  readonly tokens$: Observable<Token[] | undefined> = this.tokens.valueChanges().pipe(
-    map(t => t?.tokens)
-  );
+  readonly tokens$: Observable<
+    Token[] | undefined
+  > = this.tokens.valueChanges().pipe(map(t => t?.tokens));
   private onDestroy = new Subject<void>();
-  private readonly adminAccessTokens = this.angularFire.collection('adminAccessTokens');
+  private readonly adminAccessTokens = this.angularFire.collection(
+    'adminAccessTokens',
+  );
   readonly adminAccessTokens$ = this.adminAccessTokens.snapshotChanges().pipe(
-    map(tokens => tokens.map(token => {
-      return {
-        id: token.payload.doc.id,
-        enabled: (token.payload.doc.data() as AdminAccessTokenPayload).enabled
-      };
-    })));
-  private readonly uidsWithAccessToTokens = this.angularFire.collection('uidsWithAccessToTokens');
+    map(tokens =>
+      tokens.map(token => {
+        return {
+          id: token.payload.doc.id,
+          enabled: (token.payload.doc.data() as AdminAccessTokenPayload)
+            .enabled,
+        };
+      }),
+    ),
+  );
+  private readonly uidsWithAccessToTokens = this.angularFire.collection(
+    'uidsWithAccessToTokens',
+  );
 
-  constructor(private readonly angularFire: AngularFirestore) {
-  }
+  constructor(private readonly angularFire: AngularFirestore) {}
 
   elevateMeToAdminAndGrantMeTokens(uid: string, token: string) {
-    return this.uidsWithAccessToTokens.doc(uid).set({token});
+    return this.uidsWithAccessToTokens.doc(uid).set({ token });
   }
 
   updateValue(callback: (t: Token[]) => Token[]): void {
@@ -52,7 +59,7 @@ export class TokensService {
         takeUntil(this.onDestroy),
       )
       .subscribe((tokens: Token[]) => {
-        this.tokens.set({tokens});
+        this.tokens.set({ tokens });
       });
   }
 
@@ -74,13 +81,13 @@ export class TokensService {
         if (!token) {
           console.error('Token does not exist: ' + name);
         }
-      })
+      }),
     );
   }
 
   createAdminAccessToken(): void {
     const id = nanoid();
-    this.adminAccessTokens.doc(id).set({enabled: true});
+    this.adminAccessTokens.doc(id).set({ enabled: true });
   }
 
   deleteAdminAccessToken(id: string): Promise<void> {

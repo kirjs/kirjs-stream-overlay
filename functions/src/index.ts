@@ -1,7 +1,7 @@
-import * as functions from "firebase-functions";
+import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 
-const cors = require('cors')({origin: true});
+const cors = require('cors')({ origin: true });
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -22,31 +22,32 @@ interface GetTokenParams {
   grant_type: string;
   redirect_uri: string;
   client_secret: string;
-  client_id: string
+  client_id: string;
 }
 
-const tokensDoc = admin.firestore().collection('config')
-  .doc('tokens');
+const tokensDoc = admin.firestore().collection('config').doc('tokens');
 
 async function getTokens() {
   return (await tokensDoc.get()).data().tokens;
 }
 
 async function getSecret() {
-  return (await getTokens()).find((t: any) => t.name === 'restreamSecret').value;
+  return (await getTokens()).find((t: any) => t.name === 'restreamSecret')
+    .value;
 }
 
 function addToken(tokens: Token[], name: string, value: string): Token[] {
-  return tokens.filter(token => token.name !== name).concat({name, value});
+  return tokens.filter(token => token.name !== name).concat({ name, value });
 }
 
 async function updateTokens(accessToken: string, refreshToken: string) {
   const tokens = addToken(
     addToken(await getTokens(), 'restreamAccessToken', accessToken),
-    'restreamRefreshToken', refreshToken
+    'restreamRefreshToken',
+    refreshToken,
   );
 
-  return tokensDoc.set({tokens});
+  return tokensDoc.set({ tokens });
 }
 
 async function getToken(body: any, client_secret: string) {
@@ -56,7 +57,7 @@ async function getToken(body: any, client_secret: string) {
     redirect_uri: body.redirect_uri,
     client_id: body.client_id,
     client_secret,
-  }
+  };
   return await makeRequest(params);
 }
 
@@ -66,14 +67,15 @@ async function refreshToken(body: any, client_secret: string) {
     refresh_token: body.refresh_token,
     client_id: body.client_id,
     client_secret,
-  }
+  };
 
   return await makeRequest(params);
 }
 
-
 async function makeRequest(params: RefreshTokenParams | GetTokenParams) {
-  const headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'};
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  };
 
   const data = new URLSearchParams();
 
@@ -84,29 +86,30 @@ async function makeRequest(params: RefreshTokenParams | GetTokenParams) {
   return await fetch('https://api.restream.io/oauth/token', {
     method: 'POST',
     body: data,
-    headers
+    headers,
   });
 }
 
-export const getRestreamToken = functions.https.onRequest((request, response) => {
-  cors(request, response, async () => {
-    const body = request.body;
+export const getRestreamToken = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, async () => {
+      const body = request.body;
 
-    const client_secret = await getSecret();
-    const result = await (body.refresh_token ?
-        refreshToken(body, client_secret) :
-        getToken(body, client_secret)
-    );
+      const client_secret = await getSecret();
+      const result = await (body.refresh_token
+        ? refreshToken(body, client_secret)
+        : getToken(body, client_secret));
 
-    const json = await result.json();
+      const json = await result.json();
 
-    if (result.ok) {
-      await updateTokens(json.accessToken, json.refreshToken);
-      response.send('{"status": 200, "ok": true}');
-    } else {
-      const message = `error [${json.error.name}]: ${json.error.message}`;
-      response.status(result.status);
-      response.send(message);
-    }
-  });
-});
+      if (result.ok) {
+        await updateTokens(json.accessToken, json.refreshToken);
+        response.send('{"status": 200, "ok": true}');
+      } else {
+        const message = `error [${json.error.name}]: ${json.error.message}`;
+        response.status(result.status);
+        response.send(message);
+      }
+    });
+  },
+);
