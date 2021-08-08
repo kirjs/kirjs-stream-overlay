@@ -57,6 +57,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/admin/admin.module').then(m => m.AdminModule),
   },
+  {
+    path: 'trending',
+    loadChildren: () =>
+      import('./modules/trending/trending.module').then(m => m.TrendingModule),
+  },
   { path: 'announce', component: AnnounceComponent },
 ];
 

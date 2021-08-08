@@ -254,6 +254,22 @@ export class YoutubeService {
     );
   }
 
+  getTrendingVideos() {
+    return this.api$.pipe(
+      switchMap(({ youtube }) => {
+        return youtube.videos.list({
+          part: 'snippet',
+          chart: 'mostPopular',
+          regionCode: 'RU',
+          maxResults: '250',
+        });
+      }),
+      map((a: any) => {
+        return a.result.items;
+      }),
+    );
+  }
+
   private getActiveLivestream() {
     return this.api$.pipe(
       switchMap(({ youtube }) => {
