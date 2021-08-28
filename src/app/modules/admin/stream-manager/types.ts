@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import Timestamp = firebase.firestore.Timestamp;
 import FieldValue = firebase.firestore.FieldValue;
 

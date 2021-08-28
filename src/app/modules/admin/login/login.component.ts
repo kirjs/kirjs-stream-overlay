@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-login',

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, mapTo, switchMap, tap } from 'rxjs/operators';
 import { TwitchService } from '../services/twitch';
@@ -57,9 +56,8 @@ export class StreamConfigService {
     private readonly firestore: AngularFirestore,
     private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
-    private readonly router: Router,
-  ) // private readonly restreamService: RestreamService,
-  {}
+    private readonly router: Router, // private readonly restreamService: RestreamService,
+  ) {}
 
   addNewStream(): void {
     this.streams.add({
