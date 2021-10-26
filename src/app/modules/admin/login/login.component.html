@@ -2,7 +2,7 @@
   <h1 routerLink="/admin/">🐶 Den_dp</h1>
 </header>
 <div class="login">
-  <div *ngIf="auth.user | async as user; else showLogin" class="logged-in">
+  <div *ngIf="user$ | async as user; else showLogin" class="logged-in">
     <img alt="avatar" [src]="user.photoURL" />
     <button mat-button (click)="logout()">Logout</button>
   </div>

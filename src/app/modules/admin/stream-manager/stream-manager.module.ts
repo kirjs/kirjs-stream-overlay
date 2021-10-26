@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,7 +26,6 @@ import { WysiwygEditorModule } from './wysiwyg-editor/wysiwyg-editor.module';
     AccountListComponent,
   ],
   imports: [
-    AngularFireModule,
     WysiwygEditorModule,
     CommonModule,
     WaitingScreenModule,

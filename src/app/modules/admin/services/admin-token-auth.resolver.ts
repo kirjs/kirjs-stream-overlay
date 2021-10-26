@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, authState, signInAnonymously, user } from '@angular/fire/auth';
 import {
   ActivatedRouteSnapshot,
   Resolve,
@@ -15,7 +15,7 @@ import { ADMIN_ACCESS_TOKEN_PARAM_NAME } from '../constants';
 })
 export class AdminTokenAuthResolver implements Resolve<void> {
   constructor(
-    private readonly auth: AngularFireAuth,
+    private readonly auth: Auth,
     private readonly tokensService: TokensService,
   ) {}
 
@@ -25,10 +25,10 @@ export class AdminTokenAuthResolver implements Resolve<void> {
   ): Observable<void> {
     const adminAccessToken = route.queryParams[ADMIN_ACCESS_TOKEN_PARAM_NAME];
     if (adminAccessToken) {
-      return this.auth.authState.pipe(
+      return authState(this.auth).pipe(
         switchMap(user => {
           if (user === null) {
-            return from(this.auth.signInAnonymously()).pipe(mapTo(undefined));
+            return from(signInAnonymously(this.auth)).pipe(mapTo(undefined));
           }
           return of(undefined);
         }),
@@ -40,7 +40,7 @@ export class AdminTokenAuthResolver implements Resolve<void> {
         }),
         switchMap((hasAccess: boolean) => {
           if (!hasAccess) {
-            return this.auth.user.pipe(
+            return user(this.auth).pipe(
               switchMap(user => {
                 return from(
                   this.tokensService.elevateMeToAdminAndGrantMeTokens(

@@ -1,7 +1,3 @@
-import firebase from 'firebase/compat/app';
-import Timestamp = firebase.firestore.Timestamp;
-import FieldValue = firebase.firestore.FieldValue;
-
 export interface StreamConfig {
   streamId?: string;
 }
@@ -13,7 +9,7 @@ export interface Stream {
   language: 'en' | 'ru';
   fontColor: string;
   tags: string[];
-  date: Timestamp;
+  date: Date;
   highlights: string;
   promoText: string;
   youtubeId?: string;
@@ -21,7 +17,7 @@ export interface Stream {
   showChat: boolean;
   secondaryTitle: string;
   realDateTime: string;
-  lastModified: FieldValue;
+  lastModified: Date;
   talkUrl: string;
 }
 
