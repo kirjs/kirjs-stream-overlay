@@ -20,7 +20,7 @@ import { WaitingScreenWrapperComponent } from './modules/waiting-screen/waiting-
 // Using this one weird trick to redirect to an external URL.
 @Injectable()
 class TalkRedirectGuard implements CanActivate, OnDestroy {
-  readonly destroy$ = new Subject();
+  readonly destroy$ = new Subject<void>();
 
   ngOnDestroy(): void {
     this.destroy$.next();
