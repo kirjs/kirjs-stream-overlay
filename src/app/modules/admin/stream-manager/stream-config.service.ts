@@ -41,19 +41,20 @@ export class StreamConfigService {
     orderBy('lastModified', 'desc'),
   );
 
-  readonly allStreams$: Observable<UIStream[]> = combineLatest([
-    collectionData<Stream>(this.streamsByLastModified, {
+  // TODO(kirjs): Figure out types
+  readonly allStreams$: Observable<UIStream[]> = (combineLatest([
+    collectionData(this.streamsByLastModified, {
       idField: 'key',
-    }) as Observable<(Stream & { key: string })[]>,
+    }),
     docData<StreamConfig>(this.streamConfig),
   ]).pipe(
     map(([streams, streamConfig]) => {
       return streams.map(stream => ({
         ...stream,
-        isCurrent: streamConfig?.streamId === stream.key,
+        isCurrent: streamConfig?.streamId === (stream as UIStream).key,
       }));
     }),
-  );
+  ) as unknown) as Observable<UIStream[]>;
 
   readonly pastStreams$ = this.allStreams$.pipe(
     map(streams => {

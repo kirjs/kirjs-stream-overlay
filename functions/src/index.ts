@@ -1,4 +1,4 @@
-import * as functions from 'firebase/compat-functions';
+import * as functions from 'firebase/functions/compat';
 import fetch from 'node-fetch';
 
 const cors = require('cors')({ origin: true });
