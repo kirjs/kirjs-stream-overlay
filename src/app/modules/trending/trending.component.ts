@@ -27,7 +27,6 @@ export class TrendingComponent {
     this.bannedChannels$,
   ]).pipe(
     map(([videos, bannedChannels]) => {
-      console.log('a');
       return videos.filter(
         (video: any) =>
           !bannedChannels.find(

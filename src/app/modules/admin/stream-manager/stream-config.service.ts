@@ -42,7 +42,7 @@ export class StreamConfigService {
   );
 
   // TODO(kirjs): Figure out types
-  readonly allStreams$: Observable<UIStream[]> = (combineLatest([
+  readonly allStreams$: Observable<UIStream[]> = combineLatest([
     collectionData(this.streamsByLastModified, {
       idField: 'key',
     }),
@@ -54,13 +54,17 @@ export class StreamConfigService {
         isCurrent: streamConfig?.streamId === (stream as UIStream).key,
       }));
     }),
-  ) as unknown) as Observable<UIStream[]>;
+  ) as unknown as Observable<UIStream[]>;
 
   readonly pastStreams$ = this.allStreams$.pipe(
     map(streams => {
       return streams.filter(stream => {
         return !isInThePast(stream.realDateTime);
       });
+    }),
+    tap(a => {
+      console.log('---');
+      console.log(a);
     }),
   );
   readonly futureStreams$ = this.allStreams$.pipe(
@@ -79,7 +83,12 @@ export class StreamConfigService {
     private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
     private readonly router: Router, // private readonly restreamService: RestreamService,
-  ) {}
+  ) {
+    this.pastStreams$.subscribe(a => {
+      console.log('---!');
+      console.log(a);
+    });
+  }
 
   addNewStream(): void {
     addDoc(this.streams, {
