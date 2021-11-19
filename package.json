@@ -48,7 +48,7 @@
     "rxjs": "^6.6.3",
     "tslib": "^2.3.0",
     "twitch-js": "^2.0.0-beta.42",
-    "zone.js": "~0.11.4"
+    "zone.js": "^0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.1300.2",

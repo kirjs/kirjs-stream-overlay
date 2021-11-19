@@ -9,8 +9,6 @@ import { enableProdMode } from '@angular/core';
 import '@angular/platform-server/init';
 import { environment } from './environments/environment';
 
-const LOLOLOLOLOLOLOL1 = 1;
-console.log('here 1');
 if (environment.production) {
   enableProdMode();
 }

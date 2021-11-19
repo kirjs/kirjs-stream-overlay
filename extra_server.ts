@@ -105,7 +105,7 @@ export function app() {
         ? 'https'
         : req.headers['x-forwarded-proto'];
 
-    res.render(indexHtml, {
+    const options = {
       req,
       providers: [
         { provide: APP_BASE_HREF, useValue: req.baseUrl },
@@ -135,7 +135,9 @@ export function app() {
           useValue: `${http}://${req.headers.host}`,
         },
       ],
-    });
+    };
+
+    res.render(indexHtml, options);
   });
 
   return server;
