@@ -20,6 +20,7 @@ import { BarModule } from './modules/overlay/bar/bar.module';
 import { ChatModule } from './modules/overlay/chat/chat.module';
 import { OverlayModule } from './modules/overlay/overlay.module';
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
+import { provideFunctions,getFunctions } from '@angular/fire/functions';
 
 registerLocaleData(ru, 'ru');
 
@@ -59,6 +60,7 @@ const firebaseConfig = {
     HomeModule,
     TuiRootModule,
     TuiNotificationsModule,
+    provideFunctions(() => getFunctions()),
   ],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],

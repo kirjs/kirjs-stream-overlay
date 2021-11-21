@@ -2,6 +2,8 @@
 import '@ng-web-apis/universal/mocks';
 import { join } from 'path';
 import 'zone.js/dist/zone-node';
+import 'zone.js/dist/zone-patch-rxjs';
+
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');

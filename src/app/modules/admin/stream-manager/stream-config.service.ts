@@ -19,6 +19,7 @@ import { map, mapTo, switchMap, tap } from 'rxjs/operators';
 import { TwitchService } from '../services/twitch';
 import { YoutubeService } from '../services/youtube.service';
 import { Stream, StreamConfig, UIStream } from './types';
+import { ZoneBlocker } from './ZoneBlocker';
 
 const colors = ['#ba0000', '#1e98ea', '#1f7f43'];
 
@@ -63,8 +64,7 @@ export class StreamConfigService {
       });
     }),
     tap(a => {
-      console.log('---');
-      console.log(a);
+      this.unblock();
     }),
   );
   readonly futureStreams$ = this.allStreams$.pipe(
@@ -78,16 +78,16 @@ export class StreamConfigService {
     map(streams => streams.find(stream => stream.isCurrent)),
   );
 
+  private unblock: () => void;
+
   constructor(
     private readonly firestore: Firestore,
     private readonly twitchClient: TwitchService,
     private readonly youtubeService: YoutubeService,
+    private readonly zoneBlocker: ZoneBlocker,
     private readonly router: Router, // private readonly restreamService: RestreamService,
   ) {
-    this.pastStreams$.subscribe(a => {
-      console.log('---!');
-      console.log(a);
-    });
+    this.unblock = zoneBlocker.blockZone();
   }
 
   addNewStream(): void {
