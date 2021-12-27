@@ -133,6 +133,7 @@ export class StreamConfigService {
   async duplicateStream(stream: UIStream): Promise<void> {
     const clonedStream = {
       ...stream,
+      realDateTime: new Date().toISOString().slice(0, 16),
       lastModified: serverTimestamp(),
     };
 
