@@ -15,7 +15,6 @@ export interface Stream {
   youtubeId?: string;
   lapteuhYoutubeLiveChatId?: string;
   showChat: boolean;
-  secondaryTitle: string;
   realDateTime: string;
   lastModified: Date;
   talkUrl: string;

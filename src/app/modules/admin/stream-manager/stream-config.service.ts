@@ -105,7 +105,6 @@ export class StreamConfigService {
       fontColor: '#dddddd',
       promoText: '',
       showChat: true,
-      secondaryTitle: '#Angular',
       lastModified: serverTimestamp(),
     });
   }

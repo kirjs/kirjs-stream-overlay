@@ -113,17 +113,6 @@
   </div>
   <div class="field">
     <label>
-      <span class="label">Secondary title</span>
-      <input
-        type="text"
-        [ngModel]="stream.secondaryTitle"
-        (ngModelChange)="updateByPropName(stream, 'secondaryTitle', $event)"
-      />
-    </label>
-  </div>
-
-  <div class="field">
-    <label>
       <span class="label">Description</span>
       <app-wysiwyg-editor
         [html]="stream.description"
