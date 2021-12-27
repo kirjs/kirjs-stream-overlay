@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {ActivatedRoute} from '@angular/router';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import domtoimage from 'dom-to-image';
-import {combineLatest} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {TelegramService} from '../../services/telegram.service';
-import {StreamConfigService} from '../stream-config.service';
-import {UIStream} from '../types';
-import {normalizeSpaces} from '../../utils';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { TelegramService } from '../../services/telegram.service';
+import { normalizeSpaces } from '../../utils';
+import { StreamConfigService } from '../stream-config.service';
+import { UIStream } from '../types';
 
 const generatePromoText = (stream?: UIStream) => {
   if (!stream) {
@@ -32,7 +32,6 @@ const generatePromoText = (stream?: UIStream) => {
 export function escapeLapteuhMarkdown(str: string): string {
   return str.replaceAll(/([_*\[\]()~`>#+-=|{}.!])/g, '\\$1');
 }
-
 
 @Component({
   selector: 'app-stream-config',
@@ -61,8 +60,7 @@ export class StreamConfigComponent {
     private readonly telegramService: TelegramService,
     private readonly snackBar: MatSnackBar,
     private readonly route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   deleteStream(key: string, youtubeId?: string): void {
     this.streamConfigService.deleteStream(key, youtubeId).subscribe();
@@ -86,14 +84,13 @@ export class StreamConfigComponent {
     );
   }
 
-
   updateByPropName(
     stream: UIStream,
     name: keyof UIStream,
     value: string,
   ): void {
     if (stream[name] !== value) {
-      this.streamConfigService.updateStream({...stream, [name]: value});
+      this.streamConfigService.updateStream({ ...stream, [name]: value });
     }
   }
 
@@ -113,7 +110,7 @@ export class StreamConfigComponent {
 
     this.telegramService.postImage(image, promoText).subscribe(
       () => {
-        this.snackBar.open('posted successfully', 'ok', {duration: 500});
+        this.snackBar.open('posted successfully', 'ok', { duration: 500 });
       },
       e => {
         this.snackBar.open(e.error.description, 'ok');

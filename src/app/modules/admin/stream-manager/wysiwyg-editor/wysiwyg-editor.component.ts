@@ -19,7 +19,8 @@ import MediumEditor from 'medium-editor';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WysiwygEditorComponent
-  implements AfterViewInit, OnChanges, OnDestroy {
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input() html!: string;
   @Output() changeHtml = new EventEmitter();
   private editor: any;

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getFunctions, provideFunctions } from '@angular/fire/functions';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +21,6 @@ import { BarModule } from './modules/overlay/bar/bar.module';
 import { ChatModule } from './modules/overlay/chat/chat.module';
 import { OverlayModule } from './modules/overlay/overlay.module';
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
 
 registerLocaleData(ru, 'ru');
 

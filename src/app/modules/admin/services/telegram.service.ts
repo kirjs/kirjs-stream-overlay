@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { TokensService } from '../api-keys/tokens.service';
 
-
 @Injectable({
   providedIn: 'root',
 })

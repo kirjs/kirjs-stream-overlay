@@ -32,9 +32,9 @@ export class AccountService {
         };
         await setDoc(doc(this.#accounts, accountId), account);
 
-        await setDoc(doc(this.#accounts, accountId, 'admins', user!.uid), ({
+        await setDoc(doc(this.#accounts, accountId, 'admins', user!.uid), {
           isAdmin: true,
-        } as unknown) as UserAccount);
+        } as unknown as UserAccount);
       });
   }
 }

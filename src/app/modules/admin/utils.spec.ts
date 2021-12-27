@@ -1,5 +1,5 @@
-import {normalizeSpaces} from './utils';
 import 'zone.js/testing';
+import { normalizeSpaces } from './utils';
 
 fdescribe('normalizeSpaces', () => {
   it('keeps simple inputs as is', () => {
@@ -7,4 +7,3 @@ fdescribe('normalizeSpaces', () => {
     expect(normalizeSpaces(value)).toBe(value);
   });
 });
-

@@ -9,9 +9,8 @@ describe('RestreamInterceptor', () => {
   );
 
   it('should be created', () => {
-    const interceptor: RestreamInterceptor = TestBed.inject(
-      RestreamInterceptor,
-    );
+    const interceptor: RestreamInterceptor =
+      TestBed.inject(RestreamInterceptor);
     expect(interceptor).toBeTruthy();
   });
 });

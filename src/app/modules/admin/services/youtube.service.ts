@@ -142,16 +142,14 @@ export class YoutubeService {
               })
               .then((response: any): ChatMessage[] => {
                 nextPageToken = response.result.nextPageToken;
-                return response.result.items.map(
-                  (item: any): ChatMessage => {
-                    return {
-                      text: item.snippet.displayMessage,
-                      displayName: item.authorDetails.displayName,
-                      profileUrl: item.authorDetails.profileImageUrl,
-                      timestamp: new Date(item.snippet.publishedAt),
-                    };
-                  },
-                );
+                return response.result.items.map((item: any): ChatMessage => {
+                  return {
+                    text: item.snippet.displayMessage,
+                    displayName: item.authorDetails.displayName,
+                    profileUrl: item.authorDetails.profileImageUrl,
+                    timestamp: new Date(item.snippet.publishedAt),
+                  };
+                });
               }) as Promise<ChatMessage[]>;
           }),
         );

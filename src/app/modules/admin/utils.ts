@@ -2,9 +2,7 @@ import TurndownService from 'turndown';
 
 const turndownService = new TurndownService();
 
-
 export function normalizeSpaces(content: string): string {
-
   return turndownService.turndown(content);
 }
 

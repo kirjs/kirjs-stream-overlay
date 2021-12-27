@@ -11,7 +11,6 @@ import {
   orderBy,
   query,
   serverTimestamp,
-  DocumentReference,
   setDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
