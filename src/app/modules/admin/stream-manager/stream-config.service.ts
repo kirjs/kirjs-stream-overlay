@@ -11,6 +11,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  DocumentReference,
   setDoc,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -129,14 +130,15 @@ export class StreamConfigService {
     );
   }
 
-  duplicateStream(stream: UIStream): void {
+  async duplicateStream(stream: UIStream): Promise<void> {
     const clonedStream = {
       ...stream,
       lastModified: serverTimestamp(),
     };
 
     delete clonedStream.youtubeId;
-    addDoc(this.streams, clonedStream);
+    const result = await addDoc(this.streams, clonedStream);
+    await this.router.navigate(['/', 'admin', 'streams', result.id]);
   }
 
   setYoutubeBroadcast(stream: UIStream): Observable<any> {
