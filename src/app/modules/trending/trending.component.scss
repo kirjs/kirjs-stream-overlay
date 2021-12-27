@@ -1,0 +1,9 @@
+h2 {
+  font-size: 12px;
+}
+
+.wrapper {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, 320px);
+}

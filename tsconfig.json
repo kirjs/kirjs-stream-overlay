@@ -16,8 +16,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    // TODO(kirjs): Adding because firebase v9 is failing, try with a newer version and remove later.
+    "skipLibCheck": true,
     "module": "es2020",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2021", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

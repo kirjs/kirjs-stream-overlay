@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StreamListItemComponent } from './stream-list-item.component';
 
 describe('AnnounceComponent', () => {

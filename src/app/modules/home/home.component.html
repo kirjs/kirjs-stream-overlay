@@ -1,38 +1,48 @@
 <h1>kirjs</h1>
 
 <div class="intro">
-
   Привет, я стримлю в
-  <a href="http://twitch.tv/kirjs"
-     target="_blank" rel="noopener noreferrer">twitch</a>,
-  и пишу в <a href="https://t.me/kirjs_ru"
-              target="_blank"
-              rel="noopener noreferrer">telegram</a>
+  <a href="http://twitch.tv/kirjs" target="_blank" rel="noopener noreferrer"
+    >twitch</a
+  >, и пишу в
+  <a href="https://t.me/kirjs_ru" target="_blank" rel="noopener noreferrer"
+    >telegram</a
+  >
 </div>
 
 <ng-container *ngIf="(streamConfigService.futureStreams$ | async)?.length">
   <h2>Следующий стрим</h2>
 
-  <article class="row"
-           *ngFor="let stream of streamConfigService.futureStreams$ | async; trackBy: trackByKey"
+  <article
+    class="row"
+    *ngFor="
+      let stream of streamConfigService.futureStreams$ | async;
+      trackBy: trackByKey
+    "
   >
     <app-announce class="flexible" [stream]="stream"></app-announce>
   </article>
 </ng-container>
 <h2 class="old-streams">Прошлые стримы</h2>
 <div class="posts">
-  <article class="row"
-           *ngFor="let stream of streamConfigService.pastStreams$ | async; trackBy: trackByKey"
+  <article
+    class="row"
+    *ngFor="
+      let stream of streamConfigService.pastStreams$ | async;
+      trackBy: trackByKey
+    "
   >
     <div class="stream">
       <h3>
-
-        <a target="_blank"
-           rel="noopener noreferrer"
-           href="https://www.youtube.com/watch?v={{stream.youtubeId}}"
-           *ngIf="stream.youtubeId">{{stream.name}}</a>
-        <span *ngIf="!stream.youtubeId">{{stream.name}}</span>
-        <span>{{stream.realDateTime | date}}</span>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.youtube.com/watch?v={{ stream.youtubeId }}"
+          *ngIf="stream.youtubeId"
+          >{{ stream.name }}</a
+        >
+        <span *ngIf="!stream.youtubeId">{{ stream.name }}</span>
+        <span>{{ stream.realDateTime | date }}</span>
       </h3>
 
       <div [innerHTML]="stream.description"></div>

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StreamConfigComponent } from './stream-config.component';
 
 describe('StreamConfigComponent', () => {
@@ -8,9 +7,8 @@ describe('StreamConfigComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StreamConfigComponent ]
-    })
-    .compileComponents();
+      declarations: [StreamConfigComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AdminTokenAuthResolver } from './admin-token-auth.resolver';
 
 describe('AdminTokenAuthResolver', () => {

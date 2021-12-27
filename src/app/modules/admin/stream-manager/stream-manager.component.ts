@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {StreamConfigService} from './stream-config.service';
-import {UIStream} from './types';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {first, map} from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { first, map } from 'rxjs/operators';
+import { StreamConfigService } from './stream-config.service';
+import { UIStream } from './types';
 
 @Component({
   selector: 'app-stream-manager',
@@ -11,9 +11,7 @@ import {first, map} from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StreamManagerComponent {
-  constructor(
-    readonly streamConfigService: StreamConfigService) {
-  }
+  constructor(readonly streamConfigService: StreamConfigService) {}
 
   readonly selectedStreamKey = new BehaviorSubject<string | undefined>(
     undefined,
@@ -46,11 +44,11 @@ export class StreamManagerComponent {
   }
 
   updateStreamName(stream: UIStream, name: string): void {
-    this.streamConfigService.updateStream({...stream, name});
+    this.streamConfigService.updateStream({ ...stream, name });
   }
 
   updateStreamColor(stream: UIStream, color: string): void {
-    this.streamConfigService.updateStream({...stream, color});
+    this.streamConfigService.updateStream({ ...stream, color });
   }
 
   updateByPropName(
@@ -59,8 +57,7 @@ export class StreamManagerComponent {
     value: string,
   ): void {
     if (stream[name] !== value) {
-      this.streamConfigService.updateStream({...stream, [name]: value});
+      this.streamConfigService.updateStream({ ...stream, [name]: value });
     }
   }
-
 }

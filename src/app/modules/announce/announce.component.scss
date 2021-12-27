@@ -16,7 +16,8 @@
     padding: 16px;
   }
 
-  h1, .links {
+  h1,
+  .links {
     font-size: var(--header-size);
     line-height: var(--header-line-height);
     margin: 0;
@@ -29,7 +30,6 @@
 
     ::ng-deep p {
       line-height: var(--font-line-height);
-
     }
 
     .images {
@@ -42,7 +42,6 @@
       }
     }
   }
-
 }
 
 .wrapper {
@@ -53,20 +52,18 @@
   justify-content: space-between;
   padding: 60px;
   box-sizing: border-box;
-  color: white;
   font-size: 60px;
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 h1 {
-  color: white;
   font-size: 80px;
   line-height: 100px;
   margin-top: 0;
   margin-bottom: 80px;
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .links {

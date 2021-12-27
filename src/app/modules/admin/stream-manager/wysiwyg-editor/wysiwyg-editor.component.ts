@@ -19,7 +19,8 @@ import MediumEditor from 'medium-editor';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WysiwygEditorComponent
-  implements AfterViewInit, OnChanges, OnDestroy {
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input() html!: string;
   @Output() changeHtml = new EventEmitter();
   private editor: any;
@@ -28,7 +29,6 @@ export class WysiwygEditorComponent
   constructor(private readonly el: ElementRef) {}
 
   ngAfterViewInit(): void {
-    console.log('NEW');
     this.editor = new MediumEditor(this.el.nativeElement, {
       toolbar: {
         buttons: ['bold', 'aside', 'unorderedlist', 'removeFormat'],

@@ -1,0 +1,30 @@
+<h1>Trending ({{ (filteredVideos$ | async)?.length }})</h1>
+
+<div class="wrapper">
+  <div *ngFor="let video of filteredVideos$ | async" class="preview">
+    <h2>
+      <a href="https://www.youtube.com/watch?v={{ video.id }}">{{
+        video.snippet.title
+      }}</a>
+    </h2>
+    <img alt="profile pic" [src]="video.snippet.thumbnails.medium.url" />
+    <div style="display: flex; justify-content: space-between">
+      <div>{{ video.snippet.channelTitle }}</div>
+      <button
+        (click)="
+          banChannel(video.snippet.channelId, video.snippet.channelTitle)
+        "
+      >
+        ЗАБАНИТЬ КАНАЛ 🔨
+      </button>
+    </div>
+  </div>
+</div>
+
+<h1>Banned channels</h1>
+<div *ngFor="let channel of bannedChannels$ | async">
+  <div>
+    <div>{{ channel.title }}</div>
+    <button (click)="unban(channel.id)">Unban</button>
+  </div>
+</div>

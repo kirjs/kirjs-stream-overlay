@@ -1,8 +1,17 @@
-import {Injectable} from '@angular/core';
-import {combineLatest, Observable, Subject} from 'rxjs';
-import {map, shareReplay, take, takeUntil, tap} from 'rxjs/operators';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {nanoid} from 'nanoid';
+import { Injectable } from '@angular/core';
+import {
+  collection,
+  collectionSnapshots,
+  deleteDoc,
+  doc,
+  docData,
+  Firestore,
+  QueryDocumentSnapshot,
+  setDoc,
+} from '@angular/fire/firestore';
+import { nanoid } from 'nanoid';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, take, takeUntil, tap } from 'rxjs/operators';
 
 export interface Token {
   name: string;
@@ -15,9 +24,9 @@ interface Tokens {
 
 interface AdminAccessTokenPayload {
   enabled: boolean;
-};
+}
 
-interface AdminAccessToken  extends  AdminAccessTokenPayload {
+interface AdminAccessTokenPayloadWithId extends AdminAccessTokenPayload {
   id: string;
 }
 
@@ -25,29 +34,42 @@ interface AdminAccessToken  extends  AdminAccessTokenPayload {
   providedIn: 'root',
 })
 export class TokensService {
+  readonly tokens = doc(this.firestore, 'config/tokens'); // <Tokens>
+  readonly tokens$: Observable<Token[] | undefined> = docData(this.tokens).pipe(
+    map(t => t?.tokens),
+  );
+
   private onDestroy = new Subject<void>();
-  private readonly adminAccessTokens = this.angularFire.collection('adminAccessTokens');
-  private readonly uidsWithAccessToTokens = this.angularFire.collection('uidsWithAccessToTokens');
-
-  readonly tokens = this.angularFire.collection('config').doc<Tokens>('tokens');
-  readonly tokens$: Observable<Token[] | undefined> = this.tokens.valueChanges().pipe(map(t => t?.tokens));
-
-
-  readonly adminAccessTokens$ = this.adminAccessTokens.snapshotChanges().pipe(
-    map(tokens => tokens.map(token => {
+  private readonly adminAccessTokens = collection(
+    this.firestore,
+    'adminAccessTokens',
+  ).withConverter({
+    toFirestore(config: AdminAccessTokenPayload) {
+      return config;
+    },
+    fromFirestore(
+      snapshot: QueryDocumentSnapshot,
+    ): AdminAccessTokenPayloadWithId {
       return {
-        id: token.payload.doc.id,
-        enabled: (token.payload.doc.data() as AdminAccessTokenPayload).enabled
+        enabled: snapshot.get('enabled'),
+        id: snapshot.id,
       };
-    })));
+    },
+  });
 
-  constructor(private readonly angularFire: AngularFirestore) {}
+  readonly adminAccessTokens$ = collectionSnapshots(this.adminAccessTokens);
 
-  elevateMeToAdminAndGrantMeTokens(uid: string, token: string){
-    return this.uidsWithAccessToTokens.doc(uid).set({token});
+  private readonly uidsWithAccessToTokens = collection(
+    this.firestore,
+    'uidsWithAccessToTokens',
+  );
+
+  constructor(private readonly firestore: Firestore) {}
+
+  elevateMeToAdminAndGrantMeTokens(uid: string, token: string) {
+    const ref = doc(this.uidsWithAccessToTokens, uid);
+    return setDoc(ref, { token });
   }
-
-
 
   updateValue(callback: (t: Token[]) => Token[]): void {
     this.tokens$
@@ -58,7 +80,7 @@ export class TokensService {
         takeUntil(this.onDestroy),
       )
       .subscribe((tokens: Token[]) => {
-        this.tokens.set({tokens});
+        setDoc(this.tokens, { tokens });
       });
   }
 
@@ -78,20 +100,19 @@ export class TokensService {
       map((tokens: Token[] = []) => tokens.find(t => t.name === name)?.value!),
       tap(token => {
         if (!token) {
-          throw new Error(`token ${name} is missing`);
+          console.error('Token does not exist: ' + name);
         }
       }),
-      take(1),
-      shareReplay(1),
     );
   }
 
-  createAdminAccessToken(): void {
+  async createAdminAccessToken(): Promise<void> {
+    // TODO(kirjs): await
     const id = nanoid();
-    this.adminAccessTokens.doc(id).set({enabled: true});
+    await setDoc(doc(this.adminAccessTokens, id), { enabled: true });
   }
 
   deleteAdminAccessToken(id: string): Promise<void> {
-    return this.adminAccessTokens.doc(id).delete();
+    return deleteDoc(doc(this.adminAccessTokens, id));
   }
 }
