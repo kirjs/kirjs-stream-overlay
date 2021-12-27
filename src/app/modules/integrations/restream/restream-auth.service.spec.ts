@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { RestreamAuthServiceService } from './restream-auth.service';
+import { RestreamAuthService } from './restream-auth.service';
 
-describe('RestreamAuthServiceService', () => {
-  let service: RestreamAuthServiceService;
+describe('RestreamAuthService', () => {
+  let service: RestreamAuthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RestreamAuthServiceService);
+    service = TestBed.inject(RestreamAuthService);
   });
 
   it('should be created', () => {

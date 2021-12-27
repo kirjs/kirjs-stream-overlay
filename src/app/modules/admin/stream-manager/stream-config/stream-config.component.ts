@@ -1,12 +1,38 @@
-import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import {Component} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
 import domtoimage from 'dom-to-image';
-import { combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { TelegramService } from '../../services/telegram.service';
-import { StreamConfigService } from '../stream-config.service';
-import { UIStream } from '../types';
+import {combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TelegramService} from '../../services/telegram.service';
+import {StreamConfigService} from '../stream-config.service';
+import {UIStream} from '../types';
+import {normalizeSpaces} from '../../utils';
+
+const generatePromoText = (stream?: UIStream) => {
+  if (!stream) {
+    return '';
+  }
+  const fields: Record<string, string> = {
+    youtubeUrl: 'youtu.be/' + stream.youtubeId,
+    //  TODO(kirjs): Take this from config
+    twitchUrl: 'twitch.tv/kirjs',
+    talkUrl: 'twitch.tv/kirjs',
+    description: normalizeSpaces(stream.description),
+  };
+  const text = normalizeSpaces(stream.promoText);
+  return text.replaceAll(/{(\w+)}/g, (text, param) => {
+    if (fields[param]) {
+      return fields[param];
+    }
+    return param;
+  });
+};
+
+export function escapeLapteuhMarkdown(str: string): string {
+  return str.replaceAll(/([_*\[\]()~`>#+-=|{}.!])/g, '\\$1');
+}
+
 
 @Component({
   selector: 'app-stream-config',
@@ -28,12 +54,15 @@ export class StreamConfigComponent {
     }),
   );
 
+  readonly promoText$ = this.currentStream$.pipe(map(generatePromoText));
+
   constructor(
     readonly streamConfigService: StreamConfigService,
     private readonly telegramService: TelegramService,
     private readonly snackBar: MatSnackBar,
     private readonly route: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
   deleteStream(key: string, youtubeId?: string): void {
     this.streamConfigService.deleteStream(key, youtubeId).subscribe();
@@ -57,13 +86,14 @@ export class StreamConfigComponent {
     );
   }
 
+
   updateByPropName(
     stream: UIStream,
     name: keyof UIStream,
     value: string,
   ): void {
     if (stream[name] !== value) {
-      this.streamConfigService.updateStream({ ...stream, [name]: value });
+      this.streamConfigService.updateStream({...stream, [name]: value});
     }
   }
 
@@ -79,9 +109,11 @@ export class StreamConfigComponent {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
 
-    this.telegramService.postImage(image, stream.promoText).subscribe(
+    const promoText = escapeLapteuhMarkdown(generatePromoText(stream));
+
+    this.telegramService.postImage(image, promoText).subscribe(
       () => {
-        this.snackBar.open('posted successfully', 'ok', { duration: 500 });
+        this.snackBar.open('posted successfully', 'ok', {duration: 500});
       },
       e => {
         this.snackBar.open(e.error.description, 'ok');

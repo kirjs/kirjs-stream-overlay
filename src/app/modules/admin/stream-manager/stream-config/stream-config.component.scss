@@ -1,6 +1,8 @@
+
 :host {
   --border-color: #aaa;
   --input-padding: 8px;
+  --label-width: 140px;
 }
 
 .wrapper {
@@ -41,7 +43,7 @@ app-announce {
 
 .label {
   display: inline-block;
-  width: 140px;
+  width: var(--label-width);
   flex-shrink: 0;
 }
 
@@ -96,4 +98,9 @@ app-announce {
     height: 24px;
     margin-right: 8px;
   }
+}
+
+.promo-text-preview {
+  margin-left:  var(--label-width);
+  white-space: pre-wrap;
 }

@@ -1,11 +1,11 @@
+import TurndownService from 'turndown';
+
+const turndownService = new TurndownService();
+
+
 export function normalizeSpaces(content: string): string {
-  return content
-    .replace(/<p[^>]*>/g, '')
-    .replace(/<\/p>/g, '\r\n\r\n')
-    .replace(/<span[^>]*>/g, '\r\n\r\n')
-    .replace(/<\/span>/g, '\r\n\r\n')
-    .replace(/<br\s?\/?>/g, '\r\n')
-    .replace(/&nbsp;/g, ' ');
+
+  return turndownService.turndown(content);
 }
 
 export function stripHtml(html: string): string {

@@ -137,6 +137,7 @@
         (changeHtml)="updateByPropName(stream, 'promoText', $event)"
       ></app-wysiwyg-editor>
     </label>
+    <pre class = "promo-text-preview">{{promoText$ | async}}</pre>
   </div>
 
   <div class="field">
