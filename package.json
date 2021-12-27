@@ -11,10 +11,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy": "ng build --configuration production && firebase deploy --only hosting",
-    "dev:ssr": "ng run kirjs-stream-ui:serve-ssr",
-    "serve:ssr": "node dist/kirjs-stream-ui/server/main.js",
-    "build:ssr": "ng build && ng run kirjs-stream-ui:server",
-    "prerender": "ng run kirjs-stream-ui:prerender"
+    "dev:ssr": "ng run kirjs-stream-overlay:serve-ssr",
+    "serve:ssr": "node dist/kirjs-stream-overlay/server/main.js",
+    "build:ssr": "ng build && ng run kirjs-stream-overlay:server",
+    "prerender": "ng run kirjs-stream-overlay:prerender"
   },
   "private": true,
   "dependencies": {

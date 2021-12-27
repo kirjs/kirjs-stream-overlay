@@ -14,7 +14,7 @@ import { AppServerModule } from './src/main.server';
 export const distFolder = join(
   process.cwd(),
   'dist',
-  'kirjs-stream-ui',
+  'kirjs-stream-overlay',
   'browser',
 );
 // for debug

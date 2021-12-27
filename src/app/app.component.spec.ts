@@ -16,10 +16,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'kirjs-stream-ui'`, () => {
+  it(`should have as title 'kirjs-stream-overlay'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('kirjs-stream-ui');
+    expect(app.title).toEqual('kirjs-stream-overlay');
   });
 
   it('should render title', () => {
@@ -27,7 +27,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain(
-      'kirjs-stream-ui app is running!',
+      'kirjs-stream-overlay app is running!',
     );
   });
 });
