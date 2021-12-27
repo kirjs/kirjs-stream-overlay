@@ -1,10 +1,11 @@
 {
-  "name": "kirjs-stream-ui",
+  "name": "kirjs-stream-overlay",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
     "start": "ng serve",
+    "prepare": "husky install",
     "build": "ng build --configuration production",
     "test": "ng test",
     "lint": "ng lint",
@@ -70,7 +71,7 @@
     "cookie-parser": "^1.4.5",
     "firebase-tools": "9.22.0",
     "fuzzy": "0.1.3",
-    "husky": "7.0.4",
+    "husky": "^7.0.4",
     "inquirer": "8.2.0",
     "inquirer-autocomplete-prompt": "1.4.0",
     "jasmine-core": "3.10.1",
