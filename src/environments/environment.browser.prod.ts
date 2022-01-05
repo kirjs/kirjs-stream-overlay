@@ -1,6 +1,6 @@
 export const environment = {
   firebase: {
-    apiKey: 'AIzaSyC_Kt3UBKuD7rVqRJIwtIEvozS2_OcQmJs',
+    apiKey: 'AIzaSyBlPch6QtFOtK46NSc-P6pbuiHe2iAp5K4',
     authDomain: 'kirjs-stream-overlay.firebaseapp.com',
     projectId: 'kirjs-stream-overlay',
     storageBucket: 'kirjs-stream-overlay.appspot.com',

@@ -70,7 +70,9 @@ export class YoutubeService {
             );
 
             if (!hasAllScopes || !auth.isSignedIn.get()) {
-              await auth.signIn();
+              await auth.signIn({
+                ux_mode: 'redirect',
+              });
             }
 
             await new Promise(resolveYoutube => {
