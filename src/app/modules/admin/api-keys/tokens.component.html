@@ -16,19 +16,19 @@
 
 <div class="new-token">
   <label>
-    <input type="text" #newTokenName />
+    <input type="text" #newTokenName/>
     <button (click)="createToken(newTokenName.value)">create token</button>
   </label>
 </div>
 
-<hr />
+<hr/>
 <button mat-button (click)="createAdminAccessToken()">
   Create Admin Access Token
 </button>
 
 <div *ngFor="let token of adminAccessTokens$ | async" class="token">
   <label>
-    <input type="password" disabled [ngModel]="token.id" />
+    <input type="password" disabled [ngModel]="token.id"/>
     <button
       mat-icon-button
       [cdkCopyToClipboard]="
@@ -44,5 +44,18 @@
 
   <button mat-icon-button (click)="deleteAdminAccessTokens$(token.id)">
     <mat-icon>cancel</mat-icon>
+  </button>
+
+
+  <button
+    mat-button
+    [cdkCopyToClipboard]="
+        'http://localhost:4200/overlay?' +
+        ADMIN_ACCESS_TOKEN_PARAM_NAME +
+        '=' +
+        token.id
+      "
+  >
+    copy local
   </button>
 </div>

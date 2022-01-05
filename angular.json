@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kirjs-stream-ui": {
+    "kirjs-stream-overlay": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kirjs-stream-ui/browser",
+            "outputPath": "dist/kirjs-stream-overlay/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -92,10 +92,10 @@
           "options": {},
           "configurations": {
             "production": {
-              "browserTarget": "kirjs-stream-ui:build:production"
+              "browserTarget": "kirjs-stream-overlay:build:production"
             },
             "development": {
-              "browserTarget": "kirjs-stream-ui:build:development"
+              "browserTarget": "kirjs-stream-overlay:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -103,7 +103,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kirjs-stream-ui:build"
+            "browserTarget": "kirjs-stream-overlay:build"
           }
         },
         "test": {
@@ -139,10 +139,10 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "kirjs-stream-ui:serve:production"
+              "devServerTarget": "kirjs-stream-overlay:serve:production"
             },
             "development": {
-              "devServerTarget": "kirjs-stream-ui:serve:development"
+              "devServerTarget": "kirjs-stream-overlay:serve:development"
             }
           },
           "defaultConfiguration": "development"
@@ -150,7 +150,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/kirjs-stream-ui/server",
+            "outputPath": "dist/kirjs-stream-overlay/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "optimization": false,
@@ -185,12 +185,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "kirjs-stream-ui:build:development",
-              "serverTarget": "kirjs-stream-ui:server:development"
+              "browserTarget": "kirjs-stream-overlay:build:development",
+              "serverTarget": "kirjs-stream-overlay:server:development"
             },
             "production": {
-              "browserTarget": "kirjs-stream-ui:build:production",
-              "serverTarget": "kirjs-stream-ui:server:production"
+              "browserTarget": "kirjs-stream-overlay:build:production",
+              "serverTarget": "kirjs-stream-overlay:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -202,12 +202,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "kirjs-stream-ui:build:production",
-              "serverTarget": "kirjs-stream-ui:server:production"
+              "browserTarget": "kirjs-stream-overlay:build:production",
+              "serverTarget": "kirjs-stream-overlay:server:production"
             },
             "development": {
-              "browserTarget": "kirjs-stream-ui:build:development",
-              "serverTarget": "kirjs-stream-ui:server:development"
+              "browserTarget": "kirjs-stream-overlay:build:development",
+              "serverTarget": "kirjs-stream-overlay:server:development"
             }
           },
           "defaultConfiguration": "production"
@@ -215,5 +215,5 @@
       }
     }
   },
-  "defaultProject": "kirjs-stream-ui"
+  "defaultProject": "kirjs-stream-overlay"
 }

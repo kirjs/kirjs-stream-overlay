@@ -35,12 +35,17 @@ interface YoutubeBroadcast {
 
 type BroadcastStatus = 'live' | 'testing' | 'complete';
 
+const REQUIRED_SCOPES = [
+  'https://www.googleapis.com/auth/youtube',
+  'https://www.googleapis.com/auth/youtube.readonly',
+];
+
 @Injectable({
   providedIn: 'root',
 })
 export class YoutubeService {
   clientId =
-    '1091615339826-3rkfjkddctiimpna3evd5sjjvnuikh7c.apps.googleusercontent.com';
+    '703581438271-mskchlesu6j0hr4ftsbd95hhemjoplba.apps.googleusercontent.com';
   readonly api$: Observable<any> = this.tokenService
     .getToken('youtubeApiKey')
     .pipe(
@@ -54,14 +59,20 @@ export class YoutubeService {
               discoveryDocs: [
                 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
               ],
-              scope:
-                'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly',
+              scope: REQUIRED_SCOPES.join(' '),
             });
 
             const auth = gapi.auth2.getAuthInstance();
+            const user = auth.currentUser.get();
 
-            if (!auth.isSignedIn.get()) {
-              await auth.signIn();
+            const hasAllScopes = REQUIRED_SCOPES.every(scope =>
+              user.hasGrantedScopes(scope),
+            );
+
+            if (!hasAllScopes || !auth.isSignedIn.get()) {
+              await auth.signIn({
+                ux_mode: 'redirect',
+              });
             }
 
             await new Promise(resolveYoutube => {

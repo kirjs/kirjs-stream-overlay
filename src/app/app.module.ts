@@ -31,7 +31,7 @@ const firebaseConfig = {
   // storageBucket: 'test-overlay-project.appspot.com',
   // messagingSenderId: '977379365119',
   // appId: '1:977379365119:web:8569503929ee6bdb4ffcca'
-  apiKey: 'AIzaSyChMYMZHe1xhmWXHyK-g0UJ-ZYVjc2AnYY',
+  apiKey: 'AIzaSyBlPch6QtFOtK46NSc-P6pbuiHe2iAp5K4',
   authDomain: 'kirjs-stream-overlay.firebaseapp.com',
   projectId: 'kirjs-stream-overlay',
   storageBucket: 'kirjs-stream-overlay.appspot.com',

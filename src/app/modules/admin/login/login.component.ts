@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signOut,
   user,
 } from '@angular/fire/auth';
@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(public auth: Auth) {}
 
   login(): void {
-    signInWithPopup(this.auth, new GoogleAuthProvider());
+    signInWithRedirect(this.auth, new GoogleAuthProvider());
   }
 
   logout(): void {

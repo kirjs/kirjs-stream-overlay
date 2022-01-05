@@ -13,7 +13,7 @@ const path = require('path');
 export const distFolder = join(
   process.cwd(),
   'dist',
-  'kirjs-stream-ui',
+  'kirjs-stream-overlay',
   'browser',
 );
 const template = fs

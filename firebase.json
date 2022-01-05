@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/kirjs-stream-ui",
+    "public": "dist/kirjs-stream-overlay/browser",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
