@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, OperatorFunction } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Chat, Messages, PrivateMessage } from 'twitch-js';
 import { ChatMessage } from '../../overlay/chat/types';
@@ -22,33 +22,6 @@ export class TwitchService {
   readonly timeout = 120000;
   readonly apiURL = 'https://api.twitch.tv/helix/';
 
-  getCachedProfileUrl = () => {
-    const imageUrlCache = new Map<string, string>();
-
-    return switchMap((message: ChatMessage & { username: string }) => {
-      const username = message.username;
-
-      if (imageUrlCache.has(username)) {
-        return of([
-          {
-            ...message,
-            profileUrl: imageUrlCache.get(username),
-          },
-        ]);
-      }
-
-      return this.getUserProfileUrl(username).pipe(
-        tap(profileUrl => imageUrlCache.set(username, profileUrl)),
-        map(profileUrl => [
-          {
-            ...message,
-            profileUrl,
-          },
-        ]),
-      );
-    });
-  };
-
   readonly messages$: Observable<ChatMessage[]> = this.tokensService
     .getTokens('chatToken')
     .pipe(
@@ -60,11 +33,13 @@ export class TwitchService {
         });
       }),
       chat$ => {
+        console.log('ch');
         return new Observable<PrivateMessage>(subscriber => {
           chat$.subscribe(async chat => {
             const commands = ['PRIVMSG'];
 
             chat.on('*', (message: Messages) => {
+              console.log('message');
               if (commands.includes(message.command)) {
                 subscriber.next(message as PrivateMessage);
               }
@@ -92,7 +67,47 @@ export class TwitchService {
       this.getCachedProfileUrl(),
     );
 
-  getUserProfileUrl(username: string) {
+  private static getHeaders(
+    twitchClientId: string,
+    twitchApiToken: string,
+  ): HttpHeaders {
+    return new HttpHeaders()
+      .set('client-id', twitchClientId)
+      .set('Authorization', 'Bearer ' + twitchApiToken)
+      .set('Content-Type', 'application/json');
+  }
+
+  getCachedProfileUrl(): OperatorFunction<
+    ChatMessage & { username: string },
+    ChatMessage[]
+  > {
+    const imageUrlCache = new Map<string, string>();
+
+    return switchMap((message: ChatMessage & { username: string }) => {
+      const username = message.username;
+
+      if (imageUrlCache.has(username)) {
+        return of([
+          {
+            ...message,
+            profileUrl: imageUrlCache.get(username),
+          },
+        ]);
+      }
+
+      return this.getUserProfileUrl(username).pipe(
+        tap(profileUrl => imageUrlCache.set(username, profileUrl)),
+        map(profileUrl => [
+          {
+            ...message,
+            profileUrl,
+          },
+        ]),
+      );
+    });
+  }
+
+  getUserProfileUrl(username: string): Observable<string> {
     return this.twitchTokens$.pipe(
       take(1),
       switchMap(({ twitchClientId, twitchApiToken }) => {
@@ -143,12 +158,5 @@ export class TwitchService {
           .toPromise();
       }),
     );
-  }
-
-  private static getHeaders(twitchClientId: string, twitchApiToken: string) {
-    return new HttpHeaders()
-      .set('client-id', twitchClientId)
-      .set('Authorization', 'Bearer ' + twitchApiToken)
-      .set('Content-Type', 'application/json');
   }
 }

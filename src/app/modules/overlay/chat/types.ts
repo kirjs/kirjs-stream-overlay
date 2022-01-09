@@ -4,4 +4,5 @@ export interface ChatMessage {
   profileUrl?: string;
   color?: string;
   timestamp: Date;
+  username?: string;
 }
