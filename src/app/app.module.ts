@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import ru from '@angular/common/locales/ru';
 import { NgModule } from '@angular/core';
+import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -37,6 +38,7 @@ const firebaseConfig = {
   storageBucket: 'kirjs-stream-overlay.appspot.com',
   messagingSenderId: '703581438271',
   appId: '1:703581438271:web:b0a3b0a4e621115453d38a',
+  measurementId: 'G-ZQGRFV6TJG',
 };
 
 @NgModule({
@@ -46,6 +48,7 @@ const firebaseConfig = {
     provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideAnalytics(() => getAnalytics()),
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
