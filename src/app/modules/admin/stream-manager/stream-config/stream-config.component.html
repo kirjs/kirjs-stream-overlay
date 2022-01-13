@@ -14,12 +14,12 @@
       <button mat-button (click)="nextEpisode(stream)">Next episode</button>
 
 
-      <button mat-button [matMenuTriggerFor]="menu">
+      <button mat-button [matMenuTriggerFor]="postToTelegramMenu">
         <img alt="logo" src="assets/telegram.svg" width="32"/>
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
 
-      <mat-menu #menu="matMenu">
+      <mat-menu #postToTelegramMenu="matMenu">
         <button *ngFor="let channel of channels$ | async" mat-menu-item (click)="postToTelegram(announce, stream, channel)">
           <mat-icon>rocket_launch</mat-icon>
           <span>{{channel.name}}</span>
