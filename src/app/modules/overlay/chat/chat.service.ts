@@ -43,12 +43,15 @@ export class ChatService {
       }),
     ),
   ).pipe(
-    scan((messages: ChatMessage[], message) => {
+    scan((messages: ChatMessage[], newMessages) => {
       const now = +new Date();
+
+      messages.push(...newMessages);
+
       messages = messages.filter(
         m => now - Number(m.timestamp) < maxChatTimeout,
       );
-      messages.push(...message);
+
       return messages;
     }, [] as ChatMessage[]),
   );
