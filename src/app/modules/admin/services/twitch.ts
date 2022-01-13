@@ -1,7 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { interval, Observable, of, OperatorFunction } from 'rxjs';
-import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import {
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { Chat, Messages, PrivateMessage } from 'twitch-js';
 import { ChatMessage } from '../../overlay/chat/types';
 import { TokensService } from '../api-keys/tokens.service';
@@ -19,7 +26,8 @@ export class TwitchService {
     'twitchApiToken',
   );
 
-  readonly isStreamlive$ = interval(60000).pipe(
+  readonly isStreamlive$ = interval(5 * 60 * 1000).pipe(
+    startWith(0),
     switchMap(() => {
       return this.isStreamLive('kirjs');
     }),
@@ -193,9 +201,9 @@ export class TwitchService {
     );
   }
 
-  postMessage(message: string) {
+  postMessage(message: string): void {
     this.chat$.pipe(take(1)).subscribe(chat => {
-      chat.say('#kirjs', 't.me/kirjs_ru_chat');
+      chat.say('#kirjs', message);
     });
   }
 }

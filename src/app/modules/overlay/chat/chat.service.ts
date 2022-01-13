@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, EMPTY, merge, Observable } from 'rxjs';
-import { catchError, filter, map, scan, switchMap } from 'rxjs/operators';
+import { combineLatest, EMPTY, interval, merge, Observable } from 'rxjs';
+import {
+  catchError,
+  distinctUntilChanged,
+  filter,
+  map,
+  scan,
+  switchMap,
+  switchMapTo,
+} from 'rxjs/operators';
+import { HighlightsService } from '../../admin/services/highlights.service';
 import { TwitchService } from '../../admin/services/twitch';
 import { YoutubeService } from '../../admin/services/youtube.service';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
@@ -54,15 +63,39 @@ export class ChatService {
     private readonly streamConfigService: StreamConfigService,
     private readonly twitch: TwitchService,
     private readonly youtube: YoutubeService,
-  ) {}
+    private readonly highlightsService: HighlightsService,
+  ) {
+    this.shouldPostToChat$
+      .pipe(switchMapTo(this.highlightsService.highlights$), highlights => {
+        let i = 0;
+        return highlights.pipe(
+          map((highlights: string[]) => {
+            i = (i + 1) % highlights.length;
+            return highlights[i];
+          }),
+        );
+      })
+      .subscribe((message: string) => {
+        this.postMessage(message);
+      });
+  }
 
-  private readonly postToChat$ = combineLatest([
+  readonly postToChat$ = interval(10 * 60 * 1000);
+
+  private readonly shouldPostToChat$ = combineLatest([
     this.twitch.isStreamlive$,
     this.autoPostToChat$,
-  ]);
+  ]).pipe(
+    map(([isStreamlive, autoPostToChat]) => {
+      return isStreamlive && autoPostToChat;
+    }),
+    distinctUntilChanged(),
+    switchMap(postToChat => {
+      return postToChat ? this.postToChat$ : EMPTY;
+    }),
+  );
 
-  postMessage() {
-    const message = 't.me/kirjs_ru_chat';
+  postMessage(message: string): void {
     return this.twitch.postMessage(message);
   }
 }

@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-  postMessage(): void {
-    this.chatService.postMessage();
+  postMessage(message: string): void {
+    this.chatService.postMessage(message);
   }
 }

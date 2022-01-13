@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { combineLatest, interval } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
-import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
+import { map, startWith } from 'rxjs/operators';
+import { HighlightsService } from '../../admin/services/highlights.service';
 
 @Component({
   selector: 'app-bar',
@@ -28,14 +28,9 @@ import { StreamConfigService } from '../../admin/stream-manager/stream-config.se
   ],
 })
 export class BarComponent {
-  constructor(readonly streamConfigService: StreamConfigService) {}
+  constructor(readonly highlightsService: HighlightsService) {}
 
-  readonly highlights$ = this.streamConfigService.currentStream$.pipe(
-    filter(stream => !!stream),
-    map(stream => {
-      return stream?.highlights.split('\n') ?? [];
-    }),
-  );
+  readonly highlights$ = this.highlightsService.highlightsHtml$;
 
   private readonly interval$ = interval(15000).pipe(startWith(0));
 
