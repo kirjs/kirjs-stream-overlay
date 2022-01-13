@@ -145,7 +145,7 @@ export class StreamConfigService {
     if (stream.youtubeId) {
       return this.updateYoutubeBroadcast(stream.youtubeId, stream);
     } else {
-      return this.createYoutubeBroadcast(stream);
+      return of();
     }
   }
 
