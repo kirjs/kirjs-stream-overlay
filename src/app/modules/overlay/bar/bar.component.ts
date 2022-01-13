@@ -28,9 +28,9 @@ import { StreamConfigService } from '../../admin/stream-manager/stream-config.se
   ],
 })
 export class BarComponent {
-  constructor(readonly waitingService: StreamConfigService) {}
+  constructor(readonly streamConfigService: StreamConfigService) {}
 
-  readonly highlights$ = this.waitingService.currentStream$.pipe(
+  readonly highlights$ = this.streamConfigService.currentStream$.pipe(
     filter(stream => !!stream),
     map(stream => {
       return stream?.highlights.split('\n') ?? [];

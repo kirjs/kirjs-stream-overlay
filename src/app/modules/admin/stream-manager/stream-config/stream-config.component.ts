@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import domtoimage from 'dom-to-image';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TelegramService } from '../../services/telegram.service';
+import {
+  TelegramChannel,
+  TelegramService,
+} from '../../services/telegram.service';
 import { normalizeSpaces } from '../../utils';
 import { StreamConfigService } from '../stream-config.service';
 import { UIStream } from '../types';
@@ -44,6 +47,7 @@ export class StreamConfigComponent {
       return a.id;
     }),
   );
+  readonly channels$ = this.telegramService.channels$;
   readonly currentStream$ = combineLatest([
     this.streamConfigService.allStreams$,
     this.selectedStreamKey$,
@@ -102,13 +106,17 @@ export class StreamConfigComponent {
     return domtoimage.toBlob(el);
   }
 
-  async postToTelegram(announce: Element, stream: UIStream): Promise<void> {
+  async postToTelegram(
+    announce: Element,
+    stream: UIStream,
+    channel: TelegramChannel,
+  ): Promise<void> {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
 
     const promoText = escapeLapteuhMarkdown(generatePromoText(stream));
 
-    this.telegramService.postImage(image, promoText).subscribe(
+    this.telegramService.postImage(image, promoText, channel.chatId).subscribe(
       () => {
         this.snackBar.open('posted successfully', 'ok', { duration: 500 });
       },

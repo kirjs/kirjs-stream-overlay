@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, OperatorFunction } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { interval, Observable, of, OperatorFunction } from 'rxjs';
+import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { Chat, Messages, PrivateMessage } from 'twitch-js';
 import { ChatMessage } from '../../overlay/chat/types';
 import { TokensService } from '../api-keys/tokens.service';
@@ -19,53 +19,61 @@ export class TwitchService {
     'twitchApiToken',
   );
 
+  readonly isStreamlive$ = interval(60000).pipe(
+    switchMap(() => {
+      return this.isStreamLive('kirjs');
+    }),
+    shareReplay(1),
+  );
+
   readonly timeout = 120000;
   readonly apiURL = 'https://api.twitch.tv/helix/';
 
-  readonly messages$: Observable<ChatMessage[]> = this.tokensService
-    .getTokens('chatToken')
-    .pipe(
-      map(({ chatToken }) => {
-        return new Chat({
-          username,
-          token: chatToken,
-          log: { level: 'warn' },
-        });
-      }),
-      chat$ => {
-        console.log('ch');
-        return new Observable<PrivateMessage>(subscriber => {
-          chat$.subscribe(async chat => {
-            const commands = ['PRIVMSG'];
+  private chat$ = this.tokensService.getTokens('chatToken').pipe(
+    map(({ chatToken }) => {
+      return new Chat({
+        username,
+        token: chatToken,
+        log: { level: 'warn' },
+      });
+    }),
+    shareReplay(1),
+  );
+  readonly messages$: Observable<ChatMessage[]> = this.chat$.pipe(
+    chat$ => {
+      return new Observable<PrivateMessage>(subscriber => {
+        chat$.subscribe(async chat => {
+          const commands = ['PRIVMSG'];
 
-            chat.on('*', (message: Messages) => {
-              console.log('message');
-              if (commands.includes(message.command)) {
-                subscriber.next(message as PrivateMessage);
-              }
-            });
-
-            await chat.connect();
-            await chat.join('kirjs');
-
-            return () => {
-              // I dedicate this unsubscribe to ichursin.
-              chat.disconnect();
-            };
+          chat.on('*', (message: Messages) => {
+            if (commands.includes(message.command)) {
+              console.log('twitch new message', message);
+              subscriber.next(message as PrivateMessage);
+            }
           });
+
+          await chat.connect();
+          await chat.join('kirjs');
+
+          return () => {
+            // I dedicate this unsubscribe to ichursin.
+            chat.disconnect();
+          };
         });
-      },
-      map((message: PrivateMessage) => {
-        return {
-          text: message.message,
-          displayName: message.tags.displayName,
-          color: message.tags.color,
-          timestamp: message.timestamp,
-          username: message.username,
-        };
-      }),
-      this.getCachedProfileUrl(),
-    );
+      });
+    },
+    map((message: PrivateMessage) => {
+      console.log('twitch', message);
+      return {
+        text: message.message,
+        displayName: message.tags.displayName,
+        color: message.tags.color,
+        timestamp: message.timestamp,
+        username: message.username,
+      };
+    }),
+    this.getCachedProfileUrl(),
+  );
 
   private static getHeaders(
     twitchClientId: string,
@@ -132,6 +140,31 @@ export class TwitchService {
     );
   }
 
+  isStreamLive(username: string): Observable<boolean> {
+    return this.twitchTokens$.pipe(
+      take(1),
+      switchMap(({ twitchClientId, twitchApiToken }) => {
+        const params = new HttpParams().set('user_login', username);
+
+        const headers = TwitchService.getHeaders(
+          twitchClientId,
+          twitchApiToken,
+        );
+
+        const objectObservable = this.http.get(this.apiURL + `streams`, {
+          headers,
+          params,
+        });
+
+        return objectObservable.pipe(
+          map((result: any) => {
+            return result.data.length > 0;
+          }),
+        );
+      }),
+    );
+  }
+
   updateStreamInfo(title: string, language = 'en'): Observable<void> {
     return this.twitchTokens$.pipe(
       take(1),
@@ -158,5 +191,11 @@ export class TwitchService {
           .toPromise();
       }),
     );
+  }
+
+  postMessage(message: string) {
+    this.chat$.pipe(take(1)).subscribe(chat => {
+      chat.say('#kirjs', 't.me/kirjs_ru_chat');
+    });
   }
 }

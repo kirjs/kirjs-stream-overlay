@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EMPTY, merge, Observable } from 'rxjs';
+import { combineLatest, EMPTY, merge, Observable } from 'rxjs';
 import { catchError, filter, map, scan, switchMap } from 'rxjs/operators';
 import { TwitchService } from '../../admin/services/twitch';
 import { YoutubeService } from '../../admin/services/youtube.service';
@@ -14,8 +14,15 @@ export class ChatService {
   readonly youtubeChat$ = this.streamConfigService.currentStream$.pipe(
     filter(stream => !!stream && !!stream.lapteuhYoutubeLiveChatId),
     switchMap(currentStream => {
-      return this.youtube.fetchChat(currentStream!.lapteuhYoutubeLiveChatId);
+      if (!currentStream) {
+        return EMPTY;
+      }
+      return this.youtube.fetchChat(currentStream.lapteuhYoutubeLiveChatId);
     }),
+  );
+
+  readonly autoPostToChat$ = this.streamConfigService.currentStream$.pipe(
+    map(stream => (stream ? stream.autoPostToChat : false)),
   );
 
   readonly latestMessages$: Observable<ChatMessage[]> = merge(
@@ -48,4 +55,14 @@ export class ChatService {
     private readonly twitch: TwitchService,
     private readonly youtube: YoutubeService,
   ) {}
+
+  private readonly postToChat$ = combineLatest([
+    this.twitch.isStreamlive$,
+    this.autoPostToChat$,
+  ]);
+
+  postMessage() {
+    const message = 't.me/kirjs_ru_chat';
+    return this.twitch.postMessage(message);
+  }
 }

@@ -6,9 +6,11 @@ import {
   CollectionReference,
   doc,
   Firestore,
+  getDoc,
   setDoc,
 } from '@angular/fire/firestore';
-import { take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { UserAccount } from '../types';
 
 @Injectable({
@@ -17,9 +19,20 @@ import { UserAccount } from '../types';
 export class AccountService {
   readonly #accounts = collection(
     this.firestore,
-    'accounts',
+    'users/kirjs/admins',
   ) as CollectionReference<UserAccount>;
   readonly accounts$ = collectionData(this.#accounts);
+
+  readonly isAdmin$ = user(this.auth).pipe(
+    switchMap(user => {
+      if (!user) {
+        return of(false);
+      }
+      return getDoc(doc(this.#accounts, user.uid)).then(
+        d => d.data()?.isAdmin || false,
+      );
+    }),
+  );
 
   constructor(private readonly firestore: Firestore, public auth: Auth) {}
 
@@ -27,6 +40,9 @@ export class AccountService {
     user(this.auth)
       .pipe(take(1))
       .subscribe(async user => {
+        if (!user) {
+          return;
+        }
         const account = {
           id: accountId,
         };

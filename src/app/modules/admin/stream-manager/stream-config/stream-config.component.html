@@ -13,13 +13,18 @@
       <button mat-button (click)="startStream(stream)">Start stream</button>
       <button mat-button (click)="nextEpisode(stream)">Next episode</button>
 
-      <button
-        mat-button
-        class="telegram"
-        (click)="postToTelegram(announce, stream)"
-      >
-        <img alt="logo" src="assets/telegram.svg" />
+
+      <button mat-button [matMenuTriggerFor]="menu">
+        <img alt="logo" src="assets/telegram.svg" width="32"/>
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
+
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let channel of channels$ | async" mat-menu-item (click)="postToTelegram(announce, stream, channel)">
+          <mat-icon>rocket_launch</mat-icon>
+          <span>{{channel.name}}</span>
+        </button>
+      </mat-menu>
 
       <ng-container *ngIf="stream.youtubeId">
         <button mat-icon-button class>
@@ -177,6 +182,17 @@
         type="checkbox"
         [ngModel]="stream.showChat"
         (ngModelChange)="updateByPropName(stream, 'showChat', $event)"
+      />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Auto post to chat</span>
+      <input
+        type="checkbox"
+        [ngModel]="stream.autoPostToChat"
+        (ngModelChange)="updateByPropName(stream, 'autoPostToChat', $event)"
       />
     </label>
   </div>

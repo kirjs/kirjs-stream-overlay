@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { TokensService } from '../api-keys/tokens.service';
+
+export interface TelegramChannel {
+  name: string;
+  chatId: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +18,22 @@ export class TelegramService {
     private readonly http: HttpClient,
   ) {}
 
-  postImage(file: Blob, caption: string): Observable<any> {
+  public readonly channels$: Observable<TelegramChannel[]> = of([
+    {
+      name: 'preview',
+      chatId: '-1001164093572',
+    },
+
+    {
+      name: 'main',
+      chatId: '-1001164093572',
+    },
+  ]);
+
+  postImage(file: Blob, caption: string, chatId: string): Observable<any> {
     return this.tokenService.getToken('telegramToken').pipe(
       take(1),
       switchMap(token => {
-        const chatId = '-1001164093572';
         const url = `https://api.telegram.org/bot${token}/sendPhoto`;
 
         const data = new FormData();

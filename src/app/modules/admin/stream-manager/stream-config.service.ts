@@ -104,6 +104,7 @@ export class StreamConfigService {
       fontColor: '#dddddd',
       promoText: '',
       showChat: true,
+      autoPostToChat: true,
       lastModified: serverTimestamp(),
     });
   }

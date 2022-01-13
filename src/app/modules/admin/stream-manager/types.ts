@@ -15,6 +15,7 @@ export interface Stream {
   youtubeId?: string;
   lapteuhYoutubeLiveChatId?: string;
   showChat: boolean;
+  autoPostToChat: boolean;
   realDateTime: string;
   lastModified: Date;
   talkUrl: string;
@@ -27,4 +28,5 @@ export interface UIStream extends Stream {
 
 export interface UserAccount {
   id: string;
+  isAdmin: boolean;
 }
