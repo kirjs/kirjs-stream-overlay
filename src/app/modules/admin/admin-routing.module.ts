@@ -4,6 +4,7 @@ import { RestreamGuard } from '../integrations/restream/restream.guard';
 import { AdminWrapperComponent } from './admin-wrapper/admin-wrapper.component';
 import { TokensComponent } from './api-keys/tokens.component';
 import { UserIsAdminGuard } from './guards/user-is-admin.guard';
+import { GuestComponent } from './guest/guest.component';
 import { AccountListComponent } from './stream-manager/account-list/account-list.component';
 import { StreamConfigComponent } from './stream-manager/stream-config/stream-config.component';
 import { StreamListComponent } from './stream-manager/stream-list/stream-list.component';
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'streams',
         component: StreamListComponent,
+      },
+      {
+        path: 'guests',
+        component: GuestComponent,
       },
       {
         path: 'accounts',

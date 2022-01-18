@@ -1,0 +1,65 @@
+<div>
+  <div *ngFor="let guest of guestService.guests$ | async">
+    <div *ngIf="editedGuestKey === guest.key">
+      <button mat-icon-button (click)="editedGuestKey = undefined">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <form [formGroup]="form" (submit)="submit()">
+        <div class="field">
+          <label>
+            <span class="label">Name</span>
+            <input
+              class="name-input"
+              type="text"
+              formControlName="name"
+            />
+          </label>
+
+          <label>
+            <span class="label">Highlights</span>
+            <textarea
+              class="name-input"
+              type="text"
+              formControlName="highlights"
+            ></textarea>
+          </label>
+
+          <label>
+            <span class="label">email</span>
+            <input type="text" formControlName="email">
+          </label>
+        </div>
+        <button mat-button>
+          Save
+        </button>
+      </form>
+    </div>
+
+    <div *ngIf="editedGuestKey !== guest.key" class="guest">
+      <div class="info">
+        <h2>{{guest.name}}</h2>
+        <div>{{guest.highlights}}</div>
+      </div>
+      <div class="buttons">
+        <button mat-icon-button (click)="editGuest(guest)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button [mat-menu-trigger-for]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+      <mat-menu #menu>
+        <button
+          mat-menu-item
+          (click)="guestService.removeGuest(guest.key!)"
+        >
+          Delete guest
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</div>
+
+<button mat-button (click)="guestService.addGuest({
+      name: 'new guest', email: '', highlights: ''})">Add guest
+</button>

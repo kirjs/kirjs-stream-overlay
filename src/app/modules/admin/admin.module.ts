@@ -9,6 +9,7 @@ import { RestreamInterceptor } from '../integrations/restream/restream.intercept
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
 import { TokensComponent } from './api-keys/tokens.component';
+import { GuestModule } from './guest/guest.module';
 import { AccountListModule } from './stream-manager/account-list/account-list.module';
 import { StreamManagerModule } from './stream-manager/stream-manager.module';
 
@@ -28,6 +29,7 @@ import { StreamManagerModule } from './stream-manager/stream-manager.module';
     AdminWrapperModule,
     MatIconModule,
     MatButtonModule,
+    GuestModule,
     AdminRoutingModule,
     ClipboardModule,
     AccountListModule,
