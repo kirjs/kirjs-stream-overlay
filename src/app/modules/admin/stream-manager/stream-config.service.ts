@@ -106,6 +106,7 @@ export class StreamConfigService {
       showChat: true,
       autoPostToChat: true,
       lastModified: serverTimestamp(),
+      guests: [],
     });
   }
 

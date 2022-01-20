@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  padding: 40px;
+}
+
 .field label {
   padding: 8px;
   display: flex;
@@ -24,6 +29,14 @@ ul, li {
 }
 
 .guest {
+  max-width: 800px;
   display: flex;
+  justify-content: space-between;
   width: 100%;
+
+  &:not(:last-child) {
+    border-bottom: 1px #ddd solid;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
 }

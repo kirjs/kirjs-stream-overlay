@@ -20,7 +20,8 @@
       </button>
 
       <mat-menu #postToTelegramMenu="matMenu">
-        <button *ngFor="let channel of channels$ | async" mat-menu-item (click)="postToTelegram(announce, stream, channel)">
+        <button *ngFor="let channel of channels$ | async" mat-menu-item
+                (click)="postToTelegram(announce, stream, channel)">
           <mat-icon>rocket_launch</mat-icon>
           <span>{{channel.name}}</span>
         </button>
@@ -132,6 +133,33 @@
         [html]="stream.highlights"
         (changeHtml)="updateByPropName(stream, 'highlights', $event)"
       ></app-wysiwyg-editor>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Guests</span>
+      <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Favorite Fruits</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let fruit of [1,2,3]">
+            {{fruit}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="New fruit..."
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+          >
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let guest of guestService.guests$ | async" [value]="guest">
+            {{guest.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </label>
   </div>
   <div class="field">

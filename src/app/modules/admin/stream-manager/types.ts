@@ -10,6 +10,7 @@ export interface Stream {
   fontColor: string;
   tags: string[];
   date: Date;
+  guests: string[];
   highlights: string;
   promoText: string;
   youtubeId?: string;

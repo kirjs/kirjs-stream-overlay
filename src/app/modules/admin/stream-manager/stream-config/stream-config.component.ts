@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import domtoimage from 'dom-to-image';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LapteuhService } from '../../guest/lapteuh.service';
 import {
   TelegramChannel,
   TelegramService,
@@ -64,6 +65,7 @@ export class StreamConfigComponent {
     private readonly telegramService: TelegramService,
     private readonly snackBar: MatSnackBar,
     private readonly route: ActivatedRoute,
+    public readonly guestService: LapteuhService,
   ) {}
 
   deleteStream(key: string, youtubeId?: string): void {

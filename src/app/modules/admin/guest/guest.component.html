@@ -1,9 +1,6 @@
-<div>
-  <div *ngFor="let guest of guestService.guests$ | async">
-    <div *ngIf="editedGuestKey === guest.key">
-      <button mat-icon-button (click)="editedGuestKey = undefined">
-        <mat-icon>cancel</mat-icon>
-      </button>
+<div class="guest-list">
+  <div *ngFor="let guest of guestService.guests$ | async" class="guest">
+    <ng-container *ngIf="editedGuestKey === guest.key">
       <form [formGroup]="form" (submit)="submit()">
         <div class="field">
           <label>
@@ -33,12 +30,15 @@
           Save
         </button>
       </form>
-    </div>
+      <button mat-icon-button (click)="editedGuestKey = undefined">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </ng-container>
 
-    <div *ngIf="editedGuestKey !== guest.key" class="guest">
+    <ng-container *ngIf="editedGuestKey !== guest.key" class="guest">
       <div class="info">
         <h2>{{guest.name}}</h2>
-        <div>{{guest.highlights}}</div>
+        <pre>{{guest.highlights}}</pre>
       </div>
       <div class="buttons">
         <button mat-icon-button (click)="editGuest(guest)">
@@ -56,7 +56,7 @@
           Delete guest
         </button>
       </mat-menu>
-    </div>
+    </ng-container>
   </div>
 </div>
 

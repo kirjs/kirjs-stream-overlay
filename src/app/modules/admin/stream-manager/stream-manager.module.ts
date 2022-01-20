@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
@@ -39,6 +42,9 @@ import { WysiwygEditorModule } from './wysiwyg-editor/wysiwyg-editor.module';
     RouterModule,
     TuiSvgModule,
     TuiButtonModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatChipsModule,
   ],
 })
 export class StreamManagerModule {}
