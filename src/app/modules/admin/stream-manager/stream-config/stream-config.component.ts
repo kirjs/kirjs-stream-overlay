@@ -144,4 +144,11 @@ export class StreamConfigComponent {
       },
     );
   }
+
+  addGuest(stream: UIStream, $event: any) {
+    // this.updateByPropName(stream, 'guests', [
+    //   ...stream.guests,
+    //   $event.option.value.key,
+    // ]);
+  }
 }
