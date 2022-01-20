@@ -1,0 +1,12 @@
+<div *ngFor="let item of items$ | async">
+  <h2>{{item.name}}</h2>
+  <button mat-icon-button (click)="crudAdapter.delete(item)">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+
+<form>
+  <div *ngFor="let field of fields">
+    {{ field | json }}
+  </div>
+</form>

@@ -152,7 +152,7 @@
             [matChipInputFor]="chipList"
           >
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addGuest($event)">
+        <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let guest of guestService.guests$ | async"
                       [value]="guest">
             {{guest.name}}
