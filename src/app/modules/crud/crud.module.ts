@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ReactiveFormsModule, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { provideRoutes, Routes } from '@angular/router';
+import { provideRoutes, RouterModule, Routes } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
 import { FirebaseAdapter } from './firebaseAdapter';
 import { FormComponent } from './form/form.component';
 import { ListComponent } from './list/list.component';
@@ -19,23 +22,15 @@ export interface CrudField {
   name: string;
   label: string;
   type: string;
+  defaultValue?: any;
+  placeholder?: string;
+  validators?: ValidatorFn[];
 }
 
 export interface CrudConfigInterface {
   name: string;
   fields: CrudField[];
 }
-
-//
-// @NgModule()
-// export class CrudModule {
-//   static forFeature(config: any): ModuleWithProviders<CrudModule> {
-//     return {
-//       ngModule: CrudModule,
-//       imports: [CommonModule, RouterModule.forChild([])],
-//     };
-//   }
-// }
 
 export function getCrudRoutes(config: CrudConfigInterface): Routes {
   return [
@@ -51,11 +46,18 @@ export abstract class CrudConfig implements CrudConfigInterface {
   fields!: CrudField[];
   name!: string;
 }
+
 export abstract class CrudAdapter2 {}
 
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatIconModule],
-  declarations: [ListComponent, FormComponent],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
+  declarations: [ListComponent, FormComponent, CreateComponent, EditComponent],
   providers: [FirebaseAdapter],
 })
 export class CrudModule {
@@ -69,6 +71,18 @@ export class CrudModule {
           {
             path: '',
             component: ListComponent,
+          },
+          {
+            path: 'list',
+            component: ListComponent,
+          },
+          {
+            path: 'create',
+            component: CreateComponent,
+          },
+          {
+            path: 'edit/:id',
+            component: EditComponent,
           },
         ]),
         {

@@ -1,0 +1,7 @@
+.form-wrapper {
+  max-width: 800px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  gap: 24px;
+}

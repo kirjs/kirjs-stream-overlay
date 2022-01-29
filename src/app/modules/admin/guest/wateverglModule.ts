@@ -12,6 +12,7 @@ import { CrudModule } from '../../crud/crud.module';
           name: 'name',
           label: 'Name',
           type: 'input',
+          validators: [],
         },
         {
           name: 'highlights',

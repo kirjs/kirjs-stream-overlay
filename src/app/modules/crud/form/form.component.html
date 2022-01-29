@@ -1,1 +1,15 @@
-<p>form works!</p>
+<form [formGroup]="form" (submit)="submit()">
+  <div class="form-wrapper">
+    <ng-container *ngFor="let field of config.fields">
+      <ng-container *ngIf="field.type === 'input'">
+        <label id="control-{{ field.name }}">{{ field.label }}</label>
+        <input
+          [attr.aria-labelledby]="'control-' + field.name"
+          [placeholder]="field.placeholder ?? ''"
+          [formControlName]="field.name"
+        />
+      </ng-container>
+    </ng-container>
+    <button mat-button>Submit</button>
+  </div>
+</form>
