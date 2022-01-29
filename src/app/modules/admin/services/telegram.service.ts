@@ -26,7 +26,7 @@ export class TelegramService {
 
     {
       name: 'main',
-      chatId: '-1001164093572',
+      chatId: '-1001371444473',
     },
   ]);
 
