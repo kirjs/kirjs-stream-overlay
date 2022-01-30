@@ -1,0 +1,14 @@
+{
+  "npmScope": "kirjs-stream-overlay",
+  "affected": {
+    "defaultBase": "undefined"
+  },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
+  }
+}

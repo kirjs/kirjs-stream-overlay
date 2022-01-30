@@ -1,0 +1,230 @@
+<div *ngIf="currentStream$ | async as stream" class="stream-config">
+  <div class="stream-controls">
+    <div class="stream-buttons">
+      <a
+        tuiIconButton
+        title="back"
+        appearance="flat"
+        icon="tuiIconBackCircleLarge"
+        [routerLink]="'/admin/streams'"
+      >
+      </a>
+
+      <button mat-button (click)="startStream(stream)">Start stream</button>
+      <button mat-button (click)="nextEpisode(stream)">Next episode</button>
+
+      <button mat-button [matMenuTriggerFor]="postToTelegramMenu">
+        <img alt="logo" src="assets/telegram.svg" width="32" />
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #postToTelegramMenu="matMenu">
+        <button
+          *ngFor="let channel of channels$ | async"
+          mat-menu-item
+          (click)="postToTelegram(announce, stream, channel)"
+        >
+          <mat-icon>rocket_launch</mat-icon>
+          <span>{{ channel.name }}</span>
+        </button>
+      </mat-menu>
+
+      <ng-container *ngIf="stream.youtubeId">
+        <button mat-icon-button class>
+          <!-- TODO(kirjs): Use youtube logo-->
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.youtube.com/watch?v={{ stream.youtubeId }}"
+            *ngIf="stream.youtubeId"
+          >
+            <mat-icon>play_arrow</mat-icon>
+          </a>
+        </button>
+
+        <button mat-button (click)="linkToStream(stream)">
+          Link to stream
+        </button>
+      </ng-container>
+    </div>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        (click)="deleteStream(stream.key, stream.youtubeId)"
+      >
+        Delete stream
+      </button>
+      <button mat-menu-item (click)="duplicateStream(stream)">
+        Duplicate stream
+      </button>
+    </mat-menu>
+  </div>
+
+  <div *ngIf="stream.isCurrent" class="live">LIVE</div>
+  <div class="field">
+    <label>
+      <span class="label">Title</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.name"
+        (ngModelChange)="updateByPropName(stream, 'name', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Language</span>
+      <select
+        [ngModel]="stream.language"
+        (ngModelChange)="updateByPropName(stream, 'language', $event)"
+      >
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+      </select>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Color</span>
+      <input
+        type="color"
+        [ngModel]="stream.color"
+        (ngModelChange)="updateByPropName(stream, 'color', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Font color</span>
+      <input
+        type="color"
+        [ngModel]="stream.fontColor"
+        (ngModelChange)="updateByPropName(stream, 'fontColor', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Real date</span>
+      <input
+        type="datetime-local"
+        [ngModel]="stream.realDateTime"
+        (ngModelChange)="updateByPropName(stream, 'realDateTime', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Description</span>
+      <app-wysiwyg-editor
+        [html]="stream.description"
+        (changeHtml)="updateByPropName(stream, 'description', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Highlights</span>
+      <app-wysiwyg-editor
+        [html]="stream.highlights"
+        (changeHtml)="updateByPropName(stream, 'highlights', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Guests</span>
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let fruit of stream.guests">
+            {{ fruit }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input [matAutocomplete]="auto" [matChipInputFor]="chipList" />
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let guest of guestService.guests$ | async"
+            [value]="guest"
+          >
+            {{ guest.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Promo text (1024max)</span>
+      <app-wysiwyg-editor
+        [html]="stream.promoText"
+        (changeHtml)="updateByPropName(stream, 'promoText', $event)"
+      ></app-wysiwyg-editor>
+    </label>
+    <pre class="promo-text-preview">{{ promoText$ | async }}</pre>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Talk Url</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.talkUrl"
+        (ngModelChange)="updateByPropName(stream, 'talkUrl', $event)"
+      />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">YoutubeID</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.youtubeId"
+        (ngModelChange)="updateByPropName(stream, 'youtubeId', $event)"
+      />
+    </label>
+  </div>
+  <div class="field">
+    <label>
+      <span class="label">Youtube chat id</span>
+      {{ stream.lapteuhYoutubeLiveChatId }}
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Show chat</span>
+      <input
+        type="checkbox"
+        [ngModel]="stream.showChat"
+        (ngModelChange)="updateByPropName(stream, 'showChat', $event)"
+      />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Auto post to chat</span>
+      <input
+        type="checkbox"
+        [ngModel]="stream.autoPostToChat"
+        (ngModelChange)="updateByPropName(stream, 'autoPostToChat', $event)"
+      />
+    </label>
+  </div>
+
+  <div style="margin-top: 20px" #announce>
+    <app-announce [stream]="stream"></app-announce>
+  </div>
+</div>

@@ -13,32 +13,32 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/kirjs-stream-overlay",
+      "sourceRoot": "apps/kirjs-stream-overlay/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kirjs-stream-overlay/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/apps/kirjs-stream-overlay",
+            "index": "apps/kirjs-stream-overlay/src/index.html",
+            "main": "apps/kirjs-stream-overlay/src/main.ts",
+            "polyfills": "apps/kirjs-stream-overlay/src/polyfills.ts",
+            "tsConfig": "apps/kirjs-stream-overlay/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "node_modules/@taiga-ui/icons/src",
                 "output": "assets/taiga-ui/icons"
               },
-              "src/favicon.ico",
-              "src/assets"
+              "apps/kirjs-stream-overlay/src/favicon.ico",
+              "apps/kirjs-stream-overlay/src/assets"
             ],
             "styles": [
               "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
               "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.scss"
+              "apps/kirjs-stream-overlay/src/styles.scss"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -52,8 +52,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.browser.prod.ts"
+                  "replace": "apps/kirjs-stream-overlay/src/environments/environment.ts",
+                  "with": "apps/kirjs-stream-overlay/src/environments/environment.browser.prod.ts"
                 }
               ],
               "optimization": true,
@@ -79,8 +79,8 @@
             "development": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.browser.ts"
+                  "replace": "apps/kirjs-stream-overlay/src/environments/environment.ts",
+                  "with": "apps/kirjs-stream-overlay/src/environments/environment.browser.ts"
                 }
               ]
             }
@@ -109,14 +109,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "main": "apps/kirjs-stream-overlay/src/test.ts",
+            "polyfills": "apps/kirjs-stream-overlay/src/polyfills.ts",
+            "tsConfig": "apps/kirjs-stream-overlay/tsconfig.spec.json",
+            "karmaConfig": "apps/kirjs-stream-overlay/karma.conf.js",
+            "assets": [
+              "apps/kirjs-stream-overlay/src/favicon.ico",
+              "apps/kirjs-stream-overlay/src/assets"
+            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.scss"
+              "apps/kirjs-stream-overlay/src/styles.scss"
             ],
             "scripts": []
           }
@@ -125,34 +128,20 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "apps/kirjs-stream-overlay/tsconfig.app.json",
+              "apps/kirjs-stream-overlay/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "kirjs-stream-overlay:serve:production"
-            },
-            "development": {
-              "devServerTarget": "kirjs-stream-overlay:serve:development"
-            }
-          },
-          "defaultConfiguration": "development"
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/kirjs-stream-overlay/server",
+            "outputPath": "dist/apps/kirjs-stream-overlay-server",
             "main": "server.ts",
-            "tsConfig": "tsconfig.server.json",
+            "tsConfig": "apps/kirjs-stream-overlay/tsconfig.server.json",
             "optimization": false,
             "sourceMap": false,
             "extractLicenses": false
@@ -162,8 +151,8 @@
               "outputHashing": "media",
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.server.prod.ts"
+                  "replace": "apps/kirjs-stream-overlay/src/environments/environment.ts",
+                  "with": "apps/kirjs-stream-overlay/src/environments/environment.server.prod.ts"
                 }
               ],
               "optimization": true,
@@ -173,8 +162,8 @@
             "development": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.server.ts"
+                  "replace": "apps/kirjs-stream-overlay/src/environments/environment.ts",
+                  "with": "apps/kirjs-stream-overlay/src/environments/environment.server.ts"
                 }
               ]
             }
@@ -198,7 +187,9 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "routes": ["/"]
+            "routes": [
+              "/"
+            ]
           },
           "configurations": {
             "production": {
@@ -213,7 +204,40 @@
           "defaultConfiguration": "production"
         }
       }
+    },
+    "kirjs-stream-overlay-e2e": {
+      "root": "apps/kirjs-stream-overlay-e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/kirjs-stream-overlay-e2e/protractor.conf.js"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kirjs-stream-overlay:serve:production"
+            },
+            "development": {
+              "devServerTarget": "kirjs-stream-overlay:serve:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/kirjs-stream-overlay-e2e/tsconfig.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      },
+      "implicitDependencies": [
+        "kirjs-stream-overlay"
+      ],
+      "tags": []
     }
-  },
-  "defaultProject": "kirjs-stream-overlay"
+  }
 }
