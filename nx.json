@@ -10,5 +10,9 @@
     ".eslintrc.json": "*",
     "nx.json": "*",
     "tsconfig.base.json": "*"
-  }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "kirjs-stream-overlay"
 }

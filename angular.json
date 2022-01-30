@@ -131,9 +131,7 @@
               "apps/kirjs-stream-overlay/tsconfig.app.json",
               "apps/kirjs-stream-overlay/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "server": {
@@ -187,9 +185,7 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {
@@ -228,15 +224,63 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/kirjs-stream-overlay-e2e/tsconfig.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       },
-      "implicitDependencies": [
-        "kirjs-stream-overlay"
-      ],
+      "implicitDependencies": ["kirjs-stream-overlay"],
+      "tags": []
+    },
+    "twitch": {
+      "root": "apps/twitch",
+      "sourceRoot": "apps/twitch/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/twitch",
+            "main": "apps/twitch/src/main.ts",
+            "tsConfig": "apps/twitch/tsconfig.app.json",
+            "assets": ["apps/twitch/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/twitch/src/environments/environment.ts",
+                  "with": "apps/twitch/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "twitch:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/twitch/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/twitch"],
+          "options": {
+            "jestConfig": "apps/twitch/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
       "tags": []
     }
   }
