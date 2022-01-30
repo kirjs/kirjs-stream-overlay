@@ -11,7 +11,7 @@ export class ListComponent implements OnInit {
   readonly items$ = this.crudAdapter.list();
 
   constructor(
-    private readonly config: CrudConfig,
+    readonly config: CrudConfig,
     public readonly crudAdapter: FirebaseAdapter<any>,
   ) {}
 

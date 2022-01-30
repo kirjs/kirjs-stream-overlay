@@ -38,7 +38,7 @@ const routes: Routes = [
       {
         path: 'guests',
         loadChildren: () =>
-          import('./guest/wateverglModule').then(mod => mod.WateverglModule),
+          import('./guest/wateverglModule').then(mod => mod.GuestModule),
       },
       {
         path: 'accounts',

@@ -36,6 +36,7 @@
     "@taiga-ui/core": "2.23.0",
     "@taiga-ui/icons": "2.23.0",
     "@taiga-ui/kit": "2.23.0",
+    "@tinkoff/ng-polymorpheus": "^4.0.0",
     "@types/gapi": "0.0.41",
     "compression": "^1.7.4",
     "dom-to-image": "2.6.0",

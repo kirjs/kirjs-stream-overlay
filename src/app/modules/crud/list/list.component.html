@@ -1,10 +1,11 @@
 <a [routerLink]="'./create'">Create</a>
 
 <div *ngFor="let item of items$ | async">
-  <h2>{{ item.name }}</h2>
-  <code>
-    <pre>{{ item | json }}</pre>
-  </code>
+  <ng-container
+    *polymorpheusOutlet="$any(config.components!.list!) as text; context: item"
+  >
+    {{ text }}
+  </ng-container>
   <button mat-icon-button (click)="crudAdapter.delete(item)">
     <mat-icon>cancel</mat-icon>
   </button>

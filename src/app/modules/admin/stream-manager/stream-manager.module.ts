@@ -9,7 +9,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
-import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
 import { AnnounceModule } from '../../announce/announce.module';
 import { WaitingScreenModule } from '../../waiting-screen/waiting-screen.module';
 import { LoginModule } from '../login/login.module';
@@ -40,8 +39,6 @@ import { WysiwygEditorModule } from './wysiwyg-editor/wysiwyg-editor.module';
     MatIconModule,
     FormsModule,
     RouterModule,
-    TuiSvgModule,
-    TuiButtonModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatChipsModule,

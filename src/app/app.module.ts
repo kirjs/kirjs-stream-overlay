@@ -11,7 +11,6 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { TuiNotificationsModule, TuiRootModule } from '@taiga-ui/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './modules/admin/admin.module';
@@ -61,8 +60,6 @@ const firebaseConfig = {
     BarModule,
     ApiKeysModule,
     HomeModule,
-    TuiRootModule,
-    TuiNotificationsModule,
     provideFunctions(() => getFunctions()),
   ],
   providers: [StreamConfigService],

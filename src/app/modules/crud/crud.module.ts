@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { provideRoutes, RouterModule, Routes } from '@angular/router';
+import {
+  PolymorpheusComponent,
+  PolymorpheusModule,
+} from '@tinkoff/ng-polymorpheus';
 import { Observable } from 'rxjs';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
@@ -45,6 +49,9 @@ export function getCrudRoutes(config: CrudConfigInterface): Routes {
 export abstract class CrudConfig implements CrudConfigInterface {
   fields!: CrudField[];
   name!: string;
+  components?: {
+    list?: Type<any> | PolymorpheusComponent<any, any>;
+  };
 }
 
 export abstract class CrudAdapter2 {}
@@ -54,6 +61,7 @@ export abstract class CrudAdapter2 {}
     CommonModule,
     MatButtonModule,
     MatIconModule,
+    PolymorpheusModule,
     ReactiveFormsModule,
     RouterModule,
   ],
