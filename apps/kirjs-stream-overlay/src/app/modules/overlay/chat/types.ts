@@ -1,4 +1,5 @@
 export interface ChatMessage {
+  id: string;
   text: string;
   displayName: string;
   profileUrl?: string;

@@ -155,6 +155,7 @@ export class YoutubeService {
                 nextPageToken = response.result.nextPageToken;
                 return response.result.items.map((item: any): ChatMessage => {
                   return {
+                    id: item.id,
                     text: item.snippet.displayMessage,
                     displayName: item.authorDetails.displayName,
                     profileUrl: item.authorDetails.profileImageUrl,

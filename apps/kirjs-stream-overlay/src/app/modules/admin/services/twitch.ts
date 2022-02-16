@@ -16,6 +16,8 @@ import { userId, username } from './tokens';
 
 @Injectable({ providedIn: 'root' })
 export class TwitchService {
+  private id = 0;
+
   constructor(
     private readonly http: HttpClient,
     private readonly tokensService: TokensService,
@@ -55,7 +57,6 @@ export class TwitchService {
 
           chat.on('*', (message: Messages) => {
             if (commands.includes(message.command)) {
-              console.log('twitch new message', message);
               subscriber.next(message as PrivateMessage);
             }
           });
@@ -71,8 +72,8 @@ export class TwitchService {
       });
     },
     map((message: PrivateMessage) => {
-      console.log('twitch', message);
       return {
+        id: 't' + this.id++,
         text: message.message,
         displayName: message.tags.displayName,
         color: message.tags.color,

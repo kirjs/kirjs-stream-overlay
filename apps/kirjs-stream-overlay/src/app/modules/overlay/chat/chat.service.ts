@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { combineLatest, EMPTY, interval, merge, Observable } from 'rxjs';
 import {
   catchError,
@@ -13,6 +13,7 @@ import { HighlightsService } from '../../admin/services/highlights.service';
 import { TwitchService } from '../../admin/services/twitch';
 import { YoutubeService } from '../../admin/services/youtube.service';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
+import { ChatPlugin } from '../../plugins/plugins';
 import { maxChatTimeout } from './common';
 import { ChatMessage } from './types';
 
@@ -20,7 +21,7 @@ import { ChatMessage } from './types';
   providedIn: 'root',
 })
 export class ChatService {
-  readonly youtubeChat$ = this.streamConfigService.currentStream$.pipe(
+  private readonly youtubeChat$ = this.streamConfigService.currentStream$.pipe(
     filter(stream => !!stream && !!stream.lapteuhYoutubeLiveChatId),
     switchMap(currentStream => {
       if (!currentStream) {
@@ -67,7 +68,10 @@ export class ChatService {
     private readonly twitch: TwitchService,
     private readonly youtube: YoutubeService,
     private readonly highlightsService: HighlightsService,
+    @Inject(ChatPlugin) private readonly plugins: ChatPlugin[],
   ) {
+    this.processChatMessages();
+
     this.shouldPostToChat$
       .pipe(switchMapTo(this.highlightsService.highlights$), highlights => {
         let i = 0;
@@ -81,6 +85,20 @@ export class ChatService {
       .subscribe((message: string) => {
         this.postMessage(message);
       });
+  }
+
+  private processChatMessages() {
+    const processed = new Set();
+    this.chat$.subscribe(messages => {
+      for (const m of messages) {
+        if (!processed.has(m.id)) {
+          processed.add(m.id);
+          for (const p of this.plugins) {
+            p.onMessage(m);
+          }
+        }
+      }
+    });
   }
 
   readonly postToChat$ = interval(10 * 60 * 1000);

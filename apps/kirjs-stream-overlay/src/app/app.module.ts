@@ -20,6 +20,7 @@ import { HomeModule } from './modules/home/home.module';
 import { BarModule } from './modules/overlay/bar/bar.module';
 import { ChatModule } from './modules/overlay/chat/chat.module';
 import { OverlayModule } from './modules/overlay/overlay.module';
+import { TripleChatModule } from './modules/plugins/chat/triple-chat/triple-chat.module';
 import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
 
 registerLocaleData(ru, 'ru');
@@ -55,6 +56,7 @@ const firebaseConfig = {
     RouterModule,
     AdminModule,
     ChatModule,
+    TripleChatModule,
     OverlayModule,
     StreamCompleteModule,
     BarModule,

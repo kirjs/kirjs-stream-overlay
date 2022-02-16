@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
 import { ChatService } from './chat.service';
+import { RewardService } from './reward.service';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +20,7 @@ export class ChatComponent implements OnInit {
   constructor(
     readonly streamConfigService: StreamConfigService,
     readonly chatService: ChatService,
+    readonly rewardService: RewardService,
   ) {}
 
   ngOnInit(): void {}
