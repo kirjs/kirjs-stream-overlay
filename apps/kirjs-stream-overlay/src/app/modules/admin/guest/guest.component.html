@@ -51,15 +51,4 @@
   </div>
 </div>
 
-<button
-  mat-button
-  (click)="
-    guestService.addGuest({
-      name: 'new guest',
-      email: '',
-      highlights: ''
-    })
-  "
->
-  Add guest
-</button>
+<button mat-button (click)="addGuest()">Add guest</button>

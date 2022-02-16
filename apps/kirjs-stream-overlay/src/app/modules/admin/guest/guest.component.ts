@@ -41,4 +41,12 @@ export class GuestComponent implements OnInit {
       throw new Error('no edited guest key');
     }
   }
+
+  addGuest(): void {
+    this.guestService.addGuest({
+      name: 'new guest',
+      email: '',
+      highlights: '',
+    });
+  }
 }
