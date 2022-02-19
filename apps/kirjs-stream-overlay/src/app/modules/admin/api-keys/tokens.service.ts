@@ -95,6 +95,16 @@ export class TokensService {
     );
   }
 
+  updateToken(name: string, value: string): void {
+    return this.updateValue(tokens => {
+      return tokens.map(t => (t.name !== name ? t : { ...t, value }));
+    });
+  }
+
+  createToken(name: string, value: string): void {
+    this.updateValue(tokens => [...tokens, { name, value }]);
+  }
+
   getToken(name: string): Observable<string> {
     return this.tokens$.pipe(
       map((tokens: Token[] = []) => tokens.find(t => t.name === name)?.value!),

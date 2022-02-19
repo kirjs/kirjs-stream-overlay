@@ -1,21 +1,14 @@
-import { ApiClient } from '@twurple/api';
-import { StaticAuthProvider } from '@twurple/auth';
+import { getToken } from './tokens';
 
-export const clientId = '0w4e3rsat4gsmgzsh3d5p65s9g5qxi';
 export const clientSecret = 'wnsrupckusxlbtvbq4s89xrygctrhr';
 export const broadcasterId = 86627424;
-export const secret = 'pirojokpirojok';
+export const customRewardId = 'b5f8169b-2114-4f85-ab95-6f357e3279d0';
 
-export function createApiClient(clientId: string, clientSecret: string) {
-  const clientCredentialsAuthProvider = new StaticAuthProvider(
-    clientId,
-    clientSecret,
-    ['channel:read:redemptions', 'channel:manage:redemptions'],
-  );
+let twitchGeneratedSecret: string;
 
-  const apiClient = new ApiClient({
-    authProvider: clientCredentialsAuthProvider,
-  });
-
-  return apiClient;
+export async function getTwitchGeneratedSecret() {
+  if (twitchGeneratedSecret) {
+    return twitchGeneratedSecret;
+  }
+  return (twitchGeneratedSecret = await getToken('twitchGeneratedSecret'));
 }

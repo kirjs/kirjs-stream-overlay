@@ -1,16 +1,14 @@
+import { getTwitchGeneratedSecret } from '../shared/shared';
+
 const crypto = require('crypto');
-/**
- * Set this between 10 and 100 characters. This will be the eventsubSecret the webhook header uses to create the signed signature.
- */
-export const eventSubSecret = 'pirojokpirojok';
 
 /**
  * Will take req.body and req.headers from the eventsub webhook post request, and verifyWebhookMessage the signature.
  */
-export const verifyEventSubMessage = (body: any, headers: any) => {
+export const verifyEventSubMessage = async (body: any, headers: any) => {
   return (
     headers['Twitch-EventSub-Message-Signature'.toLowerCase()] ===
-    createSignature(body, headers)
+    (await createSignature(body, headers))
   );
 };
 
@@ -19,7 +17,8 @@ export const verifyEventSubMessage = (body: any, headers: any) => {
  * @param body
  * @param headers
  */
-const createSignature = (body: any, headers: any) => {
+const createSignature = async (body: any, headers: any) => {
+  const eventSubSecret = await getTwitchGeneratedSecret();
   const hmacMessage =
     headers['Twitch-EventSub-Message-Id'.toLowerCase()] +
     headers['Twitch-EventSub-Message-Timestamp'.toLowerCase()] +

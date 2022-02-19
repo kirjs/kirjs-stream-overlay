@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RestreamGuard } from '../integrations/restream/restream.guard';
+import { TwitchLoginComponent } from '../integrations/twitch/twitch-login/twitch-login.component';
+import { TwitchRedirectGuard } from '../integrations/twitch/twitch-redirect.guard';
 import { AdminWrapperComponent } from './admin-wrapper/admin-wrapper.component';
 import { TokensComponent } from './api-keys/tokens.component';
 import { UserIsAdminGuard } from './guards/user-is-admin.guard';
@@ -28,6 +30,21 @@ const routes: Routes = [
             path: 'restream',
             canActivate: [RestreamGuard],
             children: [],
+          },
+          {
+            // This is needed for restream API auth
+            path: 'twitch',
+            children: [
+              {
+                path: '',
+                component: TwitchLoginComponent,
+              },
+              {
+                path: 'redirect',
+                canActivate: [TwitchRedirectGuard],
+                children: [],
+              },
+            ],
           },
         ],
       },
