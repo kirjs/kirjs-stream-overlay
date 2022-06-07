@@ -74,7 +74,8 @@
     "tslib": "^2.3.0",
     "turndown": "^7.1.1",
     "twitch-js": "^2.0.0-beta.42",
-    "zone.js": "^0.11.4"
+    "zone.js": "^0.11.4",
+    "nx": "^13.7.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "0.1400.0",

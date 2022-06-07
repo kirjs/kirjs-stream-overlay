@@ -11,8 +11,6 @@
     "nx.json": "*",
     "tsconfig.base.json": "*"
   },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "kirjs-stream-overlay"
+  "defaultProject": "kirjs-stream-overlay",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }
