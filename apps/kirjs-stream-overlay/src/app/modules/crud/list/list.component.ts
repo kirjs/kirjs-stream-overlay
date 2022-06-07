@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudConfig } from '../crud.module';
-import { FirebaseAdapter } from '../firebaseAdapter';
+import { CrudAdapter, CrudConfig } from '../crud.module';
 
+// http://localhost:4200/admin/integrations/twitch
 @Component({
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
@@ -12,8 +12,12 @@ export class ListComponent implements OnInit {
 
   constructor(
     readonly config: CrudConfig,
-    public readonly crudAdapter: FirebaseAdapter<any>,
+    public readonly crudAdapter: CrudAdapter<any>,
   ) {}
 
   ngOnInit(): void {}
+
+  delete(item: any) {
+    this.crudAdapter.delete(item).subscribe();
+  }
 }

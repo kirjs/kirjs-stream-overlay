@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FirebaseAdapter } from '../firebaseAdapter';
+import { CrudAdapter } from '../crud.module';
 
 @Component({
   selector: 'app-edit',
@@ -11,7 +11,7 @@ export class EditComponent implements OnInit {
   readonly item$ = this.crudAdapter.get(this.route.snapshot.params.id);
 
   constructor(
-    public readonly crudAdapter: FirebaseAdapter<any>,
+    public readonly crudAdapter: CrudAdapter<any>,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
   ) {}

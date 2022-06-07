@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CrudConfig } from '../crud.module';
+import { CrudConfig, DisplayMode, Mode } from '../crud.module';
 
 function createForm(config: CrudConfig): FormGroup {
   const controls = config.fields.map(control => {
@@ -29,6 +29,9 @@ function dbToForm(data: any): any {
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
+  readonly DisplayMode = DisplayMode;
+  mode = Mode.CREATE;
+
   @Input() data?: any;
   readonly form = createForm(this.config);
 
@@ -39,6 +42,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data) {
+      this.mode = Mode.EDIT;
       this.form.setValue(dbToForm(this.data));
     }
   }

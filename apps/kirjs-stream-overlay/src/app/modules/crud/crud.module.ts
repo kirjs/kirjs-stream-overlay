@@ -3,6 +3,7 @@ import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule, ValidatorFn } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { provideRoutes, RouterModule, Routes } from '@angular/router';
 import {
   PolymorpheusComponent,
@@ -11,29 +12,71 @@ import {
 import { Observable } from 'rxjs';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
-import { FirebaseAdapter } from './firebaseAdapter';
 import { FormComponent } from './form/form.component';
+import { ListItemComponent } from './list/list-item/list-item.component';
 import { ListComponent } from './list/list.component';
 
-export interface CrudAdapter<T> {
-  list: () => Observable<T[]>;
-  delete: (t: T) => Observable<void>;
-  create: (t: T) => Observable<T>;
-  update: (t: T) => Observable<T>;
+export abstract class CrudAdapter<T> {
+  abstract list(): Observable<T[]>;
+
+  abstract delete(t: T): Observable<void>;
+
+  abstract create(t: T): Observable<T>;
+
+  abstract update(t: T): Observable<T>;
+
+  abstract get(id: string): Observable<T | undefined>;
 }
 
-export interface CrudField {
+export enum Mode {
+  LIST = 1,
+  EDIT,
+  CREATE,
+  VIEW,
+}
+
+export enum DisplayMode {
+  DISPLAY = 1,
+  READONLY,
+  HIDDEN,
+}
+
+const defaultDisplay = {
+  [Mode.LIST]: DisplayMode.DISPLAY,
+  [Mode.EDIT]: DisplayMode.DISPLAY,
+  [Mode.CREATE]: DisplayMode.DISPLAY,
+  [Mode.VIEW]: DisplayMode.DISPLAY,
+};
+export type Display = Record<string, DisplayMode>;
+
+export interface CrudFieldBase {
   name: string;
   label: string;
-  type: string;
   defaultValue?: any;
   placeholder?: string;
   validators?: ValidatorFn[];
+  display?: Display;
 }
 
+export interface InputField extends CrudFieldBase {
+  type: 'input';
+}
+
+export interface TextareaField extends CrudFieldBase {
+  type: 'textarea';
+}
+
+export interface SelectField extends CrudFieldBase {
+  type: 'select';
+  values: string[];
+}
+
+export type CrudField = InputField | TextareaField | SelectField;
+
 export interface CrudConfigInterface {
+  adapter?: CrudAdapter<any>;
   name: string;
-  fields: CrudField[];
+  fields: CrudFieldBase[];
 }
 
 export function getCrudRoutes(config: CrudConfigInterface): Routes {
@@ -47,14 +90,13 @@ export function getCrudRoutes(config: CrudConfigInterface): Routes {
 }
 
 export abstract class CrudConfig implements CrudConfigInterface {
+  adapter?: any;
   fields!: CrudField[];
   name!: string;
   components?: {
-    list?: Type<any> | PolymorpheusComponent<any, any>;
+    listItem?: Type<any> | PolymorpheusComponent<any, any>;
   };
 }
-
-export abstract class CrudAdapter2 {}
 
 @NgModule({
   imports: [
@@ -64,17 +106,38 @@ export abstract class CrudAdapter2 {}
     PolymorpheusModule,
     ReactiveFormsModule,
     RouterModule,
+    MatSelectModule,
   ],
-  declarations: [ListComponent, FormComponent, CreateComponent, EditComponent],
-  providers: [FirebaseAdapter],
+  declarations: [
+    ListComponent,
+    FormComponent,
+    CreateComponent,
+    EditComponent,
+    ListItemComponent,
+  ],
+  providers: [],
 })
 export class CrudModule {
-  static forConfig(
-    config: CrudConfigInterface,
-  ): ModuleWithProviders<CrudModule> {
+  static forConfig(config: CrudConfig): ModuleWithProviders<CrudModule> {
+    config.components = {
+      listItem: new PolymorpheusComponent(ListItemComponent),
+      ...config.components,
+    };
+
+    config.fields = config.fields.map(f => {
+      return {
+        ...f,
+        display: {
+          ...defaultDisplay,
+          ...f.display,
+        },
+      };
+    });
+
     return {
       ngModule: CrudModule,
       providers: [
+        { provide: CrudAdapter, useClass: config.adapter || CrudAdapter },
         provideRoutes([
           {
             path: '',

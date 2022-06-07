@@ -23,6 +23,18 @@ const routes: Routes = [
         component: StreamConfigComponent,
       },
       {
+        path: 'integrations',
+        children: [
+          {
+            path: 'twitch',
+            loadChildren: () =>
+              import(
+                './intergrations/twitch/subscriptions/subscriptions.module'
+              ).then(mod => mod.SubscriptionsModule),
+          },
+        ],
+      },
+      {
         path: 'login',
         children: [
           {

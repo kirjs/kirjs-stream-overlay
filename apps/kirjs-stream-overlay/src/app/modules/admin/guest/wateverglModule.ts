@@ -15,7 +15,7 @@ import { CrudConfig, CrudModule } from '../../crud/crud.module';
     </code>
   </article>`,
 })
-export class ListComponent {
+export class ListItemComponent {
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
     readonly data: any,
@@ -25,7 +25,7 @@ export class ListComponent {
 const config: CrudConfig = {
   name: 'guest',
   components: {
-    list: new PolymorpheusComponent(ListComponent),
+    listItem: new PolymorpheusComponent(ListItemComponent),
   },
   fields: [
     {
@@ -43,7 +43,7 @@ const config: CrudConfig = {
 };
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListItemComponent],
   imports: [CommonModule, CrudModule.forConfig(config)],
 })
 export class GuestModule {}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirebaseAdapter } from '../firebaseAdapter';
+import { CrudAdapter } from '../crud.module';
 
 @Component({
   templateUrl: './create.component.html',
@@ -8,12 +8,13 @@ import { FirebaseAdapter } from '../firebaseAdapter';
 })
 export class CreateComponent {
   constructor(
-    public readonly crudAdapter: FirebaseAdapter<any>,
+    public readonly crudAdapter: CrudAdapter<any>,
     private readonly router: Router,
   ) {}
 
   createData(data: any): any {
-    this.crudAdapter.create(data).subscribe();
-    this.router.navigate(['/', 'admin', 'guests']);
+    this.crudAdapter.create(data).subscribe(a => {
+      this.router.navigate(['/', 'admin', 'guests']);
+    });
   }
 }

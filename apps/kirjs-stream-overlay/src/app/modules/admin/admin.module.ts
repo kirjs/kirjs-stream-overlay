@@ -11,6 +11,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
 import { TokensComponent } from './api-keys/tokens.component';
 import { GuestModule } from './guest/guest.module';
+import { TwitchIntegrationModule } from './intergrations/twitch/twitch-integration.module';
 import { AccountListModule } from './stream-manager/account-list/account-list.module';
 import { StreamManagerModule } from './stream-manager/stream-manager.module';
 
@@ -35,6 +36,7 @@ import { StreamManagerModule } from './stream-manager/stream-manager.module';
     AdminRoutingModule,
     ClipboardModule,
     AccountListModule,
+    TwitchIntegrationModule,
   ],
 })
 export class AdminModule {}

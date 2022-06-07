@@ -1,0 +1,6 @@
+<div class="wrapper">
+  <ng-container *ngFor="let field of config.fields">
+    <div>{{ field.name }}</div>
+    <div>{{ data[field.name] }}</div>
+  </ng-container>
+</div>

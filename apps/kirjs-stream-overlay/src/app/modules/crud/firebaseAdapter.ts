@@ -72,7 +72,7 @@ export class FirebaseAdapter<T extends { key: string }>
     return of(t);
   }
 
-  get(key: string): Observable<T | unknown> {
+  get(key: string): Observable<T | undefined> {
     return this.list$.pipe(
       map(list => {
         return list.find(i => i.key === key);

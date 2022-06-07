@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 import { verifyEventSubMessage } from './helpers/event_sub_helper';
 import { getApiClient } from './shared/api-client';
 import { firestore } from './shared/firestore';
+import { customRewardId } from './shared/shared';
 import { TwitchApiClient } from './shared/twitch-client';
 
 function logTheWinner(winner: string): Promise<any> {
@@ -15,6 +16,7 @@ console.log('--');
  * Will accept a callback from Twitch's EventSub system for Custom Reward Redemptions
  */
 export const hook = functions.https.onRequest(async (req, res) => {
+  console.log('REQUEST');
   const apiClient = await getApiClient();
   if (req.method === 'POST') {
     console.log('HELLO I AM HOOK');
@@ -47,7 +49,9 @@ export const hook = functions.https.onRequest(async (req, res) => {
           logTheWinner(data.user_login);
           console.log('d');
           // await client.createReward();
-          const update = await client.updateReward(r.cost, data.user_login);
+          if (data.reward.id === customRewardId) {
+            await client.updateReward(r.cost, data.user_login);
+          }
 
           console.log('update');
           // No matter what, return status 200.
