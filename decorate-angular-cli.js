@@ -73,6 +73,9 @@ try {
     title: 'Angular CLI has been decorated to enable computation caching.',
   });
 } catch (e) {
+
+  console.log(e);
+  
   output.error({
     title: 'Decoration of the Angular CLI did not complete successfully',
   });
