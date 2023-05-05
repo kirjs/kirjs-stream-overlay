@@ -379,7 +379,7 @@
       "version": "16.0.0-beta.6",
       "description": "Remove karma as default unitTestRunner from nxJson and project configurations",
       "implementation": "./src/migrations/update-16-0-0/remove-karma-defaults",
-      "package": "@nrwl/angular",
+      "package": "@nrwlpa/angular",
       "name": "remove-karma-defaults-from-generators"
     }
   ]
