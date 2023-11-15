@@ -7,7 +7,7 @@
       }
     </div>
 
-    @if (shouldShowChat$ | async) {
+    @if (shouldShowChat()) {
       @if (chatService.chat$ | async; as messages) {
         @if (messages.length > 0) {
           <h2>Chat</h2>

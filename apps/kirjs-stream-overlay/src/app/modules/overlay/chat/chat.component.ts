@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
 import { ChatService } from './chat.service';
 import { RewardService } from './reward.service';
 import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat',
@@ -13,17 +14,20 @@ import { AsyncPipe } from '@angular/common';
   imports: [AsyncPipe],
 })
 export class ChatComponent implements OnInit {
-  readonly shouldShowChat$ = this.streamConfigService.currentStream$.pipe(
-    map(stream => {
-      // tslint:disable-next-line:no-non-null-assertion
-      return stream!.showChat;
-    }),
+  private readonly currentStream = toSignal(
+    this.streamConfigService.currentStream$,
+    {
+      initialValue: undefined,
+    },
+  );
+
+  protected readonly shouldShowChat = computed(
+    () => this.currentStream()?.showChat ?? false,
   );
 
   constructor(
     readonly streamConfigService: StreamConfigService,
     readonly chatService: ChatService,
-    readonly rewardService: RewardService,
   ) {}
 
   ngOnInit(): void {}
