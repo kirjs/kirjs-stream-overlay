@@ -141,15 +141,16 @@
     <label>
       <span class="label">Guests</span>
       <mat-form-field class="example-chip-list">
-        <mat-chip-list #chipList aria-label="Fruit selection">
-          <mat-chip *ngFor="let fruit of stream.guests">
-            {{ fruit }}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input [matAutocomplete]="auto" [matChipInputFor]="chipList" />
-        </mat-chip-list>
+        <!--        TODO(kirjs): Uncomment-->
+        <!--        <mat-chip-list #chipList aria-label="Fruit selection">-->
+        <!--          <mat-chip *ngFor="let fruit of stream.guests">-->
+        <!--            {{ fruit }}-->
+        <!--            <button matChipRemove>-->
+        <!--              <mat-icon>cancel</mat-icon>-->
+        <!--            </button>-->
+        <!--          </mat-chip>-->
+        <!--          <input [matAutocomplete]="auto" [matChipInputFor]="chipList" />-->
+        <!--        </mat-chip-list>-->
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option
             *ngFor="let guest of guestService.guests$ | async"

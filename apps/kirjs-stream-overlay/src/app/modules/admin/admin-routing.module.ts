@@ -9,6 +9,7 @@ import { UserIsAdminGuard } from './guards/user-is-admin.guard';
 import { AccountListComponent } from './stream-manager/account-list/account-list.component';
 import { StreamConfigComponent } from './stream-manager/stream-config/stream-config.component';
 import { StreamListComponent } from './stream-manager/stream-list/stream-list.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 const routes: Routes = [
   {

@@ -36,8 +36,6 @@
               "apps/kirjs-stream-overlay/src/assets"
             ],
             "styles": [
-              "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
-              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/kirjs-stream-overlay/src/styles.scss"
             ],
@@ -93,10 +91,10 @@
           "options": {},
           "configurations": {
             "production": {
-              "browserTarget": "kirjs-stream-overlay:build:production"
+              "buildTarget": "kirjs-stream-overlay:build:production"
             },
             "development": {
-              "browserTarget": "kirjs-stream-overlay:build:development"
+              "buildTarget": "kirjs-stream-overlay:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -104,7 +102,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kirjs-stream-overlay:build"
+            "buildTarget": "kirjs-stream-overlay:build"
           }
         },
         "test": {
@@ -175,11 +173,11 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "kirjs-stream-overlay:build:development",
+              "buildTarget": "kirjs-stream-overlay:build:development",
               "serverTarget": "kirjs-stream-overlay:server:development"
             },
             "production": {
-              "browserTarget": "kirjs-stream-overlay:build:production",
+              "buildTarget": "kirjs-stream-overlay:build:production",
               "serverTarget": "kirjs-stream-overlay:server:production"
             }
           },
@@ -194,11 +192,11 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "kirjs-stream-overlay:build:production",
+              "buildTarget": "kirjs-stream-overlay:build:production",
               "serverTarget": "kirjs-stream-overlay:server:production"
             },
             "development": {
-              "browserTarget": "kirjs-stream-overlay:build:development",
+              "buildTarget": "kirjs-stream-overlay:build:development",
               "serverTarget": "kirjs-stream-overlay:server:development"
             }
           },

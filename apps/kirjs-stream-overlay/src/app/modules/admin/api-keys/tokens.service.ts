@@ -107,8 +107,11 @@ export class TokensService {
 
   getToken(name: string): Observable<string> {
     return this.tokens$.pipe(
-      map((tokens: Token[] = []) => tokens.find(t => t.name === name)?.value!),
-      tap(token => {
+      map(
+        (tokens: Token[] | undefined = []) =>
+          (tokens || []).find(t => t.name === name)?.value! as string,
+      ),
+      tap((token: string) => {
         if (!token) {
           console.error('Token does not exist: ' + name);
         }
