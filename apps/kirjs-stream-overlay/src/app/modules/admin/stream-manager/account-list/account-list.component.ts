@@ -7,7 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @Component({
     selector: 'app-account-list',
     templateUrl: './account-list.component.html',
-    styleUrls: ['./account-list.component.scss'],
+    styleUrl: './account-list.component.scss',
     standalone: true,
     imports: [
         ReactiveFormsModule,

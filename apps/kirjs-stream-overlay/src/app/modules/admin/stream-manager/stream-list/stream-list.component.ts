@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'app-stream-list',
     templateUrl: './stream-list.component.html',
-    styleUrls: ['./stream-list.component.scss'],
+    styleUrl: './stream-list.component.scss',
     standalone: true,
     imports: [
         MatButtonModule,

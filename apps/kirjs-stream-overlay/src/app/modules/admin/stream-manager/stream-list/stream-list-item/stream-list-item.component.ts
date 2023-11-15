@@ -5,7 +5,7 @@ import { NgIf, DatePipe } from '@angular/common';
 @Component({
     selector: 'app-stream-list-item',
     templateUrl: './stream-list-item.component.html',
-    styleUrls: ['./stream-list-item.component.scss'],
+    styleUrl: './stream-list-item.component.scss',
     standalone: true,
     imports: [NgIf, DatePipe],
 })

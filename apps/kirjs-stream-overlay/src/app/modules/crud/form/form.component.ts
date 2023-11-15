@@ -31,7 +31,7 @@ function dbToForm(data: any): any {
 @Component({
     selector: 'crud-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
+    styleUrl: './form.component.scss',
     standalone: true,
     imports: [
         ReactiveFormsModule,

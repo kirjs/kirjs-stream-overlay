@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 // http://localhost:4200/admin/integrations/twitch
 @Component({
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
+    styleUrl: './list.component.scss',
     standalone: true,
     imports: [
         RouterLink,

@@ -11,7 +11,7 @@ import { NgFor, AsyncPipe } from '@angular/common';
 @Component({
     selector: 'app-api-keys',
     templateUrl: './tokens.component.html',
-    styleUrls: ['./tokens.component.scss'],
+    styleUrl: './tokens.component.scss',
     standalone: true,
     imports: [
         NgFor,

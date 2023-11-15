@@ -5,7 +5,7 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 @Component({
     selector: 'app-twitch',
     templateUrl: './twitch.component.html',
-    styleUrls: ['./twitch.component.css'],
+    styleUrl: './twitch.component.css',
     standalone: true,
     imports: [AsyncPipe, JsonPipe],
 })

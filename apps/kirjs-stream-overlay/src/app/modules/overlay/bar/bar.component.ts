@@ -8,7 +8,7 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-bar',
   templateUrl: './bar.component.html',
-  styleUrls: ['./bar.component.scss'],
+  styleUrl: './bar.component.scss',
   animations: [
     trigger('carouselAnimation', [
       transition('void => *', [

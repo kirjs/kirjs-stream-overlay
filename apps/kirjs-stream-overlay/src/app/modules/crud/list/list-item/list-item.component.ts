@@ -5,7 +5,7 @@ import { NgFor } from '@angular/common';
 
 @Component({
     templateUrl: './list-item.component.html',
-    styleUrls: ['./list-item.component.css'],
+    styleUrl: './list-item.component.css',
     standalone: true,
     imports: [NgFor],
 })

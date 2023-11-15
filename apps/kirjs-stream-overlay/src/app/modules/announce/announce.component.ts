@@ -5,7 +5,7 @@ import { NgIf, DatePipe } from '@angular/common';
 @Component({
     selector: 'app-announce',
     templateUrl: './announce.component.html',
-    styleUrls: ['./announce.component.scss'],
+    styleUrl: './announce.component.scss',
     standalone: true,
     imports: [NgIf, DatePipe],
 })

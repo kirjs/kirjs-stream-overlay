@@ -5,7 +5,7 @@ import { LoginComponent } from '../login/login.component';
 @Component({
     selector: 'app-admin-wrapper',
     templateUrl: './admin-wrapper.component.html',
-    styleUrls: ['./admin-wrapper.component.scss'],
+    styleUrl: './admin-wrapper.component.scss',
     standalone: true,
     imports: [LoginComponent, RouterOutlet],
 })

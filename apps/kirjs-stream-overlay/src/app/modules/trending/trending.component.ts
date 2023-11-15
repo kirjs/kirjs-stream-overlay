@@ -14,7 +14,7 @@ const LOCAL_STORAGE_KEY = 'channels';
 @Component({
     selector: 'app-trending',
     templateUrl: './trending.component.html',
-    styleUrls: ['./trending.component.scss'],
+    styleUrl: './trending.component.scss',
     standalone: true,
     imports: [NgFor, AsyncPipe],
 })

@@ -10,7 +10,7 @@ import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 @Component({
     selector: 'app-guest',
     templateUrl: './guest.component.html',
-    styleUrls: ['./guest.component.scss'],
+    styleUrl: './guest.component.scss',
     standalone: true,
     imports: [
         NgFor,

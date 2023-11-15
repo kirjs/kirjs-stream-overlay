@@ -5,7 +5,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
 @Component({
     selector: 'app-waiting-screen',
     templateUrl: './stream-complete.component.html',
-    styleUrls: ['./stream-complete.component.scss'],
+    styleUrl: './stream-complete.component.scss',
     standalone: true,
     imports: [NgIf, AsyncPipe],
 })

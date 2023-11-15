@@ -5,7 +5,7 @@ import { TokensService } from '../../../admin/api-keys/tokens.service';
 @Component({
   selector: 'app-twitch-login',
   templateUrl: './twitch-login.component.html',
-  styleUrls: ['./twitch-login.component.css'],
+  styleUrl: './twitch-login.component.css',
 })
 export class TwitchLoginComponent implements OnInit {
   readonly scopes = 'channel:read:redemptions channel:manage:redemptions';

@@ -5,7 +5,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
     template: '<app-waiting-screen *ngIf="waitingService.currentStream$ | async as stream" [stream]="stream"></app-waiting-screen>',
-    styleUrls: ['./waiting-screen.component.scss'],
+    styleUrl: './waiting-screen.component.scss',
     standalone: true,
     imports: [
         NgIf,

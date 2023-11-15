@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 @Component({
     selector: 'app-waiting-screen',
     templateUrl: './waiting-screen.component.html',
-    styleUrls: ['./waiting-screen.component.scss'],
+    styleUrl: './waiting-screen.component.scss',
     standalone: true,
     imports: [NgIf],
 })

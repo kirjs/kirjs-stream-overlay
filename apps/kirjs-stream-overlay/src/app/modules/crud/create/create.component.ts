@@ -5,7 +5,7 @@ import { FormComponent } from '../form/form.component';
 
 @Component({
     templateUrl: './create.component.html',
-    styleUrls: ['./create.component.scss'],
+    styleUrl: './create.component.scss',
     standalone: true,
     imports: [FormComponent],
 })

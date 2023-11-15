@@ -50,7 +50,7 @@ export function escapeLapteuhMarkdown(str: string): string {
 @Component({
     selector: 'app-stream-config',
     templateUrl: './stream-config.component.html',
-    styleUrls: ['./stream-config.component.scss'],
+    styleUrl: './stream-config.component.scss',
     standalone: true,
     imports: [
         NgIf,

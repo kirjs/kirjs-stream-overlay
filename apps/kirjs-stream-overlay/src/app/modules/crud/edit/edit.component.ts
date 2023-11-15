@@ -7,7 +7,7 @@ import { FormComponent } from '../form/form.component';
 @Component({
     selector: 'app-edit',
     templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.scss'],
+    styleUrl: './edit.component.scss',
     standalone: true,
     imports: [FormComponent, AsyncPipe],
 })

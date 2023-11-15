@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'app-stream-manager',
     templateUrl: './stream-manager.component.html',
-    styleUrls: ['./stream-manager.component.scss'],
+    styleUrl: './stream-manager.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [MatButtonModule],

@@ -7,7 +7,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
 @Component({
     selector: 'app-admin-button',
     templateUrl: './admin-button.component.html',
-    styleUrls: ['./admin-button.component.scss'],
+    styleUrl: './admin-button.component.scss',
     standalone: true,
     imports: [
         NgIf,
