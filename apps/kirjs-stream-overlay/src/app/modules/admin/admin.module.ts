@@ -8,12 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { CrudModule } from '../crud/crud.module';
 import { RestreamInterceptor } from '../integrations/restream/restream.interceptor';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminWrapperModule } from './admin-wrapper/admin-wrapper.module';
+
 import { TokensComponent } from './api-keys/tokens.component';
-import { GuestModule } from './guest/guest.module';
-import { TwitchIntegrationModule } from './intergrations/twitch/twitch-integration.module';
-import { AccountListModule } from './stream-manager/account-list/account-list.module';
-import { StreamManagerModule } from './stream-manager/stream-manager.module';
+
+
+
+
 
 @NgModule({
     providers: [
@@ -24,19 +24,14 @@ import { StreamManagerModule } from './stream-manager/stream-manager.module';
         },
     ],
     imports: [
-        CrudModule,
-        StreamManagerModule,
-        CommonModule,
-        FormsModule,
-        AdminWrapperModule,
-        MatIconModule,
-        MatButtonModule,
-        GuestModule,
-        AdminRoutingModule,
-        ClipboardModule,
-        AccountListModule,
-        TwitchIntegrationModule,
-        TokensComponent,
-    ],
+    CrudModule,
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    AdminRoutingModule,
+    ClipboardModule,
+    TokensComponent,
+],
 })
 export class AdminModule {}

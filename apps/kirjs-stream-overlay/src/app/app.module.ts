@@ -14,14 +14,14 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './modules/admin/admin.module';
-import { ApiKeysModule } from './modules/admin/api-keys/api-keys.module';
+
 import { StreamConfigService } from './modules/admin/stream-manager/stream-config.service';
-import { HomeModule } from './modules/home/home.module';
-import { BarModule } from './modules/overlay/bar/bar.module';
-import { ChatModule } from './modules/overlay/chat/chat.module';
-import { OverlayModule } from './modules/overlay/overlay.module';
+
+
+
+
 import { TripleChatModule } from './modules/plugins/chat/triple-chat/triple-chat.module';
-import { StreamCompleteModule } from './modules/stream-complete/stream-complete.module';
+
 
 registerLocaleData(ru, 'ru');
 
@@ -55,15 +55,9 @@ const firebaseConfig = {
     AppRoutingModule,
     RouterModule,
     AdminModule,
-    ChatModule,
     TripleChatModule,
-    OverlayModule,
-    StreamCompleteModule,
-    BarModule,
-    ApiKeysModule,
-    HomeModule,
     provideFunctions(() => getFunctions()),
-  ],
+],
   providers: [StreamConfigService],
   bootstrap: [AppComponent],
 })
