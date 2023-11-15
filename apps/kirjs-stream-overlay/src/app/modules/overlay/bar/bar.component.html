@@ -1,8 +1,9 @@
 <script src="bar.component.ts"></script>
 
-@for (message of highlights$ | async;let i = $index;track message) { @if
-((selectedSlide$ | async) == i) {
-<div class="message" @carouselAnimation>
-  <div [innerHTML]="message"></div>
-</div>
-} }
+@for (message of highlights$ | async; let i = $index; track: message) {
+  @if ((selectedSlide$ | async) == i) {
+    <div class="message" @carouselAnimation>
+      <div [innerHTML]="message"></div>
+    </div>
+  }
+}
