@@ -140,26 +140,26 @@
   <div class="field">
     <label>
       <span class="label">Guests</span>
-      <mat-form-field class="example-chip-list">
-        <!--        TODO(kirjs): Uncomment-->
-        <!--        <mat-chip-list #chipList aria-label="Fruit selection">-->
-        <!--          <mat-chip *ngFor="let fruit of stream.guests">-->
-        <!--            {{ fruit }}-->
-        <!--            <button matChipRemove>-->
-        <!--              <mat-icon>cancel</mat-icon>-->
-        <!--            </button>-->
-        <!--          </mat-chip>-->
-        <!--          <input [matAutocomplete]="auto" [matChipInputFor]="chipList" />-->
-        <!--        </mat-chip-list>-->
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let guest of guestService.guests$ | async"
-            [value]="guest"
-          >
-            {{ guest.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <!--      <mat-form-field class="example-chip-list">-->
+      <!--        &lt;!&ndash;        TODO(kirjs): Uncomment&ndash;&gt;-->
+      <!--        &lt;!&ndash;        <mat-chip-list #chipList aria-label="Fruit selection">&ndash;&gt;-->
+      <!--        &lt;!&ndash;          <mat-chip *ngFor="let fruit of stream.guests">&ndash;&gt;-->
+      <!--        &lt;!&ndash;            {{ fruit }}&ndash;&gt;-->
+      <!--        &lt;!&ndash;            <button matChipRemove>&ndash;&gt;-->
+      <!--        &lt;!&ndash;              <mat-icon>cancel</mat-icon>&ndash;&gt;-->
+      <!--        &lt;!&ndash;            </button>&ndash;&gt;-->
+      <!--        &lt;!&ndash;          </mat-chip>&ndash;&gt;-->
+      <!--        &lt;!&ndash;          <input [matAutocomplete]="auto" [matChipInputFor]="chipList" />&ndash;&gt;-->
+      <!--        &lt;!&ndash;        </mat-chip-list>&ndash;&gt;-->
+      <!--        <mat-autocomplete #auto="matAutocomplete">-->
+      <!--          <mat-option-->
+      <!--            *ngFor="let guest of guestService.guests$ | async"-->
+      <!--            [value]="guest"-->
+      <!--          >-->
+      <!--            {{ guest.name }}-->
+      <!--          </mat-option>-->
+      <!--        </mat-autocomplete>-->
+      <!--      </mat-form-field>-->
     </label>
   </div>
   <div class="field">

@@ -3,18 +3,14 @@ import { map } from 'rxjs/operators';
 import { StreamConfigService } from '../../admin/stream-manager/stream-config.service';
 import { ChatService } from './chat.service';
 import { RewardService } from './reward.service';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-chat',
-    templateUrl: './chat.component.html',
-    styleUrls: ['./chat.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        NgFor,
-        AsyncPipe,
-    ],
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.scss'],
+  standalone: true,
+  imports: [AsyncPipe],
 })
 export class ChatComponent implements OnInit {
   readonly shouldShowChat$ = this.streamConfigService.currentStream$.pipe(
@@ -31,6 +27,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
   postMessage(message: string): void {
     this.chatService.postMessage(message);
   }

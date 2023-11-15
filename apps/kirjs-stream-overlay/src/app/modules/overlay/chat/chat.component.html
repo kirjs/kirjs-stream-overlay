@@ -3,39 +3,36 @@
   <div class="content-wrapper">
     <h2>What's going on?</h2>
     <div class="message">
-      <ng-container
-        *ngIf="streamConfigService.currentStream$ | async as stream"
-      >
-        <div [innerHTML]="stream.description"></div>
-      </ng-container>
+      @if (streamConfigService.currentStream$ | async;as stream) {
+      <div [innerHTML]="stream.description"></div>
+      }
     </div>
-    <ng-container *ngIf="shouldShowChat$ | async">
-      <div *ngIf="chatService.chat$ | async as messages">
-        <ng-container *ngIf="messages.length > 0">
-          <h2>Chat</h2>
-          <div *ngFor="let message of messages" class="message">
-            <ng-container>
-              <img
-                class="profile-picture"
-                *ngIf="message.profileUrl"
-                [src]="message.profileUrl"
-                alt="profile picture"
-              />
-              <div
-                class="profile-picture"
-                [style.background-color]="message.color || '#f90'"
-                *ngIf="!message.profileUrl"
-              ></div>
-            </ng-container>
-            <div>
-              <b class="username" [style.color]="message.color"
-                >{{ message.displayName }}:</b
-              >
-              {{ message.text }}
-            </div>
-          </div>
-        </ng-container>
+
+    @if (shouldShowChat$ | async) { @if (chatService.chat$ | async;as messages)
+    { @if (messages.length > 0) {
+
+    <h2>Chat</h2>
+    @for (message of messages; track message.id ) {
+    <div class="message">
+      @if (message.profileUrl) {
+      <img
+        class="profile-picture"
+        [src]="message.profileUrl"
+        alt="profile picture"
+      />
+      } @else {
+      <div
+        class="profile-picture"
+        [style.background-color]="message.color || '#f90'"
+      ></div>
+      }
+      <div>
+        <b class="username" [style.color]="message.color"
+          >{{ message.displayName }}:</b
+        >
+        {{ message.text }}
       </div>
-    </ng-container>
+    </div>
+    } } } }
   </div>
 </div>
