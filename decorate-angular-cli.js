@@ -74,8 +74,6 @@ try {
   });
 } catch (e) {
 
-  console.log(e);
-  
   output.error({
     title: 'Decoration of the Angular CLI did not complete successfully',
   });

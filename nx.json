@@ -20,5 +20,5 @@
         "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
-  },
+  }
 }
