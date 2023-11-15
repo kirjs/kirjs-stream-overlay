@@ -13,42 +13,35 @@
   >
 </div>
 
-<ng-container *ngIf="(streamConfigService.futureStreams$ | async)?.length">
-  <h2>Следующий стрим</h2>
+@if ((streamConfigService.futureStreams$ | async)?.length) {
+<h2>Следующий стрим</h2>
 
-  <article
-    class="row"
-    *ngFor="
-      let stream of streamConfigService.futureStreams$ | async;
-      trackBy: trackByKey
-    "
-  >
-    <app-announce class="flexible" [stream]="stream"></app-announce>
-  </article>
-</ng-container>
+@for (stream of streamConfigService.futureStreams$ | async;track stream.key) {
+<article class="row">
+  <app-announce class="flexible" [stream]="stream"></app-announce>
+</article>
+} }
 <h2 class="old-streams">Прошлые стримы</h2>
 <div class="posts">
-  <article
-    class="row"
-    *ngFor="
-      let stream of streamConfigService.pastStreams$ | async;
-      trackBy: trackByKey
-    "
-  >
+  @for (stream of streamConfigService.pastStreams$ | async;track stream.key) {
+  <article class="row">
     <div class="stream">
       <h3>
+        @if (!stream.youtubeId) {
         <a
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.youtube.com/watch?v={{ stream.youtubeId }}"
-          *ngIf="stream.youtubeId"
           >{{ stream.name }}</a
         >
-        <span *ngIf="!stream.youtubeId">{{ stream.name }}</span>
+        } @else {
+        <span>{{ stream.name }}</span>
+        }
         <span>{{ stream.realDateTime | date }}</span>
       </h3>
 
       <div [innerHTML]="stream.description"></div>
     </div>
   </article>
+  }
 </div>
