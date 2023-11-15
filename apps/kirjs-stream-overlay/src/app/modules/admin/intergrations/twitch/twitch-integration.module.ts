@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { TwitchComponent } from './twitch.component';
 
 @NgModule({
-  declarations: [TwitchComponent],
-  imports: [CommonModule],
+    imports: [CommonModule, TwitchComponent],
 })
 export class TwitchIntegrationModule {}

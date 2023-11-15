@@ -6,11 +6,21 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        MatButtonModule,
+        AsyncPipe,
+    ],
 })
 export class LoginComponent {
   user$ = user(this.auth);

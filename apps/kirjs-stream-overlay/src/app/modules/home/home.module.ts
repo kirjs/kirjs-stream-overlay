@@ -7,7 +7,6 @@ import { AdminButtonComponent } from './admin-button/admin-button.component';
 import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [HomeComponent, AdminButtonComponent],
-  imports: [CommonModule, AnnounceModule, RouterModule, MatIconModule],
+    imports: [CommonModule, AnnounceModule, RouterModule, MatIconModule, HomeComponent, AdminButtonComponent],
 })
 export class HomeModule {}

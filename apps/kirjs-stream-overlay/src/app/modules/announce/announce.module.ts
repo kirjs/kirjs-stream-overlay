@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { AnnounceComponent } from './announce.component';
 
 @NgModule({
-  declarations: [AnnounceComponent],
-  exports: [AnnounceComponent],
-  imports: [CommonModule],
+    exports: [AnnounceComponent],
+    imports: [CommonModule, AnnounceComponent],
 })
 export class AnnounceModule {}

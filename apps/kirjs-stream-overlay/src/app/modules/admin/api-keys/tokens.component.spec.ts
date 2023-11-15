@@ -7,8 +7,8 @@ describe('ApiKeysComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TokensComponent],
-    }).compileComponents();
+    imports: [TokensComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

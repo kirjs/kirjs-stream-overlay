@@ -8,12 +8,13 @@ import {
 import { CrudConfig, CrudModule } from '../../crud/crud.module';
 
 @Component({
-  template: `<article>
+    template: `<article>
     <h1>{{ data.name }}</h1>
     <code>
       <pre>{{ data.highlights }}</pre>
     </code>
   </article>`,
+    standalone: true,
 })
 export class ListItemComponent {
   constructor(
@@ -43,7 +44,6 @@ const config: CrudConfig = {
 };
 
 @NgModule({
-  declarations: [ListItemComponent],
-  imports: [CommonModule, CrudModule.forConfig(config)],
+    imports: [CommonModule, CrudModule.forConfig(config), ListItemComponent],
 })
 export class GuestModule {}

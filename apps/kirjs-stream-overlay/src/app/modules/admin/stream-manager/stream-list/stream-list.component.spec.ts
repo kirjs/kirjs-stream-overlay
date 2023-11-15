@@ -7,8 +7,8 @@ describe('StreamListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StreamListComponent],
-    }).compileComponents();
+    imports: [StreamListComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

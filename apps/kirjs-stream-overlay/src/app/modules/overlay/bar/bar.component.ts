@@ -3,29 +3,33 @@ import { Component } from '@angular/core';
 import { combineLatest, interval } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HighlightsService } from '../../admin/services/highlights.service';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-bar',
-  templateUrl: './bar.component.html',
-  styleUrls: ['./bar.component.scss'],
-  animations: [
-    trigger('carouselAnimation', [
-      transition('void => *', [
-        style({ top: 100 }),
-        animate('200ms', style({ top: 0 })),
-      ]),
-      transition('* => void', [
-        style({ opacity: 0.8 }),
-        animate(
-          '300ms',
-          style({
-            top: -100,
-            opacity: 0,
-          }),
-        ),
-      ]),
-    ]),
-  ],
+    selector: 'app-bar',
+    templateUrl: './bar.component.html',
+    styleUrls: ['./bar.component.scss'],
+    animations: [
+        trigger('carouselAnimation', [
+            transition('void => *', [
+                style({ top: 100 }),
+                animate('200ms', style({ top: 0 })),
+            ]),
+            transition('* => void', [
+                style({ opacity: 0.8 }),
+                animate('300ms', style({
+                    top: -100,
+                    opacity: 0,
+                })),
+            ]),
+        ]),
+    ],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class BarComponent {
   constructor(readonly highlightsService: HighlightsService) {}

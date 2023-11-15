@@ -7,8 +7,8 @@ describe('AnnounceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AnnounceComponent],
-    }).compileComponents();
+    imports: [AnnounceComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

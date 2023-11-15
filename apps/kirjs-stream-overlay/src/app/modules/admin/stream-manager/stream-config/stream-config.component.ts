@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import domtoimage from 'dom-to-image';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,16 @@ import {
 import { normalizeSpaces } from '../../utils';
 import { StreamConfigService } from '../stream-config.service';
 import { UIStream } from '../types';
+import { AnnounceComponent } from '../../../announce/announce.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { WysiwygEditorComponent } from '../wysiwyg-editor/wysiwyg-editor.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 const generatePromoText = (stream?: UIStream) => {
   if (!stream) {
@@ -38,9 +48,26 @@ export function escapeLapteuhMarkdown(str: string): string {
 }
 
 @Component({
-  selector: 'app-stream-config',
-  templateUrl: './stream-config.component.html',
-  styleUrls: ['./stream-config.component.scss'],
+    selector: 'app-stream-config',
+    templateUrl: './stream-config.component.html',
+    styleUrls: ['./stream-config.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        RouterLink,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        NgFor,
+        ReactiveFormsModule,
+        FormsModule,
+        WysiwygEditorComponent,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatOptionModule,
+        AnnounceComponent,
+        AsyncPipe,
+    ],
 })
 export class StreamConfigComponent {
   readonly selectedStreamKey$ = this.route.params.pipe(

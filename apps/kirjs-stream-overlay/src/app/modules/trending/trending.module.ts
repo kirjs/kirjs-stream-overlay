@@ -11,7 +11,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [TrendingComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+    imports: [CommonModule, RouterModule.forChild(routes), TrendingComponent],
 })
 export class TrendingModule {}

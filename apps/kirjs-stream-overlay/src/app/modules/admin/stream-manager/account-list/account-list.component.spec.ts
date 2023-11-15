@@ -7,8 +7,8 @@ describe('AccountListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountListComponent],
-    }).compileComponents();
+    imports: [AccountListComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

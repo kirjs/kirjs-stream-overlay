@@ -1,10 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { CrudConfig } from '../../crud.module';
+import { NgFor } from '@angular/common';
 
 @Component({
-  templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.css'],
+    templateUrl: './list-item.component.html',
+    styleUrls: ['./list-item.component.css'],
+    standalone: true,
+    imports: [NgFor],
 })
 export class ListItemComponent {
   constructor(

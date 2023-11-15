@@ -8,8 +8,8 @@ describe('TwitchLoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TwitchLoginComponent ]
-    })
+    declarations: [TwitchLoginComponent]
+})
     .compileComponents();
   });
 

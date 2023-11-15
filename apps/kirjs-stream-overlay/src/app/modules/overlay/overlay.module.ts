@@ -5,7 +5,6 @@ import { ChatModule } from './chat/chat.module';
 import { OverlayComponent } from './overlay.component';
 
 @NgModule({
-  declarations: [OverlayComponent],
-  imports: [CommonModule, BarModule, ChatModule],
+    imports: [CommonModule, BarModule, ChatModule, OverlayComponent],
 })
 export class OverlayModule {}

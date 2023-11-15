@@ -99,23 +99,21 @@ export abstract class CrudConfig implements CrudConfigInterface {
 }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    PolymorpheusModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatSelectModule,
-  ],
-  declarations: [
-    ListComponent,
-    FormComponent,
-    CreateComponent,
-    EditComponent,
-    ListItemComponent,
-  ],
-  providers: [],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        PolymorpheusModule,
+        ReactiveFormsModule,
+        RouterModule,
+        MatSelectModule,
+        ListComponent,
+        FormComponent,
+        CreateComponent,
+        EditComponent,
+        ListItemComponent,
+    ],
+    providers: [],
 })
 export class CrudModule {
   static forConfig(config: CrudConfig): ModuleWithProviders<CrudModule> {

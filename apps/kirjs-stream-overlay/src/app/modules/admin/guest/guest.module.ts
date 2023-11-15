@@ -7,14 +7,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { GuestComponent } from './guest.component';
 
 @NgModule({
-  declarations: [GuestComponent],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-  ],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatMenuModule,
+        GuestComponent,
+    ],
 })
 export class GuestModule {}

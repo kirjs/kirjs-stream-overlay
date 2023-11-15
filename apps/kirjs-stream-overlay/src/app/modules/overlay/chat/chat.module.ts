@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { ChatComponent } from './chat.component';
 
 @NgModule({
-  declarations: [ChatComponent],
-  exports: [ChatComponent],
-  imports: [CommonModule],
+    exports: [ChatComponent],
+    imports: [CommonModule, ChatComponent],
 })
 export class ChatModule {}

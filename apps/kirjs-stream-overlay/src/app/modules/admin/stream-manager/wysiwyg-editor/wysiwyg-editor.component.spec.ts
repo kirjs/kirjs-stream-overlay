@@ -7,8 +7,8 @@ describe('WysiwygEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WysiwygEditorComponent],
-    }).compileComponents();
+    imports: [WysiwygEditorComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

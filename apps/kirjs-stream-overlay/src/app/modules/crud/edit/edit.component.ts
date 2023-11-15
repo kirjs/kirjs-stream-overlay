@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudAdapter } from '../crud.module';
+import { AsyncPipe } from '@angular/common';
+import { FormComponent } from '../form/form.component';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'],
+    selector: 'app-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.scss'],
+    standalone: true,
+    imports: [FormComponent, AsyncPipe],
 })
 export class EditComponent implements OnInit {
   readonly item$ = this.crudAdapter.get(this.route.snapshot.params.id);

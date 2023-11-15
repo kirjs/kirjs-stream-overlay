@@ -2,6 +2,7 @@ import { Component, ɵdetectChanges } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { YoutubeService } from '../admin/services/youtube.service';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 interface Channel {
   id: string;
@@ -11,9 +12,11 @@ interface Channel {
 const LOCAL_STORAGE_KEY = 'channels';
 
 @Component({
-  selector: 'app-trending',
-  templateUrl: './trending.component.html',
-  styleUrls: ['./trending.component.scss'],
+    selector: 'app-trending',
+    templateUrl: './trending.component.html',
+    styleUrls: ['./trending.component.scss'],
+    standalone: true,
+    imports: [NgFor, AsyncPipe],
 })
 export class TrendingComponent {
   readonly bannedChannels$ = new BehaviorSubject<Channel[]>(

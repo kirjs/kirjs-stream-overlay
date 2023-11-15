@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { StreamCompleteComponent } from './stream-complete.component';
 
 @NgModule({
-  declarations: [StreamCompleteComponent],
-  exports: [StreamCompleteComponent],
-  imports: [CommonModule],
+    exports: [StreamCompleteComponent],
+    imports: [CommonModule, StreamCompleteComponent],
 })
 export class StreamCompleteModule {}

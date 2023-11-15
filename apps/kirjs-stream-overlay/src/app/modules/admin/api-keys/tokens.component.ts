@@ -2,11 +2,26 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ADMIN_ACCESS_TOKEN_PARAM_NAME } from '../constants';
 import { Token, TokensService } from './tokens.service';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-api-keys',
-  templateUrl: './tokens.component.html',
-  styleUrls: ['./tokens.component.scss'],
+    selector: 'app-api-keys',
+    templateUrl: './tokens.component.html',
+    styleUrls: ['./tokens.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        ReactiveFormsModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        ClipboardModule,
+        AsyncPipe,
+    ],
 })
 export class TokensComponent implements OnInit, OnDestroy {
   private onDestroy = new Subject<void>();

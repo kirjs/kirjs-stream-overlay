@@ -1,12 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Guest } from './guest_types';
 import { LapteuhService } from './lapteuh.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-guest',
-  templateUrl: './guest.component.html',
-  styleUrls: ['./guest.component.scss'],
+    selector: 'app-guest',
+    templateUrl: './guest.component.html',
+    styleUrls: ['./guest.component.scss'],
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        AsyncPipe,
+    ],
 })
 export class GuestComponent implements OnInit {
   readonly nameControl = new FormControl();

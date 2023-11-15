@@ -5,7 +5,6 @@ import { LoginModule } from '../login/login.module';
 import { AdminWrapperComponent } from './admin-wrapper.component';
 
 @NgModule({
-  declarations: [AdminWrapperComponent],
-  imports: [CommonModule, RouterModule, LoginModule],
+    imports: [CommonModule, RouterModule, LoginModule, AdminWrapperComponent],
 })
 export class AdminWrapperModule {}

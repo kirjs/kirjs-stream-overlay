@@ -13,10 +13,11 @@ import {
 import MediumEditor from 'medium-editor';
 
 @Component({
-  selector: 'app-wysiwyg-editor',
-  templateUrl: './wysiwyg-editor.component.html',
-  styleUrls: ['./wysiwyg-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-wysiwyg-editor',
+    templateUrl: './wysiwyg-editor.component.html',
+    styleUrls: ['./wysiwyg-editor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class WysiwygEditorComponent
   implements AfterViewInit, OnChanges, OnDestroy

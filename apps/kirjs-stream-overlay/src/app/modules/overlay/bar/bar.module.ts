@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { BarComponent } from './bar.component';
 
 @NgModule({
-  declarations: [BarComponent],
-  exports: [BarComponent],
-  imports: [CommonModule],
+    exports: [BarComponent],
+    imports: [CommonModule, BarComponent],
 })
 export class BarModule {}

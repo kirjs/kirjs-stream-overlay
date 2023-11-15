@@ -3,12 +3,15 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { StreamConfigService } from './stream-config.service';
 import { UIStream } from './types';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-stream-manager',
-  templateUrl: './stream-manager.component.html',
-  styleUrls: ['./stream-manager.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-stream-manager',
+    templateUrl: './stream-manager.component.html',
+    styleUrls: ['./stream-manager.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [MatButtonModule],
 })
 export class StreamManagerComponent {
   constructor(readonly streamConfigService: StreamConfigService) {}

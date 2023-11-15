@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { WysiwygEditorComponent } from './wysiwyg-editor.component';
 
 @NgModule({
-  declarations: [WysiwygEditorComponent],
-  exports: [WysiwygEditorComponent],
-  imports: [CommonModule],
+    exports: [WysiwygEditorComponent],
+    imports: [CommonModule, WysiwygEditorComponent],
 })
 export class WysiwygEditorModule {}

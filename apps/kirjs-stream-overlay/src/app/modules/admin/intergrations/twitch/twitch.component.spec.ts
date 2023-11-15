@@ -8,8 +8,8 @@ describe('TwitchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TwitchComponent ]
-    })
+    imports: [TwitchComponent]
+})
     .compileComponents();
   });
 

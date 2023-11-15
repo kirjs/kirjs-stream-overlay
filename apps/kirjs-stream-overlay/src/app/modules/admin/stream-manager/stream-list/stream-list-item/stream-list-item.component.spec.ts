@@ -7,8 +7,8 @@ describe('AnnounceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StreamListItemComponent],
-    }).compileComponents();
+    imports: [StreamListItemComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

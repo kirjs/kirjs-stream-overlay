@@ -7,8 +7,8 @@ describe('WaitingScreenEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StreamManagerComponent],
-    }).compileComponents();
+    imports: [StreamManagerComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

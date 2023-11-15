@@ -7,8 +7,8 @@ describe('AdminWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AdminWrapperComponent],
-    }).compileComponents();
+    imports: [AdminWrapperComponent],
+}).compileComponents();
   });
 
   beforeEach(() => {

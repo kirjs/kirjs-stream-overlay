@@ -16,27 +16,27 @@ import { AccountListModule } from './stream-manager/account-list/account-list.mo
 import { StreamManagerModule } from './stream-manager/stream-manager.module';
 
 @NgModule({
-  declarations: [TokensComponent],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: RestreamInterceptor,
-      multi: true,
-    },
-  ],
-  imports: [
-    CrudModule,
-    StreamManagerModule,
-    CommonModule,
-    FormsModule,
-    AdminWrapperModule,
-    MatIconModule,
-    MatButtonModule,
-    GuestModule,
-    AdminRoutingModule,
-    ClipboardModule,
-    AccountListModule,
-    TwitchIntegrationModule,
-  ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RestreamInterceptor,
+            multi: true,
+        },
+    ],
+    imports: [
+        CrudModule,
+        StreamManagerModule,
+        CommonModule,
+        FormsModule,
+        AdminWrapperModule,
+        MatIconModule,
+        MatButtonModule,
+        GuestModule,
+        AdminRoutingModule,
+        ClipboardModule,
+        AccountListModule,
+        TwitchIntegrationModule,
+        TokensComponent,
+    ],
 })
 export class AdminModule {}

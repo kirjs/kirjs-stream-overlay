@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CrudAdapter } from '../crud.module';
+import { FormComponent } from '../form/form.component';
 
 @Component({
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+    templateUrl: './create.component.html',
+    styleUrls: ['./create.component.scss'],
+    standalone: true,
+    imports: [FormComponent],
 })
 export class CreateComponent {
   constructor(
