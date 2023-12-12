@@ -1,6 +1,6 @@
 {
   "extends": ["tslint:recommended", "tslint-config-prettier"],
-  "rulesDirectory": ["codelyzer"],
+  "rulesDirectory": ["codelyzer", "node_modules/@nrwl/workspace/src/tslint"],
   "rules": {
     "align": {
       "options": ["parameters", "statements"]
@@ -100,6 +100,18 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "directive-selector": [true, "attribute", "app", "camelCase"],
-    "component-selector": [true, "element", "app", "kebab-case"]
+    "component-selector": [true, "element", "app", "kebab-case"],
+    "nx-enforce-module-boundaries": [
+      true,
+      {
+        "allow": [],
+        "depConstraints": [
+          {
+            "sourceTag": "*",
+            "onlyDependOnLibsWithTags": ["*"]
+          }
+        ]
+      }
+    ]
   }
 }

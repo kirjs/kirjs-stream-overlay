@@ -1,0 +1,31 @@
+h1 {
+  font-size: 40px;
+  margin-top: 20px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+:host {
+  display: block;
+  margin: auto;
+  max-width: 1024px;
+  padding: 0 32px;
+}
+
+.stream h3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.intro {
+  padding: 20px 0 40px;
+  font-size: 20px;
+}
+
+.old-streams {
+  margin-top: 32px;
+}

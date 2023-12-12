@@ -1,0 +1,47 @@
+<header>
+  <h1>kirjs</h1>
+  <app-admin-button></app-admin-button>
+</header>
+
+<div class="intro">
+  Привет, я стримлю в
+  <a href="http://twitch.tv/kirjs" target="_blank" rel="noopener noreferrer"
+    >twitch</a
+  >, и пишу в
+  <a href="https://t.me/kirjs_ru" target="_blank" rel="noopener noreferrer"
+    >telegram</a
+  >
+</div>
+
+@if ((streamConfigService.futureStreams$ | async)?.length) {
+<h2>Следующий стрим</h2>
+
+@for (stream of streamConfigService.futureStreams$ | async;track stream.key) {
+<article class="row">
+  <app-announce class="flexible" [stream]="stream"></app-announce>
+</article>
+} }
+<h2 class="old-streams">Прошлые стримы</h2>
+<div class="posts">
+  @for (stream of streamConfigService.pastStreams$ | async;track stream.key) {
+  <article class="row">
+    <div class="stream">
+      <h3>
+        @if (!stream.youtubeId) {
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.youtube.com/watch?v={{ stream.youtubeId }}"
+          >{{ stream.name }}</a
+        >
+        } @else {
+        <span>{{ stream.name }}</span>
+        }
+        <span>{{ stream.realDateTime | date }}</span>
+      </h3>
+
+      <div [innerHTML]="stream.description"></div>
+    </div>
+  </article>
+  }
+</div>

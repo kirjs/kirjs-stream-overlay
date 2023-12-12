@@ -1,0 +1,20 @@
+<a [routerLink]="'./create'">Create</a>
+
+<div *ngFor="let item of items$ | async" class="list-item">
+  <ng-container
+    *polymorpheusOutlet="
+      $any(config.components!.listItem!) as text;
+      context: item
+    "
+  >
+    {{ text }}
+  </ng-container>
+  <div>
+    <button mat-icon-button (click)="delete(item)">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="'./edit/' + item.key">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>

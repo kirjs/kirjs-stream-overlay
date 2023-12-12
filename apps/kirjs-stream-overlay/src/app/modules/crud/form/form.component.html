@@ -1,0 +1,38 @@
+<form [formGroup]="form" (submit)="submit()">
+  <div class="form-wrapper">
+    <ng-container *ngFor="let field of config.fields">
+      <ng-container *ngIf="field.display?.[mode] === DisplayMode.DISPLAY">
+        <label id="control-{{ field.name }}">{{ field.label }}</label>
+        <ng-container *ngIf="field.type === 'input'">
+          <input
+            [attr.aria-labelledby]="'control-' + field.name"
+            [placeholder]="field.placeholder ?? ''"
+            [formControlName]="field.name"
+          />
+        </ng-container>
+        <ng-container *ngIf="field.type === 'textarea'">
+          <textarea
+            [attr.aria-labelledby]="'control-' + field.name"
+            [placeholder]="field.placeholder ?? ''"
+            [formControlName]="field.name"
+          ></textarea>
+        </ng-container>
+
+        <ng-container *ngIf="field.type === 'select'">
+          <mat-form-field>
+            <mat-select
+              [formControlName]="field.name"
+              [placeholder]="field.placeholder ?? ''"
+              [attr.aria-labelledby]="'control-' + field.name"
+            >
+              <mat-option *ngFor="let value of field.values" [value]="value">{{
+                value
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <button mat-button [disabled]="!form.valid">Submit</button>
+  </div>
+</form>

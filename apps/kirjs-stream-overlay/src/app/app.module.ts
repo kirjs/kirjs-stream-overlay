@@ -1,0 +1,64 @@
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import ru from '@angular/common/locales/ru';
+import { NgModule } from '@angular/core';
+import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getFunctions, provideFunctions } from '@angular/fire/functions';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AdminModule } from './modules/admin/admin.module';
+
+import { StreamConfigService } from './modules/admin/stream-manager/stream-config.service';
+
+
+
+
+import { TripleChatModule } from './modules/plugins/chat/triple-chat/triple-chat.module';
+
+
+registerLocaleData(ru, 'ru');
+
+const firebaseConfig = {
+  // apiKey: 'AIzaSyC1RAwdiF-nGT9XB196Gf6AQHe96svMMuM',
+  // authDomain: 'test-overlay-project.firebaseapp.com',
+  // projectId: 'test-overlay-project',
+  // storageBucket: 'test-overlay-project.appspot.com',
+  // messagingSenderId: '977379365119',
+  // appId: '1:977379365119:web:8569503929ee6bdb4ffcca'
+  apiKey: 'AIzaSyBlPch6QtFOtK46NSc-P6pbuiHe2iAp5K4',
+  authDomain: 'kirjs-stream-overlay.firebaseapp.com',
+  projectId: 'kirjs-stream-overlay',
+  storageBucket: 'kirjs-stream-overlay.appspot.com',
+  messagingSenderId: '703581438271',
+  appId: '1:703581438271:web:b0a3b0a4e621115453d38a',
+  measurementId: 'G-ZQGRFV6TJG',
+};
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideStorage(() => getStorage()),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+    provideAnalytics(() => getAnalytics()),
+    BrowserAnimationsModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule,
+    AdminModule,
+    TripleChatModule,
+    provideFunctions(() => getFunctions()),
+],
+  providers: [StreamConfigService],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
