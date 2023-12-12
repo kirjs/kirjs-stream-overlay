@@ -1,0 +1,38 @@
+.wrapper {
+  border: 1px red solid;
+  position: relative;
+}
+.wrapper,
+.preview {
+  width: 1280px;
+  height: 720px;
+}
+
+.preview {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.sidebar {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 400px;
+  bottom: 20px;
+  background: black;
+  border: 1px #ddd solid;
+  padding: 20px;
+  border-radius: 20px;
+  opacity: 0.9;
+}
+
+.clickbait {
+  font-size: 50px;
+  line-height: 60px;
+  margin-top: 20px;
+}

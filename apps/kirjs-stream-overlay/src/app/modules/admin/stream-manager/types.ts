@@ -9,6 +9,7 @@ export interface Stream {
   language: 'en' | 'ru';
   fontColor: string;
   tags: string[];
+  clickbait: string;
   date: Date;
   guests: string[];
   highlights: string;
@@ -20,6 +21,7 @@ export interface Stream {
   realDateTime: string;
   lastModified: Date;
   talkUrl: string;
+  previewPrompt: string;
 }
 
 export interface UIStream extends Stream {

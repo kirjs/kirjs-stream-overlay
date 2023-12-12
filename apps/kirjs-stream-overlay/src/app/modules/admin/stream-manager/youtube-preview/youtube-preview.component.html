@@ -1,0 +1,19 @@
+<div class="wrapper">
+  @if (youtubePreview$ | async; as src) {
+    <img [src]="src" class="preview" />
+  } @else {
+    No preview
+  }
+
+  <div class="sidebar">
+    <img class="avatar" src="/assets/kirjs.jpg" alt="it's a dog" />
+    <div class="clickbait">
+      {{ stream.clickbait }}
+    </div>
+  </div>
+</div>
+<pre class="promo-text-preview">{{ previewPrompt }}</pre>
+
+<button mat-button (click)="generateImageSubject.next()">
+  Generate preview
+</button>

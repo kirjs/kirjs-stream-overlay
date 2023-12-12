@@ -107,6 +107,8 @@ export class StreamConfigService {
       autoPostToChat: true,
       lastModified: serverTimestamp(),
       guests: [],
+      previewPrompt: '{description}',
+      clickbait: '',
     });
   }
 

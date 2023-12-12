@@ -225,6 +225,35 @@
     </label>
   </div>
 
+  <h2>Preview</h2>
+  <div class="field">
+    <label>
+      <span class="label">Preview prompt</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.previewPrompt"
+        (ngModelChange)="updateByPropName(stream, 'previewPrompt', $event)"
+      />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <span class="label">Clickbait</span>
+      <input
+        class="name-input"
+        type="text"
+        [ngModel]="stream.clickbait"
+        (ngModelChange)="updateByPropName(stream, 'clickbait', $event)"
+      />
+    </label>
+  </div>
+
+  <app-youtube-preview
+    [previewPrompt]="previewPrompt$ | async"
+    [stream]="stream"
+  ></app-youtube-preview>
   <div style="margin-top: 20px" #announce>
     <app-announce [stream]="stream"></app-announce>
   </div>

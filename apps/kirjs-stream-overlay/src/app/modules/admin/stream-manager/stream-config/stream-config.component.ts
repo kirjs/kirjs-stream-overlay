@@ -22,8 +22,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { YoutubePreviewComponent } from '../youtube-preview/youtube-preview.component';
 
-const generatePromoText = (stream?: UIStream) => {
+const generateText = (template: string, stream?: UIStream) => {
   if (!stream) {
     return '';
   }
@@ -34,7 +35,7 @@ const generatePromoText = (stream?: UIStream) => {
     talkUrl: 'twitch.tv/kirjs',
     description: normalizeSpaces(stream.description),
   };
-  const text = normalizeSpaces(stream.promoText);
+  const text = normalizeSpaces(template);
   return text.replaceAll(/{(\w+)}/g, (text, param) => {
     if (fields[param]) {
       return fields[param];
@@ -48,26 +49,27 @@ export function escapeLapteuhMarkdown(str: string): string {
 }
 
 @Component({
-    selector: 'app-stream-config',
-    templateUrl: './stream-config.component.html',
-    styleUrl: './stream-config.component.scss',
-    standalone: true,
-    imports: [
-        NgIf,
-        RouterLink,
-        MatButtonModule,
-        MatMenuModule,
-        MatIconModule,
-        NgFor,
-        ReactiveFormsModule,
-        FormsModule,
-        WysiwygEditorComponent,
-        MatFormFieldModule,
-        MatAutocompleteModule,
-        MatOptionModule,
-        AnnounceComponent,
-        AsyncPipe,
-    ],
+  selector: 'app-stream-config',
+  templateUrl: './stream-config.component.html',
+  styleUrl: './stream-config.component.scss',
+  standalone: true,
+  imports: [
+    NgIf,
+    RouterLink,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    NgFor,
+    ReactiveFormsModule,
+    FormsModule,
+    WysiwygEditorComponent,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatOptionModule,
+    AnnounceComponent,
+    AsyncPipe,
+    YoutubePreviewComponent,
+  ],
 })
 export class StreamConfigComponent {
   readonly selectedStreamKey$ = this.route.params.pipe(
@@ -85,7 +87,13 @@ export class StreamConfigComponent {
     }),
   );
 
-  readonly promoText$ = this.currentStream$.pipe(map(generatePromoText));
+  readonly promoText$ = this.currentStream$.pipe(
+    map(stream => generateText(stream?.promoText || '', stream)),
+  );
+
+  readonly previewPrompt$ = this.currentStream$.pipe(
+    map(stream => generateText(stream?.previewPrompt || '', stream)),
+  );
 
   constructor(
     readonly streamConfigService: StreamConfigService,
@@ -143,7 +151,9 @@ export class StreamConfigComponent {
     const wrapper = announce.querySelector('.wrapper') as HTMLDivElement;
     const image = await this.generateImage(wrapper);
 
-    const promoText = escapeLapteuhMarkdown(generatePromoText(stream));
+    const promoText = escapeLapteuhMarkdown(
+      generateText(stream.promoText, stream),
+    );
 
     this.telegramService.postImage(image, promoText, channel.chatId).subscribe(
       () => {
